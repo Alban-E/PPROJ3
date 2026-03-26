@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3307
--- Généré le : ven. 13 fév. 2026 à 11:07
+-- Généré le : jeu. 26 mars 2026 à 13:48
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -24,34 +24,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `banned`
+-- Structure de la table `activity_feed`
 --
 
-CREATE TABLE `banned` (
+CREATE TABLE `activity_feed` (
   `id` int(11) NOT NULL,
-  `cause` varchar(50) NOT NULL
+  `type` enum('rate','feedback','comment','add_to_list','new_list') NOT NULL,
+  `id_activity` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ban_info`
+-- Structure de la table `bans`
 --
 
-CREATE TABLE `ban_info` (
+CREATE TABLE `bans` (
   `id` int(11) NOT NULL,
-  `id_banner` int(11) NOT NULL,
   `id_banned` int(11) NOT NULL,
-  `id_ban` int(11) NOT NULL
+  `id_banner` int(11) NOT NULL,
+  `ban_reason` varchar(255) NOT NULL,
+  `banned_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `chat`
+-- Structure de la table `chats`
 --
 
-CREATE TABLE `chat` (
+CREATE TABLE `chats` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -71,10 +75,10 @@ CREATE TABLE `chat_info` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `chat_messsage`
+-- Structure de la table `chat_message`
 --
 
-CREATE TABLE `chat_messsage` (
+CREATE TABLE `chat_message` (
   `id` int(11) NOT NULL,
   `id_chat` int(11) NOT NULL,
   `id_message` int(11) NOT NULL,
@@ -84,49 +88,52 @@ CREATE TABLE `chat_messsage` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `feedback`
+-- Structure de la table `comments`
 --
 
-CREATE TABLE `feedback` (
+CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
-  `id_music` int(11) NOT NULL,
-  `has_liked` tinyint(1) DEFAULT NULL,
-  `comment` varchar(255) DEFAULT NULL
+  `comment` varchar(255) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `feedbackception`
+-- Structure de la table `feedbacks`
 --
 
-CREATE TABLE `feedbackception` (
+CREATE TABLE `feedbacks` (
   `id` int(11) NOT NULL,
-  `hasliked` int(11) NOT NULL,
-  `comment` varchar(255) NOT NULL
+  `rating` int(11) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `feedback_feedback`
+-- Structure de la table `feedback_comment`
 --
 
-CREATE TABLE `feedback_feedback` (
+CREATE TABLE `feedback_comment` (
   `id` int(11) NOT NULL,
   `id_original` int(11) NOT NULL,
-  `id_feedback` int(11) NOT NULL
+  `id_comment` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `list`
+-- Structure de la table `lists`
 --
 
-CREATE TABLE `list` (
+CREATE TABLE `lists` (
   `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL DEFAULT 'New List',
+  `private` tinyint(1) NOT NULL DEFAULT 1,
+  `creation_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -137,9 +144,8 @@ CREATE TABLE `list` (
 
 CREATE TABLE `list_info` (
   `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
   `id_list` int(11) NOT NULL,
-  `id_music` int(11) NOT NULL
+  `id_track` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -162,7 +168,9 @@ CREATE TABLE `messages` (
 
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
-  `content` varchar(100) NOT NULL
+  `content` varchar(100) NOT NULL,
+  `type` enum('new_message','new_subscriber','new_track') NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -173,20 +181,9 @@ CREATE TABLE `notifications` (
 
 CREATE TABLE `signals` (
   `id` int(11) NOT NULL,
-  `cause` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `signal_info`
---
-
-CREATE TABLE `signal_info` (
-  `id` int(11) NOT NULL,
-  `id_signal` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `id_feedback` int(11) NOT NULL
+  `id_feedback` int(11) NOT NULL,
+  `cause` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -199,6 +196,34 @@ CREATE TABLE `subscribed_user` (
   `id` int(11) NOT NULL,
   `id_subcriber` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tracks`
+--
+
+CREATE TABLE `tracks` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `release_date` date DEFAULT NULL,
+  `api_id` varchar(100) NOT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `listeners` int(11) NOT NULL,
+  `artist` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `track_feedback`
+--
+
+CREATE TABLE `track_feedback` (
+  `id` int(11) NOT NULL,
+  `track_id` int(11) NOT NULL,
+  `feedback_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -223,13 +248,26 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `user_comment`
+--
+
+CREATE TABLE `user_comment` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_comment` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user_feedback`
 --
 
 CREATE TABLE `user_feedback` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `id_feedback` int(11) NOT NULL
+  `id_feedback` int(11) NOT NULL,
+  `liked` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -249,24 +287,21 @@ CREATE TABLE `user_notification` (
 --
 
 --
--- Index pour la table `banned`
+-- Index pour la table `activity_feed`
 --
-ALTER TABLE `banned`
+ALTER TABLE `activity_feed`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `ban_info`
+-- Index pour la table `bans`
 --
-ALTER TABLE `ban_info`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_banner` (`id_banner`),
-  ADD KEY `id_bann` (`id_ban`),
-  ADD KEY `id_banned` (`id_banned`);
+ALTER TABLE `bans`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `chat`
+-- Index pour la table `chats`
 --
-ALTER TABLE `chat`
+ALTER TABLE `chats`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -279,47 +314,45 @@ ALTER TABLE `chat_info`
   ADD KEY `id_user2` (`id_user2`);
 
 --
--- Index pour la table `chat_messsage`
+-- Index pour la table `chat_message`
 --
-ALTER TABLE `chat_messsage`
+ALTER TABLE `chat_message`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_chatt` (`id_chat`),
   ADD KEY `id_msg` (`id_message`),
   ADD KEY `id_sender` (`id_sender`);
 
 --
--- Index pour la table `feedback`
+-- Index pour la table `comments`
 --
-ALTER TABLE `feedback`
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `feedbackception`
+-- Index pour la table `feedbacks`
 --
-ALTER TABLE `feedbackception`
+ALTER TABLE `feedbacks`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `feedback_feedback`
+-- Index pour la table `feedback_comment`
 --
-ALTER TABLE `feedback_feedback`
+ALTER TABLE `feedback_comment`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_originalFeedback` (`id_original`),
-  ADD KEY `id_newFeedback` (`id_feedback`);
+  ADD KEY `id_newFeedback` (`id_comment`);
 
 --
--- Index pour la table `list`
+-- Index pour la table `lists`
 --
-ALTER TABLE `list`
+ALTER TABLE `lists`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `list_info`
 --
 ALTER TABLE `list_info`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_listMusic` (`id_list`),
-  ADD KEY `id_userList` (`id_user`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `messages`
@@ -340,15 +373,6 @@ ALTER TABLE `signals`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `signal_info`
---
-ALTER TABLE `signal_info`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_signal` (`id_signal`),
-  ADD KEY `id_signaler` (`id_user`),
-  ADD KEY `id_feedbackSignaled` (`id_feedback`);
-
---
 -- Index pour la table `subscribed_user`
 --
 ALTER TABLE `subscribed_user`
@@ -357,9 +381,28 @@ ALTER TABLE `subscribed_user`
   ADD KEY `id_userHasSub` (`id_user`);
 
 --
+-- Index pour la table `tracks`
+--
+ALTER TABLE `tracks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `track_feedback`
+--
+ALTER TABLE `track_feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `login` (`login`);
+
+--
+-- Index pour la table `user_comment`
+--
+ALTER TABLE `user_comment`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -383,21 +426,21 @@ ALTER TABLE `user_notification`
 --
 
 --
--- AUTO_INCREMENT pour la table `banned`
+-- AUTO_INCREMENT pour la table `activity_feed`
 --
-ALTER TABLE `banned`
+ALTER TABLE `activity_feed`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `ban_info`
+-- AUTO_INCREMENT pour la table `bans`
 --
-ALTER TABLE `ban_info`
+ALTER TABLE `bans`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `chat`
+-- AUTO_INCREMENT pour la table `chats`
 --
-ALTER TABLE `chat`
+ALTER TABLE `chats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -407,33 +450,33 @@ ALTER TABLE `chat_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `chat_messsage`
+-- AUTO_INCREMENT pour la table `chat_message`
 --
-ALTER TABLE `chat_messsage`
+ALTER TABLE `chat_message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `feedback`
+-- AUTO_INCREMENT pour la table `comments`
 --
-ALTER TABLE `feedback`
+ALTER TABLE `comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `feedbackception`
+-- AUTO_INCREMENT pour la table `feedbacks`
 --
-ALTER TABLE `feedbackception`
+ALTER TABLE `feedbacks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `feedback_feedback`
+-- AUTO_INCREMENT pour la table `feedback_comment`
 --
-ALTER TABLE `feedback_feedback`
+ALTER TABLE `feedback_comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `list`
+-- AUTO_INCREMENT pour la table `lists`
 --
-ALTER TABLE `list`
+ALTER TABLE `lists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -461,21 +504,33 @@ ALTER TABLE `signals`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `signal_info`
---
-ALTER TABLE `signal_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `subscribed_user`
 --
 ALTER TABLE `subscribed_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `tracks`
+--
+ALTER TABLE `tracks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `track_feedback`
+--
+ALTER TABLE `track_feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `user_comment`
+--
+ALTER TABLE `user_comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -495,50 +550,27 @@ ALTER TABLE `user_notification`
 --
 
 --
--- Contraintes pour la table `ban_info`
---
-ALTER TABLE `ban_info`
-  ADD CONSTRAINT `id_bann` FOREIGN KEY (`id_ban`) REFERENCES `banned` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_banned` FOREIGN KEY (`id_banned`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_banner` FOREIGN KEY (`id_banner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Contraintes pour la table `chat_info`
 --
 ALTER TABLE `chat_info`
-  ADD CONSTRAINT `id_chatUsers` FOREIGN KEY (`id_chat`) REFERENCES `chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_chatUsers` FOREIGN KEY (`id_chat`) REFERENCES `chats` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_user1` FOREIGN KEY (`id_user1`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_user2` FOREIGN KEY (`id_user2`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `chat_messsage`
+-- Contraintes pour la table `chat_message`
 --
-ALTER TABLE `chat_messsage`
-  ADD CONSTRAINT `id_chatt` FOREIGN KEY (`id_chat`) REFERENCES `chat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ALTER TABLE `chat_message`
+  ADD CONSTRAINT `id_chatt` FOREIGN KEY (`id_chat`) REFERENCES `chats` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_msg` FOREIGN KEY (`id_message`) REFERENCES `messages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_sender` FOREIGN KEY (`id_sender`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `feedback_feedback`
+-- Contraintes pour la table `feedback_comment`
 --
-ALTER TABLE `feedback_feedback`
-  ADD CONSTRAINT `id_newFeedback` FOREIGN KEY (`id_feedback`) REFERENCES `feedbackception` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_originalFeedback` FOREIGN KEY (`id_original`) REFERENCES `feedback` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `list_info`
---
-ALTER TABLE `list_info`
-  ADD CONSTRAINT `id_listMusic` FOREIGN KEY (`id_list`) REFERENCES `list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_userList` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `signal_info`
---
-ALTER TABLE `signal_info`
-  ADD CONSTRAINT `id_feedbackSignaled` FOREIGN KEY (`id_feedback`) REFERENCES `feedback` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_signal` FOREIGN KEY (`id_signal`) REFERENCES `signals` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_signaler` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `feedback_comment`
+  ADD CONSTRAINT `id_newFeedback` FOREIGN KEY (`id_comment`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_originalFeedback` FOREIGN KEY (`id_original`) REFERENCES `feedbacks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `subscribed_user`
@@ -551,7 +583,7 @@ ALTER TABLE `subscribed_user`
 -- Contraintes pour la table `user_feedback`
 --
 ALTER TABLE `user_feedback`
-  ADD CONSTRAINT `id_feedbackUser` FOREIGN KEY (`id_feedback`) REFERENCES `feedback` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_feedbackUser` FOREIGN KEY (`id_feedback`) REFERENCES `feedbacks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_userFeedback` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

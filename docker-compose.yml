@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${db_user}
+      POSTGRES_PASSWORD: ${db_password}
+      POSTGRES_DB: ${db_name}
+    volumes:
+      - ./pproj3.sql:/docker-entrypoint-initdb.d/pproj3.sql
+      - PPROJ3-db-data:/var/lib/postgresql/data
+    networks:
+      - PPROJ3-network
+
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5000:5000"
+    networks:
+      - PPROJ3-network
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    networks:
+      - PPROJ3-network
+    depends_on:
+      - db
+
+volumes:
+  PPROJ3-db-data:
+
+networks:
+  PPROJ3-network

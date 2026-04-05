@@ -4,15 +4,14 @@ services:
     env_file:
       - .env
     environment:
-      POSTGRES_USER: ${db_user}
-      POSTGRES_PASSWORD: ${db_password}
-      POSTGRES_DB: ${db_name}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./pproj3.sql:/docker-entrypoint-initdb.d/pproj3.sql
       - PPROJ3-db-data:/var/lib/postgresql/data
     networks:
       - PPROJ3-network
-
 
   frontend:
     build: ./frontend
@@ -22,6 +21,8 @@ services:
       - PPROJ3-network
     depends_on:
       - backend
+    env_file:
+      - .env
 
   backend:
     build: ./backend
@@ -31,6 +32,8 @@ services:
       - PPROJ3-network
     depends_on:
       - db
+    env_file:
+      - .env
 
 volumes:
   PPROJ3-db-data:

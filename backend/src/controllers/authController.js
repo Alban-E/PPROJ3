@@ -18,8 +18,7 @@ const register = async (req, res) => {
             return res.status(409).json({ message: 'Login already used'})
         }
         
-        const encryptionAmount = 10
-        const hashedPassword = await bcrypt.hash(password, encryptionAmount)
+        const hashedPassword = await bcrypt.hash(password, 10)
         
         const resultInsert = await pool.query(`INSERT INTO users (login, password, username) VALUES ($1, $2, $3) RETURNING id, admin`,[login, hashedPassword, username])
         const user = resultInsert.rows[0] 

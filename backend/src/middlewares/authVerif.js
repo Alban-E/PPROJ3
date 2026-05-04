@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-const authMiddleware = (req, res, next) => { 
+const authenticateToken = (req, res, next) => { 
     try {
         const token = req.cookies.connexionToken
         
@@ -19,4 +19,19 @@ const authMiddleware = (req, res, next) => {
     } 
 }
 
-module.exports = authMiddleware 
+const assertUserIsAdmin = (req, res, next) => {
+    switch (String(req.user.userRole)) {
+        case "user":
+            if (String(req.user.userId) !== String(req.params.id)) {
+                return res.status(401).json({message: "Unauthorized operation"})
+            }
+            break
+        case "admin":
+            break
+        default:
+            return res.status(500).json({message: "Invalid user role"})
+    }
+    next()
+}
+
+module.exports = {authenticateToken, assertUserIsAdmin}

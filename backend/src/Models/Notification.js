@@ -1,0 +1,8 @@
+const { Schema, model } = require('mongoose')
+
+const notificationSchema = new Schema({
+    content: { type: String, required: true, maxlength: 100 },
+    type: { type: String, enum: ['new_message', 'new_subscriber', 'new_track'], required: true }
+})
+
+module.exports = model('Notification', notificationSchema)

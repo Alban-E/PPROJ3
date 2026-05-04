@@ -1,6 +1,4 @@
 const router = require('express').Router()
-const searchTracks = require('../controllers/trackController')
-
-router.get('/searchTracks', searchTracks)
+const {authenticateToken, assertUserIsAdmin} = require('../middlewares/authVerif')
 
 module.exports = router

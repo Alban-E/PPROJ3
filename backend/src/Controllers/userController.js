@@ -1,0 +1,152 @@
+const User = require('../Models/User')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+//#region CRUD
+// CRUD OPERATIONS
+// Create
+const createUser = async (req, res) => {
+    try {
+        const existingUserLogin = await User.findOne({ login: req.body.login })
+        const existingUsername = await User.findOne({ username: req.body.username })    
+        if (existingUserLogin || existingUsername) {
+            return res.status(409).json({message: 'Login or username already used'})
+        }
+
+        const password = req.body.password
+        const hashedPassword = await bcrypt.hash(password,10)
+
+        const user = await User.create({
+            login: req.body.login,
+            password: hashedPassword,
+            oauth_provider: "",
+            oauth_id: "",
+            username: req.body.username,
+        })
+
+        res.status(201).json({
+            message: 'User created',
+            user: { id: user._id, login: user.login, username: user.username }
+    })} catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+// Read
+const getAllUser = async (req, res) => {
+    try {
+        const user = await User.find()
+        
+        if(!user){
+            return res.status(404).json({message: "No user found"})
+        }
+        
+        return res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+const getUserById = async (req, res) => {
+    if ((req.user.userRole === 'admin') || (req.params.id === req.user.userId )){
+        try {
+            const users = await User.findById(req.params.id)
+            
+            if(!users){
+                return res.status(404).json({message: "No user found"})
+            }
+            
+            return res.status(200).json(users)
+        } catch (error) {
+            return res.status(500).json({message: error.message})
+        }
+    }
+    return res.status(401).json({message: "Unauthorized operation"})
+}
+
+// Update
+const updateUserById = async (req, res) => {
+    if ((req.user.userRole === 'admin') || (req.params.id === req.user.userId )){
+        try {
+            const user = await User.findById(req.params.id)
+
+            if (!user) {
+                return res.status(404).json({message: "User not found"})
+            }
+
+            const {login, password, username, avatar_url, bio, is_private, role} = req.body;
+
+            if (login) {
+                user.login = login
+            }
+            if (password) {
+                const hashedPassword = bcrypt.hash(password,10)
+                user.password = hashedPassword
+            }
+            if (username) {
+                user.username = username
+            }
+            if (avatar_url) {
+                user.avatar_url = avatar_url
+            }
+            if (bio) {
+                user.bio = Boolean(bio)
+            }
+            if (is_private) {
+                user.is_private = is_private
+            }
+            if (role && String(role) === "NewAdminRole") {
+                user.role= role
+            }
+
+            await user.save();
+
+            return res.status(200).json({message: "User updated"})
+        } catch (error) {
+            return res.status(500).json({message: error.message})
+        }
+    }
+    return res.status(401).json({message: "Unauthorized operation"})
+}
+
+// Delete
+const deleteUserById = async (req, res) => {
+    if ((req.user.userRole === 'admin') || (req.params.id === req.user.userId )){
+        try {
+            const user = await User.findById(req.params.id)
+            
+            if (!user) {
+                return res.status(404).json({message: "User not found"})
+            }
+
+            await user.deleteOne()
+            return res.status(200).json({message: "User deleted successfully"})
+        } catch (error) {
+            return res.status(500).json({message: error.message})
+        }
+    }
+    return res.status(401).json({message: "Unauthorized operation"})
+}
+
+//#endregion
+
+const login = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email })
+        if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+            return res.status(409).json({message: 'Invalid email or password'})
+        }
+        
+        const token = jwt.sign(
+            { userId: user._id, email: user.email, userRole: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        )
+        
+        return res.status(200).json({ token })
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+
+module.exports = { createUser, getAllUser, getUserById, updateUserById, deleteUserById, login }

@@ -2,7 +2,7 @@ const User = require('../Models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-//#region CRUD
+// #region CRUD
 // CRUD OPERATIONS
 // Create
 const createUser = async (req, res) => {
@@ -24,7 +24,7 @@ const createUser = async (req, res) => {
             username: req.body.username,
             role: "admin"
         })
-        console.log("USER ADMIN CREATED | REMOVE ADMIN DEFAULT ROLE")
+        console.log("USER ADMIN CREATED | TO DO: REMOVE ADMIN DEFAULT ROLE")
         res.status(201).json({
             message: 'User created',
             user: { id: user._id, login: user.login, username: user.username }
@@ -81,7 +81,7 @@ const updateUserById = async (req, res) => {
                 user.login = login
             }
             if (password) {
-                const hashedPassword = bcrypt.hash(password,10)
+                const hashedPassword = await bcrypt.hash(password,10)
                 user.password = hashedPassword
             }
             if (username) {
@@ -96,8 +96,8 @@ const updateUserById = async (req, res) => {
             if (is_private) {
                 user.is_private = is_private
             }
-            if (role && String(role) === "NewAdminRole") {
-                user.role= role
+            if (role) {
+                user.role= String(role) === "NewAdminRole"? "admin" : "user"
             }
 
             await user.save();
@@ -128,7 +128,6 @@ const deleteUserById = async (req, res) => {
     }
     return res.status(401).json({message: "Unauthorized operation"})
 }
-
 //#endregion
 
 const login = async (req, res) => {

@@ -5,8 +5,7 @@ const mongo = require("mongoose")
 const cookieParser = require('cookie-parser')
 
 const userRoutes = require('./src/Routes/userRoutes')
-// const authRoutes = require('./src/routes/authRoutes')
-// const listRoutes = require('./src/routes/listRoutes')
+const listRoutes = require('./src/Routes/listRoutes')
 // const trakcRoutes = require('./src/routes/tracksRoutes')
 
 const app = express()
@@ -25,6 +24,7 @@ app.use(cookieParser())
 app.get('/supify/api/test', (req, res) => res.status(200).json({message: "Test OK"}))
 
 app.use('/supify/api/user', userRoutes)
+app.use('/supify/api/list', userRoutes)
 
 mongo.connect(process.env.MONGODB_URI)
 .then(() => console.log('MongoDB connected'))

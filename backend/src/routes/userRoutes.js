@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const {authenticateToken, assertUserIsAdmin} = require('../Middlewares/authVerif')
-// const {validateBody, userSchema, userUpdateSchema} = require('../Middlewares/ValidateBody')
 const { createUser, getAllUser, getUserById, updateUserById, deleteUserById, login } = require('../Controllers/userController')
 
 //#region CRUD

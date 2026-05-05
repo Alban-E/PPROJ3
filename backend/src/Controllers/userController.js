@@ -22,8 +22,9 @@ const createUser = async (req, res) => {
             oauth_provider: "",
             oauth_id: "",
             username: req.body.username,
+            role: "admin"
         })
-
+        console.log("USER ADMIN CREATED | REMOVE ADMIN DEFAULT ROLE")
         res.status(201).json({
             message: 'User created',
             user: { id: user._id, login: user.login, username: user.username }
@@ -132,7 +133,7 @@ const deleteUserById = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email })
+        const user = await User.findOne({ login: req.body.login })
         if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
             return res.status(409).json({message: 'Invalid email or password'})
         }
@@ -143,7 +144,15 @@ const login = async (req, res) => {
             { expiresIn: '1d' }
         )
         
-        return res.status(200).json({ token })
+        res.cookie('connexionToken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax',
+            maxAge: 24 * 60 * 60 * 1000, // 1 jour
+            path: '/'
+            })
+            
+        return res.status(200).json({message: "Login success" })
     } catch (error) {
         return res.status(500).json({message: error.message})
     }

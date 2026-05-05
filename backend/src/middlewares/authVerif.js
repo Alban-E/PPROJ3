@@ -8,7 +8,7 @@ const authenticateToken = (req, res, next) => {
             return res.status(401).json({message : "Invalid connexion token"})
         }
 
-        const validToken = jwt.verify(token, process.env.jwt_secret)
+        const validToken = jwt.verify(token, process.env.JWT_SECRET)
 
         req.user = validToken
         
@@ -29,7 +29,7 @@ const assertUserIsAdmin = (req, res, next) => {
         case "admin":
             break
         default:
-            return res.status(500).json({message: "Invalid user role"})
+            return res.status(500).json({message: "Invalid user role", user: req.user})
     }
     next()
 }

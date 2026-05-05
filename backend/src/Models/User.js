@@ -9,7 +9,7 @@ const userSchema = new Schema({
     avatar_url: String,
     bio: String,
     is_private: { type: Boolean, default: true },
-    admin: { type: String, enum: ['user', 'administrator'], default: 'user', required: true }
+    role: { type: String, enum: ['user', 'admin'], default: 'user', required: true }
 })
 
 module.exports = model('User', userSchema)

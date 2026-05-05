@@ -2,6 +2,7 @@ require("dotenv").config()
 const cors = require("cors")
 const express = require("express")
 const mongo = require("mongoose")
+const cookieParser = require('cookie-parser')
 
 const userRoutes = require('./src/Routes/userRoutes')
 // const authRoutes = require('./src/routes/authRoutes')
@@ -19,6 +20,7 @@ app.use((req, res, next) =>{
 
 app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
 
 app.get('/supify/api/test', (req, res) => res.status(200).json({message: "Test OK"}))
 

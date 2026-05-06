@@ -21,8 +21,8 @@ router.delete('/:id', authenticateToken, deleteList)
 
 
 //List Info (List content)
-router.post('/:id/track', authenticateToken, addTrackToList)
+router.post('/:idList/track/:idTrack', authenticateToken, addTrackToList)
 
-router.delete('/:id/track/:trackId', authenticateToken, removeTrackFromList)
+router.delete('/:idList/track/:idTrack', authenticateToken, removeTrackFromList)
 
 module.exports = router

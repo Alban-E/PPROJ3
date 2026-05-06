@@ -12,7 +12,7 @@ const createList = async (req, res) => {
         }
 
         const list = await List.create({
-            idList: req.body.listId,
+            idUser: req.user.userId,
             name: req.body.listName,
             private: req.body.private
         })
@@ -119,12 +119,54 @@ const deleteList = async (req, res) => {
 }
 //#endregion
 
-const addTrackToList = async (req, res) => {
+const addTrackToList = async (req, res)=> {
+    try {     
+        const list = await List.findById(req.params.idList)
+        if (!list) {
+            return res.status(404).json({message: "There is no existing list with this id"})
+        }          
 
+        if (list.idUser != req.user.userId || String(req.user.userRole) === "admin") {
+            return req.status(401).json({message: "Unauthorized operation, the user logged is not the owner of the list"})
+        }
+
+        const AlreadyInList = await LisInfo.find({idList: req.params.idList, idTrack: req.params.idTrack})
+
+        if (AlreadyInList) {
+            return res.status(409).json({message: "The list already contains this track"})
+        }
+
+        const listInfo = await ListInfocreate({
+            idList: req.params.idList,
+            idTrack: req.params.idTrack
+        })
+
+        res.status(201).json({message: 'List created', list: list })
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 }
 
 const removeTrackFromList = async (req, res) => {
+    try {     
+        const list = await List.findById(req.params.idList)
+        if (!list) {
+            return res.status(404).json({message: "There is no existing list with this id"})
+        }          
 
+        if (list.idUser != req.user.userId || String(req.user.userRole) === "admin") {
+            return req.status(401).json({message: "Unauthorized operation, the user logged is not the owner of the list"})
+        }
+
+        const trackIsInList = await LisInfo.find({idList: req.params.idList, idTrack: req.params.idTrack})
+        if (trackIsInList) {
+            return res.status(200).json({message: "Track deleted from list"})
+        }
+
+        res.status(404).json({message: "The track is not in the lsit" })
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
 }
 
 module.exports = { createList, getMyLists, getUserPublicLists, getAllLists, updateList, deleteList, addTrackToList, removeTrackFromList }

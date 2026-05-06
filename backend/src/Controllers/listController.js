@@ -12,7 +12,7 @@ const createList = async (req, res) => {
         }
 
         const list = await List.create({
-            idUser: req.user.userId,
+            userId: req.user.userId,
             name: req.body.listName,
             private: req.body.private
         })
@@ -26,7 +26,7 @@ const createList = async (req, res) => {
 // Read
 const getMyLists = async (req, res) => {
     try {
-        const lists = await List.find({idUser: req.user.userId})
+        const lists = await List.find({userId: req.user.userId})
         
         if(!lists){
             return res.status(404).json({message: "No list found"})
@@ -40,7 +40,7 @@ const getMyLists = async (req, res) => {
 
 const getUserPublicLists = async (req, res) => {
     try {
-        const lists = await List.find({idUser: req.params.id, private: false})
+        const lists = await List.find({userId: req.params.id, private: false})
         
         if(!lists){
             return res.status(404).json({message: "No public list found"})
@@ -75,7 +75,7 @@ const updateList = async (req, res) => {
             return res.status(404).json({message: "List not found"})
         }
         
-        if ((list.idUser === req.user.userId) || (req.user.userRole === 'admin')){
+        if ((list.userId === req.user.userId) || (req.user.userRole === 'admin')){
             const {name, private} = req.body;
             
             if (name) {
@@ -107,7 +107,7 @@ const deleteList = async (req, res) => {
             return res.status(404).json({message: "List not found"})
         }
         
-        if ((list.idUser === req.user.userId) || (req.user.userRole === 'admin')){
+        if ((list.userId === req.user.userId) || (req.user.userRole === 'admin')){
             await list.deleteOne()
             return res.status(200).json({message: "List deleted successfully"})
         }
@@ -126,7 +126,7 @@ const addTrackToList = async (req, res)=> {
             return res.status(404).json({message: "There is no existing list with this id"})
         }          
 
-        if (list.idUser != req.user.userId || String(req.user.userRole) === "admin") {
+        if (list.userId != req.user.userId || String(req.user.userRole) === "admin") {
             return req.status(401).json({message: "Unauthorized operation, the user logged is not the owner of the list"})
         }
 
@@ -154,7 +154,7 @@ const removeTrackFromList = async (req, res) => {
             return res.status(404).json({message: "There is no existing list with this id"})
         }          
 
-        if (list.idUser != req.user.userId || String(req.user.userRole) === "admin") {
+        if (list.userId != req.user.userId || String(req.user.userRole) === "admin") {
             return req.status(401).json({message: "Unauthorized operation, the user logged is not the owner of the list"})
         }
 

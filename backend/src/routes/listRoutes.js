@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
-const {createList, getMyLists, getUserPublicLists, getAllLists, updateList, deleteList, addTrackToList, removeTrackFromList} = require('../controllers/listController')
+const {createList, getMyLists, getUserPublicLists, getAllLists, updateList, deleteList, addTrackToList, removeTrackFromList} = require('../Controllers/listController')
 
 //#region CRUD
 // Create

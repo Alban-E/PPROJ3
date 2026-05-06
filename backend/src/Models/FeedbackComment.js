@@ -1,8 +1,9 @@
-const { Schema, model, Types } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const feedbackCommentSchema = new Schema({
-    idOriginal: { type: Types.ObjectId, ref: 'Feedback', required: true },
-    idComment: { type: Types.ObjectId, ref: 'Comment', required: true }
+    comment: { type: String, required: true },
+    originalFeedbackId: { type: Types.ObjectId, ref: 'Feedback', required: true },
+    date: { type: Date, default: Date.now }
 })
 
 module.exports = model('FeedbackComment', feedbackCommentSchema)

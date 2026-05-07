@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser')
 
 const userRoutes = require('./src/Routes/userRoutes')
 const listRoutes = require('./src/Routes/listRoutes')
-// const trakcRoutes = require('./src/routes/tracksRoutes')
+const feedbackRoutes = require('./src/routes/feedbackRoutes')
+const feedbackCommentRoutes = require('./src/routes/feedbackCommentRoutes')
 
 const app = express()
 
@@ -24,7 +25,9 @@ app.use(cookieParser())
 app.get('/supify/api/test', (req, res) => res.status(200).json({message: "Test OK"}))
 
 app.use('/supify/api/user', userRoutes)
-app.use('/supify/api/list', userRoutes)
+app.use('/supify/api/list', listRoutes)
+app.use('/supify/api/feedback', feedbackRoutes)
+app.use('/supify/api/feedbackComment', feedbackCommentRoutes)
 
 mongo.connect(process.env.MONGODB_URI)
 .then(() => console.log('MongoDB connected'))

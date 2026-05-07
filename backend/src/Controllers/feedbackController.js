@@ -1,12 +1,10 @@
 const Feedback = require('../Models/Feedback')
-const TrackFeedback = require('../Models/TrackFeedback')
 
 // #region CRUD
 // CRUD OPERATIONS
 // Create
 const createFeedback = async (req, res) => {
     try {
-        //check si pas de feedback déjà publié par l'user
         const existingFeedback = await UserFeedback.find({trackId: req.params.trackId, userId: req.user.userId})
         if (existingFeedback) {
             return res.status(409).json({message: "The user already leaved a feedback on this track"})

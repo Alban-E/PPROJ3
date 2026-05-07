@@ -1,4 +1,5 @@
 const User = require('../Models/User')
+const List = require('../Models/List')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -25,6 +26,15 @@ const createUser = async (req, res) => {
             role: "admin"
         })
         console.log("USER ADMIN CREATED | TO DO: REMOVE ADMIN DEFAULT ROLE")
+
+        const listsToCreate = [ "A écouter", "Ecoutées", "Aimée" ]
+        for (const name of listsToCreate) {
+            await List.create({
+                userId: user.id,
+                name: name,
+            })
+        }
+
         res.status(201).json({
             message: 'User created',
             user: { id: user._id, login: user.login, username: user.username }
@@ -157,4 +167,14 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { createUser, getAllUser, getUserById, updateUserById, deleteUserById, login }
+const logout = (req, res) => {
+    res.clearCookie('connexionToken', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/'
+    })
+    return res.status(200).json({ message: 'Logged out' })
+}
+
+module.exports = { createUser, getAllUser, getUserById, updateUserById, deleteUserById, login, logout }

@@ -1,5 +1,5 @@
 const List = require('../Models/List')
-const ListInfo = require('../Models/ListInfo')
+const ListInfo = require('../Models/ListTracks')
 
 // #region CRUD
 // CRUD OPERATIONS
@@ -136,7 +136,7 @@ const addTrackToList = async (req, res)=> {
             return res.status(409).json({message: "The list already contains this track"})
         }
 
-        const listInfo = await ListInfocreate({
+        const listTracks = await ListTracks.create({
             idList: req.params.idList,
             idTrack: req.params.idTrack
         })

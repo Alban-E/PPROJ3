@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {authenticateToken, assertUserIsAdmin} = require('../Middlewares/authVerif')
-const { createUser, getAllUser, getUserById, updateUserById, deleteUserById, login } = require('../Controllers/userController')
+const { createUser, getAllUser, getUserById, updateUserById, deleteUserById, login, logout } = require('../Controllers/userController')
 
 //#region CRUD
 // Create
@@ -20,5 +20,7 @@ router.delete('/:id', authenticateToken, deleteUserById)
 //#endregion
 
 router.post('/login', login)
+
+router.post('/logout', authenticateToken, logout)
 
 module.exports = router

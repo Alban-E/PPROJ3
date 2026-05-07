@@ -120,4 +120,4 @@ const deleteFeedback = async (req, res) => {
 }
 //#endregion
 
-module.export = { createFeedback, getMyFeedbacks, getUserFeedbacks, getAllFeedbacks, updateFeedback, deleteFeedback }
+module.exports = { createFeedback, getMyFeedbacks, getUserFeedbacks, getAllFeedbacks, updateFeedback, deleteFeedback }

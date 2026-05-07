@@ -212,4 +212,4 @@ const deleteMessage = async (req, res) => {
 }
 //#endregion
 
-module.export = { createChat, getMyChats, getChatWithUser, getAllChats, deleteChat }
+module.exports = { createChat, getMyChats, getChatWithUser, getAllChats, deleteChat, createMessage, getMessagesFromChat, getMessagesFromUser, GetAllMessages, UpdateMessage, deleteMessage }

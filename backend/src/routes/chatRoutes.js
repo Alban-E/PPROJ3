@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
-const { createChat, getMyChats, getChatWithUser, GetAllChats, updateChat, deleteChat } = require('../Controllers/chatController')
+const { createChat, getMyChats, getChatWithUser, getAllChats, deleteChat, createMessage, getMessagesFromChat, getMessagesFromUser, GetAllMessages, UpdateMessage, deleteMessage } = require('../Controllers/chatController')
 
 //#region General Chat CRUD
 // Create

@@ -108,4 +108,4 @@ const deleteFeedbackComment = async (req, res) => {
 }
 //#endregion
 
-module.export = { createFeedbackComment, getFeedbackCommentByFeedbackId, getUserFeedbackComment, getAllFeedBackComment, updateFeedbackComment, deleteFeedbackComment }
+module.exports = { createFeedbackComment, getFeedbackCommentByFeedbackId, getUserFeedbackComment, getAllFeedBackComment, updateFeedbackComment, deleteFeedbackComment }

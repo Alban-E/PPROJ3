@@ -1,6 +1,8 @@
 const Chat = require('../Models/Chat')
+const ChatMessage = require('../Models/ChatMessage')
+const User = require('../Models/User')
 
-// #region CRUD
+// #region General Chat CRUD
 // CRUD OPERATIONS
 // Create
 const createChat = async (req, res) => {
@@ -10,7 +12,7 @@ const createChat = async (req, res) => {
             { userId1: req.user.userId, userId2: req.params.userId }
         ]})
         if (existingChat) {
-            return res.status(409).json({message: "A chat between you and the otheer user already exist"})
+            return res.status(409).json({message: "A chat between you and the other user already exist"})
         }
 
         const chat = await Chat.create({
@@ -85,6 +87,121 @@ const deleteChat = async (req, res) => {
         
         if ((String(chat.userId1) === String(req.user.userId))  || String(chat.userId2) === String(req.user.userId) || (String(req.user.userRole) === 'admin')){
             await chat.deleteOne()
+            return res.status(200).json({message: "Chat deleted successfully"})
+        }
+        
+        return res.status(401).json({message: "Unauthorized operation"})
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+//#endregion
+
+// #region Chat message CRUD
+// CRUD OPERATIONS
+// Create
+const createMessage = async (req, res) => {
+    try {
+        const existingChat = await Chat.findById(req.params.chatId)
+        if (!existingChat) {
+            return res.status(404).json({message: "No chat found with this id"})
+        }
+
+        const chatMessage = await ChatMessage.create({
+            chatId: req.params.chatId,
+            senderId: req.params.userId,
+            content: req.body.content
+        })
+
+        res.status(201).json({message: 'Chat message created', chat: chatMessage })
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+// Read
+const getMessagesFromChat = async (req, res) => {
+    try {
+        const existingChat = await Chat.findById(req.params.chatId)
+        if (!existingChat) {
+            return res.status(404).json({message: "No chat found with this id"})
+        }
+
+        const messages = await ChatMessage.find({chatId: req.params.chatId})
+        if (!messages) {
+            return res.status(404).json({message: "No message found in this chat"})
+        }
+                
+        return res.status(200).json(messages)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+const getMessagesFromUser = async (req, res) => {
+    try {
+        const existingUser = await User.findById(req.params.userId)
+        if (!existingUser) {
+            return res.status(404).json({message: "No User found"})
+        }
+
+        const messages = await ChatMessage.find({senderId: req.params.userId})
+        if (!messages) {
+            return res.status(404).json({message: "No message found from this user"})
+        }
+                
+        return res.status(200).json(messages)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+const GetAllMessages = async (req, res) => {
+    try {
+        const messages = await ChatMessage.find()
+        
+        if(!messages){
+            return res.status(404).json({message: "No chat messages found"})
+        }
+        
+        return res.status(200).json(messages)
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+
+// Update 
+const UpdateMessage = async (req, res) => {
+    try {
+        const message = await ChatMessage.findById(req.params.messageId)
+        
+        if(!message){
+            return res.status(404).json({message: "No message found"})
+        }
+
+        const content = req.body
+
+        if (content) {
+            message.content = content
+        }
+        
+        return res.status(200).json(message)
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+
+// Delete
+const deleteMessage = async (req, res) => {
+    try {
+        const message = await ChatMessage.findById(req.params.messageId)
+        
+        if(!message){
+            return res.status(404).json({message: "No message found"})
+        }
+        
+        if ((String(message.senderId) === String(req.user.userId)) || (String(req.user.userRole) === 'admin')){
+            await message.deleteOne()
             return res.status(200).json({message: "Chat deleted successfully"})
         }
         

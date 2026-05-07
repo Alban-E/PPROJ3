@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
 const { createChat, getMyChats, getChatWithUser, GetAllChats, updateChat, deleteChat } = require('../Controllers/chatController')
 
-//#region CRUD
+//#region General Chat CRUD
 // Create
 router.post('/:userId', authenticateToken, createChat)
 
@@ -15,5 +15,24 @@ router.get('/', authenticateToken, assertUserIsAdmin, GetAllChats)
 // Delete
 router.delete('/:id', authenticateToken, deleteChat)
 //#endregion
+
+//#region Chat message CRUD
+// Create
+router.post('/:chatId/', authenticateToken, createMessage)
+
+// Read
+router.get('/:chatId', authenticateToken, getMessagesFromChat)
+
+router.get('/:userId', authenticateToken, getMessagesFromUser)
+router.get('/', authenticateToken, assertUserIsAdmin, GetAllMessages)
+
+// Update
+router.put('/:messageId', authenticateToken, UpdateMessage)
+
+// Delete
+router.delete('/:messageId', authenticateToken, deleteMessage)
+//#endregion
+
+
 
 module.exports = router

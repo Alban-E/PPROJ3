@@ -1,9 +1,11 @@
 const { Schema, model, Types } = require('mongoose')
 
 const chatMessageSchema = new Schema({
-    idChat: { type: Types.ObjectId, ref: 'Chat', required: true },
-    idMessage: { type: Types.ObjectId, ref: 'Message', required: true },
-    idSender: { type: Types.ObjectId, ref: 'User', required: true }
+    chatId: { type: Types.ObjectId, ref: 'Chat', required: true },
+    senderId: { type: Types.ObjectId, ref: 'User', required: true },
+    content: { type: String, required: true },
+    Date: { type: Date, default: Date.now }
+
 })
 
 module.exports = model('ChatMessage', chatMessageSchema)

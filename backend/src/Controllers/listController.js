@@ -6,7 +6,7 @@ const ListInfo = require('../Models/ListTracks')
 // Create
 const createList = async (req, res) => {
     try {
-        const listWithSameName = List.findOne({name: req.body.listName})
+        const listWithSameName = List.findOne({name: req.body.listName, userId: req.user.userId})
         if (listWithSameName) {
             return res.status(409).json({message: "A list with the same name already exist"})
         }

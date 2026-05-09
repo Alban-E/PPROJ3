@@ -1,33 +1,35 @@
 const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
-const { createSignal, getSignalByUser, getAllSignals, deleteSignal, createBan, getBanByUser, getAllBans, deleteBans } = require('../Controllers/ModerationController')
+const { createSignal, getSignalByUser, getAllSignals, deleteSignal, createBan, getBanByBanned, getBanByBanner, getAllBans, deleteBans, revokeBan } = require('../Controllers/ModerationController')
 
 //#region Signal CRUD
 // Create
-router.post('/:userId', authenticateToken, createSignal)
+router.post('/signal/:userId', authenticateToken, createSignal)
 
 // Read
-router.get('/:userId', authenticateToken, getSignalByUser)
+router.get('/signal/:userId', authenticateToken, getSignalByUser)
 
-router.get('/', authenticateToken, assertUserIsAdmin, getAllSignals)
+router.get('/signal/', authenticateToken, assertUserIsAdmin, getAllSignals)
 
 // Delete
-router.delete('/:userId', authenticateToken, deleteSignal)
+router.delete('/signal/:userId', authenticateToken, deleteSignal)
 //#endregion
 
 //#region Ban CRUD
 // Create
-router.post('/:userId', authenticateToken, createBan)
+router.post('/ban/:userId', authenticateToken, createBan)
 
 // Read
-router.get('/:userId', authenticateToken, getBanByUser)
+router.get('/ban/banned/:userId', authenticateToken, assertUserIsAdmin, getBanByBanned)
+router.get('/ban/banner/:userId', authenticateToken, assertUserIsAdmin, getBanByBanner)
 
-router.get('/', authenticateToken, assertUserIsAdmin, getAllBans)
+router.get('/ban/', authenticateToken, assertUserIsAdmin, getAllBans)
 
 // Delete
-router.delete('/:userId', authenticateToken, deleteBans)
+router.delete('/ban/:userId', authenticateToken, deleteBans)
 //#endregion
 
+router.put('/ban/revoke/:banId', authenticateToken, revokeBan)
 
 
 module.exports = router

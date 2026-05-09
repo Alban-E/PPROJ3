@@ -1,9 +1,13 @@
 const { Schema, model, Types } = require('mongoose')
 
 const signalSchema = new Schema({
-    userId: { type: Types.ObjectId, ref: 'User', required: true },
-    idFeedback: { type: Types.ObjectId, ref: 'Feedback', required: true },
+    suspectUserID: { type: Types.ObjectId, ref: 'User', required: true },
+    signalerId: { type: Types.ObjectId, ref: 'User', required: true },
+    feedbackId: { type: Types.ObjectId, ref: 'Feedback'},
+    messageId: { type: Types.ObjectId, ref: 'Message'},
     cause: { type: String, required: true }
 })
+
+feedbackSchema.index({ suspectUserID: 1, signalerId: 1 }, { unique: true })
 
 module.exports = model('Signal', signalSchema)

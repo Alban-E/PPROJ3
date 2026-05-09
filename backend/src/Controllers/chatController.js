@@ -185,6 +185,7 @@ const UpdateMessage = async (req, res) => {
             message.content = content
         }
         
+        await message.save()
         return res.status(200).json(message)
     } catch (error) {
         return res.status(500).json({message: error.message})

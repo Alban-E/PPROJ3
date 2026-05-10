@@ -1,9 +1,19 @@
-# PPROJ3
-SUPIFY
+# PPROJ3: SUPIFY
 
-### To launch the front type this in the CLI while being at the root folder
+Launch instructions
 
-```bash
-docker compose up
+1. Clone this repo in your files.
+2. Start the application via docker :
+
+ ```bash
+    docker compose up
 ```
-##
+
+3. Visit the Ip of the frontend and Voila
+
+## Database: Mongo
+
+
+## Backend: Express js
+
+## Frontend: React

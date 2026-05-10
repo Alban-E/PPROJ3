@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
 const notificationSchema = new Schema({
     userId: { type: Types.ObjectId, ref: 'User', required: true },

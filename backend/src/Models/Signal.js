@@ -8,6 +8,6 @@ const signalSchema = new Schema({
     cause: { type: String, required: true }
 })
 
-feedbackSchema.index({ suspectUserID: 1, signalerId: 1 }, { unique: true })
+signalSchema.index({ suspectUserID: 1, signalerId: 1 }, { unique: true })
 
 module.exports = model('Signal', signalSchema)

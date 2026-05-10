@@ -10,7 +10,7 @@ router.post('/:userId', authenticateToken, createChat)
 router.get('/me', authenticateToken, getMyChats)
 router.get('/user/:userId', authenticateToken, getChatWithUser)
 
-router.get('/', authenticateToken, assertUserIsAdmin, GetAllChats)
+router.get('/', authenticateToken, assertUserIsAdmin, getAllChats)
 
 // Delete
 router.delete('/:id', authenticateToken, deleteChat)

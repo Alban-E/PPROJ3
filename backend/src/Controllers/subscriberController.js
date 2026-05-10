@@ -3,7 +3,7 @@ const Subscriber = require('../Models/Subscriber')
 // #region subscriber CRUD
 // CRUD OPERATIONS
 // Create
-const createSubscriber = (req, res) => {
+const createSubscriber = async (req, res) => {
     try {
         const subscriber = await Subscriber.create({
             subscriberId: req.user.userId,
@@ -17,7 +17,7 @@ const createSubscriber = (req, res) => {
 }
 
 // Read
-const getMySubscribers = (req, res) => {
+const getMySubscribers = async (req, res) => {
     try {
         subscribers = await Subscriber.find({ userId: req.user.userId })
 
@@ -31,7 +31,7 @@ const getMySubscribers = (req, res) => {
     }
 }
 
-const getMySubscriptions = (req, res) => {
+const getMySubscriptions = async (req, res) => {
     try {
         subscription = await Subscriber.find({ subscriberId: req.user.userId })
 
@@ -45,7 +45,7 @@ const getMySubscriptions = (req, res) => {
     }
 }
 
-const getSubscriberByUser = (req, res) => {
+const getSubscriberByUser = async (req, res) => {
     try {
         subscribers = await Subscriber.find({ userId: req.params.userId })
 
@@ -59,7 +59,7 @@ const getSubscriberByUser = (req, res) => {
     }
 }
 
-const getUserSubscriptions = (req, res) => {
+const getUserSubscriptions = async (req, res) => {
     try {
         subscription = await Subscriber.find({ subscriberId: req.params.userId })
 
@@ -73,7 +73,7 @@ const getUserSubscriptions = (req, res) => {
     }
 }
 
-const getAllSubscribers = (req, res) => {
+const getAllSubscribers = async (req, res) => {
     try {
         subscribers = await Subscriber.find()
 
@@ -88,7 +88,7 @@ const getAllSubscribers = (req, res) => {
 }
 
 // Delete
-const deleteSubscriber = (req, res) => {
+const deleteSubscriber = async (req, res) => {
     try {
         const subscriber = Subscriber.findById(req.params.subscriberId)
         if(!subscriber){

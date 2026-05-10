@@ -2,7 +2,7 @@ const Notification = require('../Models/Notification')
 // #region notification CRUD
 // CRUD OPERATIONS
 // Create
-const createNotification = (req, res) => {
+const createNotification = async (req, res) => {
     try {
         const notification = await Notification.create({
             userId: req.user.userId,
@@ -17,7 +17,7 @@ const createNotification = (req, res) => {
 }
 
 // Read
-const getMyNotifications = (req, res) => {
+const getMyNotifications = async (req, res) => {
     try {
         const filter = { userId: req.user.userId }
         const { type } = req.query
@@ -36,7 +36,7 @@ const getMyNotifications = (req, res) => {
     }
 }
 
-const getNotificationsByUser = (req, res) => {
+const getNotificationsByUser = async (req, res) => {
     try {
         const filter = { userId: req.params.userId }
         const { type } = req.query
@@ -55,7 +55,7 @@ const getNotificationsByUser = (req, res) => {
     }
 }
 
-const getAllNotification = (req, res) => {
+const getAllNotification = async (req, res) => {
     try {
         const filter = {}
         const { type } = req.query
@@ -75,7 +75,7 @@ const getAllNotification = (req, res) => {
 }
 
 // Delete
-const deleteNotification = (req, res) => {
+const deleteNotification = async (req, res) => {
     try {
         const notification = Notification.findById(req.params.notificationId)
         if(!notification){

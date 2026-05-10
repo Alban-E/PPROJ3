@@ -1,6 +1,5 @@
-const FeedbackComment = require('../Models/Feedback')
+const Feedback = require('../Models/Feedback')
 const FeedbackComment = require('../Models/FeedbackComment')
-const UserFeedbackComment = require('../Models/UserFeedbackComment')
 
 // #region CRUD
 // CRUD OPERATIONS

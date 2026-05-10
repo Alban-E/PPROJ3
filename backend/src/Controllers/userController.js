@@ -1,3 +1,4 @@
+require("dotenv").config()
 const User = require('../Models/User')
 const List = require('../Models/List')
 const bcrypt = require('bcrypt')
@@ -17,15 +18,22 @@ const createUser = async (req, res) => {
         const password = req.body.password
         const hashedPassword = await bcrypt.hash(password,10)
 
-        const user = await User.create({
+
+        const content = {
             login: req.body.login,
             password: hashedPassword,
             oauth_provider: "",
             oauth_id: "",
             username: req.body.username,
-            role: "admin"
-        })
-        console.log("USER ADMIN CREATED | TO DO: REMOVE ADMIN DEFAULT ROLE")
+        }
+
+        if (String(req.query.admin) === process.env.CREATE_ADMIN_ACOUNT)
+        {
+            content.role = "admin"
+            console.log("User Created as admin")
+        }
+
+        const user = await User.create(content)
 
         const listsToCreate = [ "A écouter", "Ecoutées", "Aimée" ]
         for (const name of listsToCreate) {
@@ -37,7 +45,7 @@ const createUser = async (req, res) => {
 
         res.status(201).json({
             message: 'User created',
-            user: { id: user._id, login: user.login, username: user.username }
+            user: { id: user._id, login: user.login, username: user.username, role: user.role }
     })} catch (error) {
         res.status(500).json({message: error.message})
     }

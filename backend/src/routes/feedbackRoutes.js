@@ -4,7 +4,7 @@ const { createFeedback, getMyFeedbacks, getUserFeedbacks, getAllFeedbacks, updat
 
 //#region CRUD
 // Create
-router.post('/:trackId', authenticateToken, createFeedback)
+router.post('/', authenticateToken, createFeedback)
 
 // Read
 router.get('/me', authenticateToken, getMyFeedbacks)
@@ -13,10 +13,10 @@ router.get('/user', authenticateToken, getUserFeedbacks)
 router.get('/', authenticateToken, assertUserIsAdmin, getAllFeedbacks)
 
 // Update
-router.put('/:id', authenticateToken, updateFeedback)
+router.put('/', authenticateToken, updateFeedback)
 
 // Delete
-router.delete('/:id', authenticateToken, deleteFeedback)
+router.delete('/', authenticateToken, deleteFeedback)
 //#endregion
 
 module.exports = router

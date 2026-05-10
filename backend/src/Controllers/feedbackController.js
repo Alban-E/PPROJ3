@@ -5,7 +5,7 @@ const Feedback = require('../Models/Feedback')
 // Create
 const createFeedback = async (req, res) => {
     try {
-        const existingFeedback = await UserFeedback.find({trackId: req.params.trackId, userId: req.user.userId})
+        const existingFeedback = await Feedback.find({trackId: req.query.trackId, userId: req.user.userId})
         if (existingFeedback) {
             return res.status(409).json({message: "The user already leaved a feedback on this track"})
         }
@@ -70,7 +70,7 @@ const getAllFeedbacks = async (req, res) => {
 // Update
 const updateFeedback = async (req, res) => {
     try {
-        const feedback = await Feedback.findById(req.params.id)
+        const feedback = await Feedback.findById(req.query.feedbackId)
         
         if (!feedback) {
             return res.status(404).json({message: "Feedback not found"})
@@ -102,7 +102,7 @@ const updateFeedback = async (req, res) => {
 // Delete
 const deleteFeedback = async (req, res) => {
     try {
-        const feedback = await Feedback.findById(req.params.id)
+        const feedback = await Feedback.findById(req.query.id)
         
         if (!feedback) {
             return res.status(404).json({message: "Feedback not found"})

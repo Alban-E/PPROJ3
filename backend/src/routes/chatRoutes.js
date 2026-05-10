@@ -4,7 +4,7 @@ const { createChat, getMyChats, getChatWithUser, getAllChats, deleteChat, create
 
 //#region General Chat CRUD
 // Create
-router.post('/:userId', authenticateToken, createChat)
+router.post('/', authenticateToken, createChat)
 
 // Read
 router.get('/me', authenticateToken, getMyChats)
@@ -13,17 +13,17 @@ router.get('/user', authenticateToken, getChatWithUser)
 router.get('/', authenticateToken, assertUserIsAdmin, getAllChats)
 
 // Delete
-router.delete('/:id', authenticateToken, deleteChat)
+router.delete('/', authenticateToken, deleteChat)
 //#endregion
 
 //#region Chat message CRUD
 // Create
-router.post('/:chatId/', authenticateToken, createMessage)
+router.post('/message/', authenticateToken, createMessage)
 
 // Read
-router.get('/:chatId/messages', authenticateToken, getMessagesFromChat)
+router.get('/messages', authenticateToken, getMessagesFromChat)
 
-router.get('/messages', authenticateToken, getMessagesFromUser)
+router.get('/messages/user', authenticateToken, getMessagesFromUser)
 router.get('/messages/all', authenticateToken, assertUserIsAdmin, GetAllMessages)
 
 // Update

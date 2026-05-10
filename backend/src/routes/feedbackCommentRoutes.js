@@ -4,19 +4,19 @@ const { createFeedbackComment, getFeedbackCommentByFeedbackId, getUserFeedbackCo
 
 //#region CRUD
 // Create
-router.post('/:feedbackId', authenticateToken, createFeedbackComment)
+router.post('/', authenticateToken, createFeedbackComment)
 
 // Read
-router.get('/:feedbackId', getFeedbackCommentByFeedbackId)
+router.get('/origin', getFeedbackCommentByFeedbackId)
 router.get('/user', getUserFeedbackComment)
 
 router.get('/', authenticateToken, assertUserIsAdmin, getAllFeedBackComment)
 
 // Update
-router.put('/:id', authenticateToken, updateFeedbackComment)
+router.put('/', authenticateToken, updateFeedbackComment)
 
 // Delete
-router.delete('/:id', authenticateToken, deleteFeedbackComment)
+router.delete('/', authenticateToken, deleteFeedbackComment)
 //#endregion
 
 module.exports = router

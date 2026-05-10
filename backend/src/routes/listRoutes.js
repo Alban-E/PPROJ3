@@ -8,15 +8,17 @@ router.post('/', authenticateToken, createList)
 
 // Read
 router.get('/me', authenticateToken, getMyLists)
-router.get('/user/:id', authenticateToken, getUserPublicLists)
+router.get('/user', authenticateToken, getUserPublicLists)
+
+router.get('/user/all', authenticateToken, getUserPublicLists)
 
 router.get('/', authenticateToken, assertUserIsAdmin, getAllLists)
 
 // Update
-router.put('/:id', authenticateToken, updateList)
+router.put('/', authenticateToken, updateList)
 
 // Delete
-router.delete('/:id', authenticateToken, deleteList)
+router.delete('/', authenticateToken, deleteList)
 //#endregion
 
 

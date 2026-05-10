@@ -7,7 +7,7 @@ const FeedbackComment = require('../Models/FeedbackComment')
 const createFeedbackComment = async (req, res) => {
     try {
         const feedbackComment = await FeedbackComment.create({
-            originalFeedbackId: req.params.feedbackId,
+            originalFeedbackId: req.query.feedbackId,
             comment: req.body.comment,
         })
 
@@ -20,7 +20,7 @@ const createFeedbackComment = async (req, res) => {
 // Read
 const getFeedbackCommentByFeedbackId = async (req, res) => {
     try {
-        const feedbackComments = await FeedbackComment.find({originalFeedbackId: req.params.feedbackId})
+        const feedbackComments = await FeedbackComment.find({originalFeedbackId: req.query.feedbackId})
         
         if(!feedbackComments){
             return res.status(404).json({message: "No feedback comment found on this feedback"})
@@ -63,7 +63,7 @@ const getAllFeedBackComment = async (req, res) => {
 // Update
 const updateFeedbackComment = async (req, res) => {
     try {
-        const feedbackComment = await FeedbackComment.findById(req.params.id)
+        const feedbackComment = await FeedbackComment.findById(req.query.feedbackId)
         
         if (!feedbackComment) {
             return res.status(404).json({message: "Feedback comment not found"})
@@ -89,7 +89,7 @@ const updateFeedbackComment = async (req, res) => {
 // Delete
 const deleteFeedbackComment = async (req, res) => {
     try {
-        const feedbackComment = await FeedbackComment.findById(req.params.id)
+        const feedbackComment = await FeedbackComment.findById(req.query.feedbackId)
         
         if (!feedbackComment) {
             return res.status(404).json({message: "Feedback comment not found"})

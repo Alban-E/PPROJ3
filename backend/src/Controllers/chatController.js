@@ -8,8 +8,8 @@ const User = require('../Models/User')
 const createChat = async (req, res) => {
     try {
         const existingChat = await Chat.findOne({$or: [
-            { userId1: req.params.userId, userId2: req.user.userId },
-            { userId1: req.user.userId, userId2: req.params.userId }
+            { userId1: req.query.userId, userId2: req.user.userId },
+            { userId1: req.user.userId, userId2: req.query.userId }
         ]})
         if (existingChat) {
             return res.status(409).json({message: "A chat between you and the other user already exist"})
@@ -17,7 +17,7 @@ const createChat = async (req, res) => {
 
         const chat = await Chat.create({
             userId1: req.user.userId,
-            userId1: req.params.userId,
+            userId2: req.query.userId,
         })
 
         res.status(201).json({message: 'Chat created', chat: chat })
@@ -29,16 +29,16 @@ const createChat = async (req, res) => {
 // Read
 const getMyChats = async (req, res) => {
     try {
-        const existingChat = await Chat.find({$or: [
+        const chat = await Chat.find({$or: [
             { userId1: req.user.userId },
             { userId2: req.user.userId }
         ]})
         
-        if(!chats){
+        if(!chat){
             return res.status(404).json({message: "No chat found between you and others users"})
         }
         
-        return res.status(200).json(chats)
+        return res.status(200).json(chat)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -46,15 +46,15 @@ const getMyChats = async (req, res) => {
 
 const getChatWithUser = async (req, res) => {
     try {
-        const existingChat = await Chat.findOne({$or: [
+        const chat = await Chat.findOne({$or: [
             { userId1: req.query.userId, userId2: req.user.userId },
             { userId1: req.user.userId, userId2: req.query.userId }
         ]})
-        if (!existingChat) {
+        if (!chat) {
             return res.status(404).json({message: "There is no existing chat between you and to other user"})
         }
         
-        return res.status(200).json(chats)
+        return res.status(200).json(chat)
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -74,12 +74,10 @@ const getAllChats = async (req, res) => {
     }
 }
 
-// No update on the chats 
-
 // Delete maybe not needed ?
 const deleteChat = async (req, res) => {
     try {
-        const chat = await Chat.findById(req.params.id)
+        const chat = await Chat.findById(req.query.chatId)
         
         if (!chat) {
             return res.status(404).json({message: "Chat not found"})
@@ -102,13 +100,13 @@ const deleteChat = async (req, res) => {
 // Create
 const createMessage = async (req, res) => {
     try {
-        const existingChat = await Chat.findById(req.params.chatId)
+        const existingChat = await Chat.findById(req.query.chatId)
         if (!existingChat) {
             return res.status(404).json({message: "No chat found with this id"})
         }
 
         const chatMessage = await ChatMessage.create({
-            chatId: req.params.chatId,
+            chatId: req.query.chatId,
             senderId: req.user.userId,
             content: req.body.content
         })
@@ -122,12 +120,12 @@ const createMessage = async (req, res) => {
 // Read
 const getMessagesFromChat = async (req, res) => {
     try {
-        const existingChat = await Chat.findById(req.params.chatId)
+        const existingChat = await Chat.findById(req.query.chatId)
         if (!existingChat) {
             return res.status(404).json({message: "No chat found with this id"})
         }
 
-        const messages = await ChatMessage.find({chatId: req.params.chatId})
+        const messages = await ChatMessage.find({chatId: req.query.chatId})
         if (!messages) {
             return res.status(404).json({message: "No message found in this chat"})
         }
@@ -140,11 +138,6 @@ const getMessagesFromChat = async (req, res) => {
 
 const getMessagesFromUser = async (req, res) => {
     try {
-        const existingUser = await User.findById(req.query.userId)
-        if (!existingUser) {
-            return res.status(404).json({message: "No User found"})
-        }
-
         const messages = await ChatMessage.find({senderId: req.query.userId})
         if (!messages) {
             return res.status(404).json({message: "No message found from this user"})
@@ -179,7 +172,7 @@ const UpdateMessage = async (req, res) => {
             return res.status(404).json({message: "No message found"})
         }
 
-        const content = req.body
+        const { content } = req.body
 
         if (content) {
             message.content = content

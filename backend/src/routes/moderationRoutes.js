@@ -7,17 +7,17 @@ const { createSignal, getSignalByUser, getAllSignals, deleteSignal, createBan, g
 router.post('/signal/:userId', authenticateToken, createSignal)
 
 // Read
-router.get('/signal/:userId', authenticateToken, getSignalByUser)
+router.get('/signal/:userId', authenticateToken, assertUserIsAdmin, getSignalByUser)
 
 router.get('/signal/', authenticateToken, assertUserIsAdmin, getAllSignals)
 
 // Delete
-router.delete('/signal/:userId', authenticateToken, deleteSignal)
+router.delete('/signal/:userId', authenticateToken, assertUserIsAdmin, deleteSignal)
 //#endregion
 
 //#region Ban CRUD
 // Create
-router.post('/ban/:userId', authenticateToken, createBan)
+router.post('/ban/:userId', authenticateToken, assertUserIsAdmin, createBan)
 
 // Read
 router.get('/ban/banned/:userId', authenticateToken, assertUserIsAdmin, getBanByBanned)
@@ -26,10 +26,10 @@ router.get('/ban/banner/:userId', authenticateToken, assertUserIsAdmin, getBanBy
 router.get('/ban/', authenticateToken, assertUserIsAdmin, getAllBans)
 
 // Delete
-router.delete('/ban/:userId', authenticateToken, deleteBans)
+router.delete('/ban/:userId', authenticateToken, assertUserIsAdmin, deleteBans)
 //#endregion
 
-router.put('/ban/revoke/:banId', authenticateToken, revokeBan)
+router.put('/ban/revoke/:banId', authenticateToken, assertUserIsAdmin, revokeBan)
 
 
 module.exports = router

@@ -6,16 +6,16 @@ const Ban = require('../Models/Ban')
 // Create
 const createSignal = async (req, res) => {
     try {
-        const alreadySignal = Signal.find({ suspectUserID: req.body.suspectUserID, signalerId: req.user.userId })
+        const alreadySignal = Signal.find({ suspectUserID: req.query.suspectUserID, signalerId: req.user.userId })
         if(alreadySignal){
             return res.status(409).json({message: "You already signaled this user"})
         }
 
         const signal = await Signal.create({
-            suspectUserID: req.body.suspectUserID,
+            suspectUserID: req.query.suspectUserID,
             signalerId: req.user.userId,
-            feedbakcId: req.body.feedbakcId,
-            messageId: req.body.messageId,
+            feedbakcId: req.query.feedbakcId,
+            messageId: req.query.messageId,
             cause: req.body.cause
         })
         
@@ -28,7 +28,7 @@ const createSignal = async (req, res) => {
 // Read
 const getSignalByUser = async (req, res) => {
     try {
-        const signal = await Signal.find({ suspectUserID: req.body.suspectUserID })
+        const signal = await Signal.find({ suspectUserID: req.query.suspectUserID })
         if(!signal){
             return res.status(404).json({message: "This user has not been signaled (yet?)"})
         }
@@ -55,7 +55,7 @@ const getAllSignals = async (req, res) => {
 // Delete
 const deleteSignal = async (req, res) => {
     try {
-        const signal = await Signal.findById(req.body.signalId)
+        const signal = await Signal.findById(req.query.signalId)
         if(!signal){
             return res.status(404).json({message: "No signal found"})
         }
@@ -73,9 +73,9 @@ const deleteSignal = async (req, res) => {
 const createBan = async (req, res) => {
     try {
         const ban = await Ban.create({
-            bannedId: req.body.suspectUserID,
+            bannedId: req.query.suspectUserID,
             bannerId: req.user.userId,
-            banReason: req.body.feedbakcId,
+            banReason: req.body.banReason,
         })
         
         return res.status(201).json({message: "User successfully banned"})
@@ -87,7 +87,7 @@ const createBan = async (req, res) => {
 // Read
 const getBanByBanned = async (req, res) => {
     try {
-        const ban = await Ban.find({ bannedId: req.params.userId })
+        const ban = await Ban.find({ bannedId: req.query.userId })
         if(!ban){
             return res.status(404).json({message: "This user has not been banned (yet?)"})
         }
@@ -100,7 +100,7 @@ const getBanByBanned = async (req, res) => {
 
 const getBanByBanner = async (req, res) => {
     try {
-        const ban = await Ban.find({ bannerId: req.params.userId })
+        const ban = await Ban.find({ bannerId: req.query.userId })
         if(!ban){
             return res.status(404).json({message: "This user has not banned anyone (yet?)"})
         }
@@ -124,9 +124,9 @@ const getAllBans = async (req, res) => {
 }
 
 // Delete
-const deleteBans = async (req, res) => {
+const deleteBan = async (req, res) => {
     try {
-        const bans = await Ban.find()
+        const ban = await Ban.findById(req.query.banId)
         if(!bans){
             return res.status(404).json({message: "No ban found"})
         }
@@ -140,7 +140,7 @@ const deleteBans = async (req, res) => {
 
 const revokeBan = async (req, res) => {
         try {
-        const ban = await Ban.findById(req.params.banId)
+        const ban = await Ban.findById(req.query.banId)
         if(!bans){
             return res.status(404).json({message: "No ban found"})
         }
@@ -154,4 +154,4 @@ const revokeBan = async (req, res) => {
     }    
 }
 
-module.exports = { createSignal, getSignalByUser, getAllSignals, deleteSignal, createBan, getBanByBanned, getBanByBanner, getAllBans, deleteBans, revokeBan }
+module.exports = { createSignal, getSignalByUser, getAllSignals, deleteSignal, createBan, getBanByBanned, getBanByBanner, getAllBans, deleteBan, revokeBan }

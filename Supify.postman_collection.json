@@ -1,0 +1,1778 @@
+{
+  "info": {
+    "_postman_id": "b579427e-c164-48a9-9c97-21126afcc979",
+    "name": "Supify",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51925018",
+    "_collection_link": "https://go.postman.co/collection/51925018-b579427e-c164-48a9-9c97-21126afcc979?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"test\",\r\n    \"password\": \"password\",\r\n    \"username\": \"test\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"testAdmin\",\r\n    \"password\": \"password\",\r\n    \"username\": \"testAdmin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/register?admin=password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "register"
+              ],
+              "query": [
+                {
+                  "key": "admin",
+                  "value": "password"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"testAdmin\",\r\n    \"password\": \"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"test\",\r\n    \"password\": \"password\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all users",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/69fa5b15b851504f9efbcb51",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "69fa5b15b851504f9efbcb51"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"Rominette\",\r\n    \"password\": \"Rominette\",\r\n    \"username\": \"Rominette\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/69fa5b15b851504f9efbcb51",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "69fa5b15b851504f9efbcb51"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"test\",\r\n    \"password\": \"password\",\r\n    \"username\": \"test\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/69fa5b15b851504f9efbcb51",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "69fa5b15b851504f9efbcb51"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Lists",
+      "item": [
+        {
+          "name": "Create List",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"login\": \"testAdmin\",\r\n    \"password\": \"password\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/?listName=Test",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "listName",
+                  "value": "Test"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get my lists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user public lists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/user/userId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "user",
+                "userId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all lists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/userId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "userId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateList",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"listName\": \"test rename\",\r\n    \"private\": \"false\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/listId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "listId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete list",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/listId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "listId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add track to list",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/listId/track?trackId=zejhfkdsjvg",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "listId",
+                "track"
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "zejhfkdsjvg"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remove track from list",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/listid/track?trackId=azefds",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "listid",
+                "track"
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "azefds"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Feedback",
+      "item": [
+        {
+          "name": "create feedback",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rating\":\"1\",\r\n    \"comment\":\"klehzjgdfsvhbjk ziosdhbhj  zefdshvbhjesdnbjhdxbc hjvberzjkbvkjea raezasd\",\r\n    \"liked\":\"true\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/trackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "trackId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my feedback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get user feedback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/user?userId=QSDFGHJNBVCV",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "QSDFGHJNBVCV"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all feedback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update feedback",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rating\": \"3\",\r\n    \"comment\": \"Lorem ipsum\",\r\n    \"liked\": \"true\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/feedbackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "feedbackId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete feedback",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/feedbackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "feedbackId"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "FeedbackComment",
+      "item": [
+        {
+          "name": "create feedback comment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"comment\": \"zejskfdbb aezhjsd c hnjhfdcx hjdfcbvhjfd jnj b hjdfc hjnfdc jhfd khj\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "comment",
+                "feedbackId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get feedback comment by feedback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "comment",
+                "feedbackId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get feedback comment by user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/comment/user?userId=zefdknsjbhj",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "comment",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "zefdknsjbhj"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all feedback comment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/comment/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "comment",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update feedback comment",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"comment\": \"MODIFICATION: zejskfdbb aezhjsd c hnjhfdcx hjdfcbvhjfd jnj b hjdfc hjnfdc jhfd khj\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "comment",
+                "feedbackId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete feedback comment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "feedback",
+                "comment",
+                "feedbackId"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Chats",
+          "item": [
+            {
+              "name": "create chat with user",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"login\": \"testAdmin\",\r\n    \"password\": \"password\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/userId",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "userId"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get my chats",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/me",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "me"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get chat with user",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/user?userId=efhsdv",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "user"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "efhsdv"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all chats",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete chat",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/chatId",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "chatId"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Messages",
+          "item": [
+            {
+              "name": "create chat message",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"content\": \"Content of the message with a user\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/chatId/",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "chatId",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get message in chat",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/chatId/messages",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "chatId",
+                    "messages"
+                  ],
+                  "query": [
+                    {
+                      "key": "",
+                      "value": null,
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get messages from user",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/message?userId=rzeasd",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "message"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "rzeasd"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all messages",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/messages/all",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "messages",
+                    "all"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update message",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/message?messageId=ezafds",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "message"
+                  ],
+                  "query": [
+                    {
+                      "key": "messageId",
+                      "value": "ezafds"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete message",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/chat/message?messageId=rzeasd",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "chat",
+                    "message"
+                  ],
+                  "query": [
+                    {
+                      "key": "messageId",
+                      "value": "rzeasd"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "moderation",
+      "item": [
+        {
+          "name": "signal",
+          "item": [
+            {
+              "name": "create signal",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"cause\": \"Il a été pas gentil\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/signal?suspectUdserId=ezsdfqf&feedbackId=zerfds",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "signal"
+                  ],
+                  "query": [
+                    {
+                      "key": "suspectUdserId",
+                      "value": "ezsdfqf"
+                    },
+                    {
+                      "key": "feedbackId",
+                      "value": "zerfds"
+                    },
+                    {
+                      "key": "messageId",
+                      "value": "azesd",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get signal by user",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/signaled?suspectUserID=zeazefds",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "signaled"
+                  ],
+                  "query": [
+                    {
+                      "key": "suspectUserID",
+                      "value": "zeazefds"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all signal",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/signal",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "signal"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete signal",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/signal?signalId=ezlsfdhbv",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "signal"
+                  ],
+                  "query": [
+                    {
+                      "key": "signalId",
+                      "value": "ezlsfdhbv"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Bans",
+          "item": [
+            {
+              "name": "create ban",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"banReason\": \"Il a vraiment pas été gentil avec ses camarades\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/ban?suspectUserID=azesd",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "ban"
+                  ],
+                  "query": [
+                    {
+                      "key": "suspectUserID",
+                      "value": "azesd"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get ban by banned",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/banned?userId=zeazefds",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "banned"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "zeazefds"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get ban by banner",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/banner?userId=zkeljgkhdsvb",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "banner"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "zkeljgkhdsvb"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all bans",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/bans",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "bans"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete ban",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/ban?banId=ezlsfdhbv",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "ban"
+                  ],
+                  "query": [
+                    {
+                      "key": "banId",
+                      "value": "ezlsfdhbv"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Revoke Ban",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/supify/api/moderation/ban/revoke?banId=ezlsfdhbv",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "supify",
+                    "api",
+                    "moderation",
+                    "ban",
+                    "revoke"
+                  ],
+                  "query": [
+                    {
+                      "key": "banId",
+                      "value": "ezlsfdhbv"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "notification",
+      "item": [
+        {
+          "name": "create notification",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"content\": \"Nouvelle notification\",\r\n    \"type\": \"new_subscriber\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/notifications/?userId=ezhjdbs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "notifications",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "ezhjdbs"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my notifications",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/notifications/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "notifications",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get notification by user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/notifications/user?userId=ezhjdbs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "notifications",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "ezhjdbs"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all notifications",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/notifications/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "notifications",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete notification",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/notifications/?notificationId=zeiougifhdsvh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "notifications",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "notificationId",
+                  "value": "zeiougifhdsvh"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "subscribers",
+      "item": [
+        {
+          "name": "create subscriber",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscribers/?userId=iezufghjsdv",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscribers",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "iezufghjsdv"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my subscribers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscribers/me/subscribers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscribers",
+                "me",
+                "subscribers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscriber/me/subscriptions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscriber",
+                "me",
+                "subscriptions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get subscriber by user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscribers/subscribers?userId=iezufghjsdv",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscribers",
+                "subscribers"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "iezufghjsdv"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get subscriptions by user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscribers/subscriptions?userId=iezufghjsdv",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscribers",
+                "subscriptions"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "iezufghjsdv"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all subscribers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscribers/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscribers",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete Subscriber",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/subscribers/?subscriberId=egrf",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "subscribers",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "subscriberId",
+                  "value": "egrf"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/supify/api/test",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "supify",
+            "api",
+            "test"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

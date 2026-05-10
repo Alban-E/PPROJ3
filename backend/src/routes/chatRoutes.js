@@ -8,7 +8,7 @@ router.post('/:userId', authenticateToken, createChat)
 
 // Read
 router.get('/me', authenticateToken, getMyChats)
-router.get('/user/:userId', authenticateToken, getChatWithUser)
+router.get('/user', authenticateToken, getChatWithUser)
 
 router.get('/', authenticateToken, assertUserIsAdmin, getAllChats)
 
@@ -21,16 +21,16 @@ router.delete('/:id', authenticateToken, deleteChat)
 router.post('/:chatId/', authenticateToken, createMessage)
 
 // Read
-router.get('/:chatId', authenticateToken, getMessagesFromChat)
+router.get('/:chatId/messages', authenticateToken, getMessagesFromChat)
 
-router.get('/:userId', authenticateToken, getMessagesFromUser)
-router.get('/', authenticateToken, assertUserIsAdmin, GetAllMessages)
+router.get('/messages', authenticateToken, getMessagesFromUser)
+router.get('/messages/all', authenticateToken, assertUserIsAdmin, GetAllMessages)
 
 // Update
-router.put('/:messageId', authenticateToken, UpdateMessage)
+router.put('/message', authenticateToken, UpdateMessage)
 
 // Delete
-router.delete('/:messageId', authenticateToken, deleteMessage)
+router.delete('/message', authenticateToken, deleteMessage)
 //#endregion
 
 

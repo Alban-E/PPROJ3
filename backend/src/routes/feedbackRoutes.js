@@ -8,7 +8,7 @@ router.post('/:trackId', authenticateToken, createFeedback)
 
 // Read
 router.get('/me', authenticateToken, getMyFeedbacks)
-router.get('/user/:userId', authenticateToken, getUserFeedbacks)
+router.get('/user', authenticateToken, getUserFeedbacks)
 
 router.get('/', authenticateToken, assertUserIsAdmin, getAllFeedbacks)
 

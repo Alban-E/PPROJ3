@@ -41,7 +41,7 @@ const getMyFeedbacks = async (req, res) => {
 
 const getUserFeedbacks = async (req, res) => {
     try {
-        const feedbacks = await Feedback.find({userId: req.params.userId})
+        const feedbacks = await Feedback.find({userId: req.query.userId})
         
         if(!feedbacks){
             return res.status(404).json({message: "No feedback found from the user"})

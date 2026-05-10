@@ -7,7 +7,7 @@ const createSubscriber = async (req, res) => {
     try {
         const subscriber = await Subscriber.create({
             subscriberId: req.user.userId,
-            userId: req.params.userId,
+            userId: req.query.userId,
         })
         
         return res.status(201).json({message: "Subscriber created successfuly", subscriber: subscriber})
@@ -47,7 +47,7 @@ const getMySubscriptions = async (req, res) => {
 
 const getSubscriberByUser = async (req, res) => {
     try {
-        subscribers = await Subscriber.find({ userId: req.params.userId })
+        subscribers = await Subscriber.find({ userId: req.query.userId })
 
         if(!subscribers){
             return res.status(404).json({message: "No subscribers found"})
@@ -61,7 +61,7 @@ const getSubscriberByUser = async (req, res) => {
 
 const getUserSubscriptions = async (req, res) => {
     try {
-        subscription = await Subscriber.find({ subscriberId: req.params.userId })
+        subscription = await Subscriber.find({ subscriberId: req.query.userId })
 
         if(!subscribers){
             return res.status(404).json({message: "No subscribers found"})
@@ -90,7 +90,7 @@ const getAllSubscribers = async (req, res) => {
 // Delete
 const deleteSubscriber = async (req, res) => {
     try {
-        const subscriber = Subscriber.findById(req.params.subscriberId)
+        const subscriber = Subscriber.findById(req.query.subscriberId)
         if(!subscriber){
             return res.status(404).json({message: "No subscriber found"})
         }

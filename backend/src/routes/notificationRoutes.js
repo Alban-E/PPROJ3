@@ -11,12 +11,12 @@ router.post('/', authenticateToken, createNotification)
 router.get('/me', authenticateToken, getNotificationsByUser)
 
 // Can filter by type in the query params
-router.get('/:userId', authenticateToken, assertUserIsAdmin, getNotificationsByUser)
+router.get('/user', authenticateToken, assertUserIsAdmin, getNotificationsByUser)
 // Can filter by type in the query params
 router.get('/', authenticateToken, assertUserIsAdmin, getAllNotification)
 
 // Delete
-router.delete('/:notificationId', authenticateToken, deleteNotification)
+router.delete('/', authenticateToken, deleteNotification)
 //#endregion
 
 

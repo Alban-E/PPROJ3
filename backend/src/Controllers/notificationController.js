@@ -5,7 +5,7 @@ const Notification = require('../Models/Notification')
 const createNotification = async (req, res) => {
     try {
         const notification = await Notification.create({
-            userId: req.user.userId,
+            userId: req.query.userId,
             content: req.body.content,
             type: req.body.type
         })
@@ -38,7 +38,7 @@ const getMyNotifications = async (req, res) => {
 
 const getNotificationsByUser = async (req, res) => {
     try {
-        const filter = { userId: req.params.userId }
+        const filter = { userId: req.query.userId }
         const { type } = req.query
         if (type){
             filter.type = type
@@ -77,7 +77,7 @@ const getAllNotification = async (req, res) => {
 // Delete
 const deleteNotification = async (req, res) => {
     try {
-        const notification = Notification.findById(req.params.notificationId)
+        const notification = Notification.findById(req.query.notificationId)
         if(!notification){
             return res.status(404).json({message: "No notification found"})
         }

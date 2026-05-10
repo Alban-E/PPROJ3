@@ -33,7 +33,7 @@ app.get('/supify/api/test', (req, res) => res.status(200).json({message: "Test O
 app.use('/supify/api/user', userRoutes)
 app.use('/supify/api/list', listRoutes)
 app.use('/supify/api/feedback', feedbackRoutes)
-app.use('/supify/api/feedbackComment', feedbackCommentRoutes)
+app.use('/supify/api/feedback/comment', feedbackCommentRoutes)
 app.use('/supify/api/chat', chatRoutes)
 app.use('/supify/api/moderation', moderationRoutes)
 app.use('/supify/api/notifications', notificationRoutes)

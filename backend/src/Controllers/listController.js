@@ -6,15 +6,14 @@ const ListInfo = require('../Models/ListTracks')
 // Create
 const createList = async (req, res) => {
     try {
-        const listWithSameName = List.findOne({name: req.body.listName, userId: req.user.userId})
+        const listWithSameName = List.findOne({name: req.query.listName, userId: req.user.userId})
         if (listWithSameName) {
             return res.status(409).json({message: "A list with the same name already exist"})
         }
 
         const list = await List.create({
             userId: req.user.userId,
-            name: req.body.listName,
-            private: req.body.private
+            name: req.query.listName,
         })
 
         res.status(201).json({message: 'List created', list: list })
@@ -76,12 +75,12 @@ const updateList = async (req, res) => {
         }
         
         if ((list.userId === req.user.userId) || (req.user.userRole === 'admin')){
-            const {name, private} = req.body;
+            const {listName, private} = req.body;
             
-            if (name) {
-                const existingName = await List.find({name: name})
+            if (listName) {
+                const existingName = await List.find({name: listName})
                 if (!existingName) {
-                    list.name = name
+                    list.name = listName
                 }
             }
             if (private) {
@@ -121,7 +120,7 @@ const deleteList = async (req, res) => {
 
 const addTrackToList = async (req, res)=> {
     try {     
-        const list = await List.findById(req.params.idList)
+        const list = await List.findById(req.params.listId)
         if (!list) {
             return res.status(404).json({message: "There is no existing list with this id"})
         }          
@@ -130,15 +129,15 @@ const addTrackToList = async (req, res)=> {
             return req.status(401).json({message: "Unauthorized operation, the user logged is not the owner of the list"})
         }
 
-        const AlreadyInList = await LisInfo.find({idList: req.params.idList, idTrack: req.params.idTrack})
+        const AlreadyInList = await LisInfo.find({listId: req.params.listId, trackId: req.query.trackId})
 
         if (AlreadyInList) {
             return res.status(409).json({message: "The list already contains this track"})
         }
 
         const listTracks = await ListTracks.create({
-            idList: req.params.idList,
-            idTrack: req.params.idTrack
+            listId: req.params.listId,
+            trackId: req.query.trackId
         })
 
         res.status(201).json({message: 'List created', list: list })
@@ -149,7 +148,7 @@ const addTrackToList = async (req, res)=> {
 
 const removeTrackFromList = async (req, res) => {
     try {     
-        const list = await List.findById(req.params.idList)
+        const list = await List.findById(req.params.listId)
         if (!list) {
             return res.status(404).json({message: "There is no existing list with this id"})
         }          
@@ -158,8 +157,9 @@ const removeTrackFromList = async (req, res) => {
             return req.status(401).json({message: "Unauthorized operation, the user logged is not the owner of the list"})
         }
 
-        const trackIsInList = await LisInfo.find({idList: req.params.idList, idTrack: req.params.idTrack})
+        const trackIsInList = await LisInfo.find({listId: req.params.listId, trackId: req.query.trackId})
         if (trackIsInList) {
+            await trackIsInList.deleteOne()
             return res.status(200).json({message: "Track deleted from list"})
         }
 

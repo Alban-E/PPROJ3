@@ -4,19 +4,19 @@ const { createSubscriber, getMySubscribers, getMySubscriptions, getSubscriberByU
 
 //#region subscriber CRUD
 // Create
-router.post('/:userId', authenticateToken, createSubscriber)
+router.post('/', authenticateToken, createSubscriber)
 
 // Read
 router.get('/me/subscribers', authenticateToken, getMySubscribers)
 router.get('/me/subscriptions', authenticateToken, getMySubscriptions)
 
-router.get('/:userId/subscribers', authenticateToken, getSubscriberByUser)
-router.get('/:userId/subscriptions', authenticateToken, getSubscriberByUser)
+router.get('/subscribers', authenticateToken, getSubscriberByUser)
+router.get('/subscriptions', authenticateToken, getSubscriberByUser)
 
 router.get('/', authenticateToken, getAllSubscribers)
 
 // Delete
-router.delete('/:subscriberId', authenticateToken, deleteSubscriber)
+router.delete('/', authenticateToken, deleteSubscriber)
 //#endregion
 
 

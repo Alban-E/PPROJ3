@@ -4,7 +4,7 @@ const {createList, getMyLists, getUserPublicLists, getAllLists, updateList, dele
 
 //#region CRUD
 // Create
-router.post('', authenticateToken, createList)
+router.post('/', authenticateToken, createList)
 
 // Read
 router.get('/me', authenticateToken, getMyLists)
@@ -21,8 +21,8 @@ router.delete('/:id', authenticateToken, deleteList)
 
 
 //List Info (List content)
-router.post('/:idList/track/:idTrack', authenticateToken, addTrackToList)
+router.post('/:listId/track', authenticateToken, addTrackToList)
 
-router.delete('/:idList/track/:idTrack', authenticateToken, removeTrackFromList)
+router.delete('/:listId/track', authenticateToken, removeTrackFromList)
 
 module.exports = router

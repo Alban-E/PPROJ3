@@ -34,7 +34,7 @@ const getFeedbackCommentByFeedbackId = async (req, res) => {
 
 const getUserFeedbackComment = async (req, res) => {
     try {
-        const feedbackComments = await FeedbackComment.find({userId: req.params.userId})
+        const feedbackComments = await FeedbackComment.find({userId: req.query.userId})
         
         if(!feedbackComments){
             return res.status(404).json({message: "No feedback comment found from the user"})
@@ -70,7 +70,7 @@ const updateFeedbackComment = async (req, res) => {
         }
         
         if ((feedbackComment.userId === req.user.userId) || (req.user.userRole === 'admin')){
-            const comment = req.body;
+            const { comment } = req.body;
             
             if (comment) {
                 feedbackComment.comment = comment

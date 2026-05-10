@@ -47,8 +47,8 @@ const getMyChats = async (req, res) => {
 const getChatWithUser = async (req, res) => {
     try {
         const existingChat = await Chat.findOne({$or: [
-            { userId1: req.params.userId, userId2: req.user.userId },
-            { userId1: req.user.userId, userId2: req.params.userId }
+            { userId1: req.query.userId, userId2: req.user.userId },
+            { userId1: req.user.userId, userId2: req.query.userId }
         ]})
         if (!existingChat) {
             return res.status(404).json({message: "There is no existing chat between you and to other user"})
@@ -109,7 +109,7 @@ const createMessage = async (req, res) => {
 
         const chatMessage = await ChatMessage.create({
             chatId: req.params.chatId,
-            senderId: req.params.userId,
+            senderId: req.user.userId,
             content: req.body.content
         })
 
@@ -140,12 +140,12 @@ const getMessagesFromChat = async (req, res) => {
 
 const getMessagesFromUser = async (req, res) => {
     try {
-        const existingUser = await User.findById(req.params.userId)
+        const existingUser = await User.findById(req.query.userId)
         if (!existingUser) {
             return res.status(404).json({message: "No User found"})
         }
 
-        const messages = await ChatMessage.find({senderId: req.params.userId})
+        const messages = await ChatMessage.find({senderId: req.query.userId})
         if (!messages) {
             return res.status(404).json({message: "No message found from this user"})
         }
@@ -173,7 +173,7 @@ const GetAllMessages = async (req, res) => {
 // Update 
 const UpdateMessage = async (req, res) => {
     try {
-        const message = await ChatMessage.findById(req.params.messageId)
+        const message = await ChatMessage.findById(req.query.messageId)
         
         if(!message){
             return res.status(404).json({message: "No message found"})
@@ -195,7 +195,7 @@ const UpdateMessage = async (req, res) => {
 // Delete
 const deleteMessage = async (req, res) => {
     try {
-        const message = await ChatMessage.findById(req.params.messageId)
+        const message = await ChatMessage.findById(req.query.messageId)
         
         if(!message){
             return res.status(404).json({message: "No message found"})

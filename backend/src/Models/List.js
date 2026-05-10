@@ -7,6 +7,6 @@ const listSchema = new Schema({
     creationDate: { type: Date, default: Date.now }
 })
 
-listSchema.index({ userId: 1, nameId: 1 }, { unique: true })
+listSchema.index({ userId: 1, name: 1 }, { unique: true })
 
 module.exports = model('List', listSchema)

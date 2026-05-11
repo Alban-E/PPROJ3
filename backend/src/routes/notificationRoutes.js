@@ -8,7 +8,7 @@ router.post('/', authenticateToken, createNotification)
 
 // Read
 // Can filter by type in the query params
-router.get('/me', authenticateToken, getNotificationsByUser)
+router.get('/me', authenticateToken, getMyNotifications)
 
 // Can filter by type in the query params
 router.get('/user', authenticateToken, assertUserIsAdmin, getNotificationsByUser)

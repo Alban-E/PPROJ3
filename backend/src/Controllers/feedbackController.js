@@ -5,7 +5,7 @@ const Feedback = require('../Models/Feedback')
 // Create
 const createFeedback = async (req, res) => {
     try {
-        const existingFeedback = await Feedback.find({trackId: req.query.trackId, userId: req.user.userId})
+        const existingFeedback = await Feedback.findOne({trackId: req.query.trackId, userId: req.user.userId})
         if (existingFeedback) {
             return res.status(409).json({message: "The user already leaved a feedback on this track"})
         }
@@ -14,7 +14,7 @@ const createFeedback = async (req, res) => {
             rating: req.body.rating,
             comment: req.body.comment,
             liked: req.body.liked,
-            trackId: req.params.trackId,
+            trackId: req.query.trackId,
             userId: req.user.userId
         })
 

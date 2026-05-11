@@ -19,7 +19,7 @@ const createSubscriber = async (req, res) => {
 // Read
 const getMySubscribers = async (req, res) => {
     try {
-        subscribers = await Subscriber.find({ userId: req.user.userId })
+        const subscribers = await Subscriber.find({ userId: req.user.userId })
 
         if(!subscribers){
             return res.status(404).json({message: "No subscribers found"})
@@ -33,13 +33,13 @@ const getMySubscribers = async (req, res) => {
 
 const getMySubscriptions = async (req, res) => {
     try {
-        subscription = await Subscriber.find({ subscriberId: req.user.userId })
+        const subscriptions = await Subscriber.find({ subscriberId: req.user.userId })
 
-        if(!subscribers){
-            return res.status(404).json({message: "No subscribers found"})
+        if(!subscriptions){
+            return res.status(404).json({message: "No subscription found"})
         }
 
-        return res.status(200).json({subscribers})
+        return res.status(200).json({subscription: subscriptions})
     } catch (error) {
         return res.status(500).json({message: error.message})
     }
@@ -47,10 +47,10 @@ const getMySubscriptions = async (req, res) => {
 
 const getSubscriberByUser = async (req, res) => {
     try {
-        subscribers = await Subscriber.find({ userId: req.query.userId })
+        const subscribers = await Subscriber.find({ userId: req.query.userId })
 
         if(!subscribers){
-            return res.status(404).json({message: "No subscribers found"})
+            return res.status(404).json({message: "No subscriber found"})
         }
 
         return res.status(200).json({subscribers})
@@ -59,15 +59,15 @@ const getSubscriberByUser = async (req, res) => {
     }
 }
 
-const getUserSubscriptions = async (req, res) => {
+const getSubscriptionsByUser = async (req, res) => {
     try {
-        subscription = await Subscriber.find({ subscriberId: req.query.userId })
+        const subscriptions = await Subscriber.find({ subscriberId: req.query.userId })
 
-        if(!subscribers){
-            return res.status(404).json({message: "No subscribers found"})
+        if(!subscriptions){
+            return res.status(404).json({message: "No subscription found"})
         }
 
-        return res.status(200).json({subscribers})
+        return res.status(200).json({subscription: subscriptions})
     } catch (error) {
         return res.status(500).json({message: error.message})
     }
@@ -95,6 +95,7 @@ const deleteSubscriber = async (req, res) => {
             return res.status(404).json({message: "No subscriber found"})
         }
 
+        await subscriber.deleteOne()
         return res.status(200).json({message: "Subscriber Successfully deleted"})
     } catch (error) {
         return res.status(500).json({message: error.message})
@@ -102,4 +103,4 @@ const deleteSubscriber = async (req, res) => {
 }
 //#endregion
 
-module.exports = { createSubscriber, getMySubscribers, getMySubscriptions, getSubscriberByUser, getAllSubscribers, deleteSubscriber }
+module.exports = { createSubscriber, getMySubscribers, getMySubscriptions, getSubscriberByUser, getSubscriptionsByUser, getAllSubscribers, deleteSubscriber }

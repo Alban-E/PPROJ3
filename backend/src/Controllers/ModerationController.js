@@ -6,13 +6,13 @@ const Ban = require('../Models/Ban')
 // Create
 const createSignal = async (req, res) => {
     try {
-        const alreadySignal = Signal.find({ suspectUserID: req.query.suspectUserID, signalerId: req.user.userId })
+        const alreadySignal = await Signal.findOne({ suspectUserId: req.query.suspectUserId, signalerId: req.user.userId })
         if(alreadySignal){
             return res.status(409).json({message: "You already signaled this user"})
         }
 
         const signal = await Signal.create({
-            suspectUserID: req.query.suspectUserID,
+            suspectUserId: req.query.suspectUserId,
             signalerId: req.user.userId,
             feedbakcId: req.query.feedbakcId,
             messageId: req.query.messageId,
@@ -28,7 +28,7 @@ const createSignal = async (req, res) => {
 // Read
 const getSignalByUser = async (req, res) => {
     try {
-        const signal = await Signal.find({ suspectUserID: req.query.suspectUserID })
+        const signal = await Signal.find({ suspectUserId: req.query.suspectUserId })
         if(!signal){
             return res.status(404).json({message: "This user has not been signaled (yet?)"})
         }
@@ -60,6 +60,7 @@ const deleteSignal = async (req, res) => {
             return res.status(404).json({message: "No signal found"})
         }
 
+        await signal.deleteOne()
         return res.status(200).json({message: "Signal Successfully deleted"})
     } catch (error) {
         return res.status(500).json({message: error.message})
@@ -73,7 +74,7 @@ const deleteSignal = async (req, res) => {
 const createBan = async (req, res) => {
     try {
         const ban = await Ban.create({
-            bannedId: req.query.suspectUserID,
+            bannedId: req.query.suspectUserId,
             bannerId: req.user.userId,
             banReason: req.body.banReason,
         })
@@ -127,11 +128,12 @@ const getAllBans = async (req, res) => {
 const deleteBan = async (req, res) => {
     try {
         const ban = await Ban.findById(req.query.banId)
-        if(!bans){
+        if(!ban){
             return res.status(404).json({message: "No ban found"})
         }
-
-        return res.status(200).json({bans: bans})
+        
+        await ban.deleteOne()
+        return res.status(200).json({message: "Ban successfully deleted"})
     } catch (error) {
         return res.status(500).json({message: error.message})
     }    
@@ -141,14 +143,14 @@ const deleteBan = async (req, res) => {
 const revokeBan = async (req, res) => {
         try {
         const ban = await Ban.findById(req.query.banId)
-        if(!bans){
+        if(!ban){
             return res.status(404).json({message: "No ban found"})
         }
         
         ban.active = false
         
         await ban.save()
-        return res.status(200).json({message: "Ban successfully revoked", bans: bans})
+        return res.status(200).json({message: "Ban successfully revoked", ban: ban})
     } catch (error) {
         return res.status(500).json({message: error.message})
     }    

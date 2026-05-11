@@ -187,7 +187,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/user/69fa5b15b851504f9efbcb51",
+              "raw": "http://localhost:8080/supify/api/user/6a0102803e39efcac1e1660e",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -197,7 +197,7 @@
                 "supify",
                 "api",
                 "user",
-                "69fa5b15b851504f9efbcb51"
+                "6a0102803e39efcac1e1660e"
               ]
             }
           },
@@ -210,7 +210,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"login\": \"Rominette\",\r\n    \"password\": \"Rominette\",\r\n    \"username\": \"Rominette\"\r\n}",
+              "raw": "{\r\n    \"login\": \"test\",\r\n    \"password\": \"password\",\r\n    \"username\": \"test\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -218,7 +218,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/user/69fa5b15b851504f9efbcb51",
+              "raw": "http://localhost:8080/supify/api/user/6a0102803e39efcac1e1660e",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -228,7 +228,7 @@
                 "supify",
                 "api",
                 "user",
-                "69fa5b15b851504f9efbcb51"
+                "6a0102803e39efcac1e1660e"
               ]
             }
           },
@@ -249,7 +249,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/user/69fa5b15b851504f9efbcb51",
+              "raw": "http://localhost:8080/supify/api/user/6a01031d3e39efcac1e16616",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -259,7 +259,7 @@
                 "supify",
                 "api",
                 "user",
-                "69fa5b15b851504f9efbcb51"
+                "6a01031d3e39efcac1e16616"
               ]
             }
           },
@@ -330,7 +330,35 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/list/user/userId",
+              "raw": "http://localhost:8080/supify/api/list/user?userId=6a0104708a6d5373f75b3250",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "list",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "6a0104708a6d5373f75b3250"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all user lists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/list/user/all?userId=6a0104708a6d5373f75b3250",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -341,19 +369,25 @@
                 "api",
                 "list",
                 "user",
-                "userId"
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "6a0104708a6d5373f75b3250"
+                }
               ]
             }
           },
           "response": []
         },
         {
-          "name": "Get all lists",
+          "name": "get all lists",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/list/userId",
+              "raw": "http://localhost:8080/supify/api/list/",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -363,7 +397,7 @@
                 "supify",
                 "api",
                 "list",
-                "userId"
+                ""
               ]
             }
           },
@@ -376,7 +410,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"listName\": \"test rename\",\r\n    \"private\": \"false\"\r\n}",
+              "raw": "{\r\n    \"listName\": \"Rename test\",\r\n    \"private\": \"false\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -384,7 +418,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/list/listId",
+              "raw": "http://localhost:8080/supify/api/list?listId=6a01057ea6ba99d32db2823a",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -393,8 +427,13 @@
               "path": [
                 "supify",
                 "api",
-                "list",
-                "listId"
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "listId",
+                  "value": "6a01057ea6ba99d32db2823a"
+                }
               ]
             }
           },
@@ -406,7 +445,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/list/listId",
+              "raw": "http://localhost:8080/supify/api/list/?listId=6a01057ea6ba99d32db2823a",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -416,64 +455,12 @@
                 "supify",
                 "api",
                 "list",
-                "listId"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "add track to list",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/list/listId/track?trackId=zejhfkdsjvg",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "list",
-                "listId",
-                "track"
+                ""
               ],
               "query": [
                 {
-                  "key": "trackId",
-                  "value": "zejhfkdsjvg"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "remove track from list",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/list/listid/track?trackId=azefds",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "list",
-                "listid",
-                "track"
-              ],
-              "query": [
-                {
-                  "key": "trackId",
-                  "value": "azefds"
+                  "key": "listId",
+                  "value": "6a01057ea6ba99d32db2823a"
                 }
               ]
             }
@@ -500,7 +487,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/trackId",
+              "raw": "http://localhost:8080/supify/api/feedback/?trackId=6a024ee9517805fea95e118f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -510,7 +497,13 @@
                 "supify",
                 "api",
                 "feedback",
-                "trackId"
+                ""
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "6a024ee9517805fea95e118f"
+                }
               ]
             }
           },
@@ -544,7 +537,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/user?userId=QSDFGHJNBVCV",
+              "raw": "http://localhost:8080/supify/api/feedback/user?userId=6a01046e8a6d5373f75b324c",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -559,7 +552,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "QSDFGHJNBVCV"
+                  "value": "6a01046e8a6d5373f75b324c"
                 }
               ]
             }
@@ -603,7 +596,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/feedbackId",
+              "raw": "http://localhost:8080/supify/api/feedback/?feedbackId=",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -613,7 +606,13 @@
                 "supify",
                 "api",
                 "feedback",
-                "feedbackId"
+                ""
+              ],
+              "query": [
+                {
+                  "key": "feedbackId",
+                  "value": ""
+                }
               ]
             }
           },
@@ -624,8 +623,12 @@
           "request": {
             "method": "DELETE",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rating\": \"3\",\r\n    \"comment\": \"Lorem ipsum\",\r\n    \"liked\": \"true\"\r\n}"
+            },
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/feedbackId",
+              "raw": "http://localhost:8080/supify/api/feedback/?feedbackId=",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -635,7 +638,13 @@
                 "supify",
                 "api",
                 "feedback",
-                "feedbackId"
+                ""
+              ],
+              "query": [
+                {
+                  "key": "feedbackId",
+                  "value": ""
+                }
               ]
             }
           },
@@ -661,7 +670,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "raw": "http://localhost:8080/supify/api/feedback/comment/?feedbackId=azertyuiop",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -672,7 +681,13 @@
                 "api",
                 "feedback",
                 "comment",
-                "feedbackId"
+                ""
+              ],
+              "query": [
+                {
+                  "key": "feedbackId",
+                  "value": "azertyuiop"
+                }
               ]
             }
           },
@@ -684,7 +699,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "raw": "http://localhost:8080/supify/api/feedback/comment/origin?feedbackId=azertyuiop",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -695,7 +710,13 @@
                 "api",
                 "feedback",
                 "comment",
-                "feedbackId"
+                "origin"
+              ],
+              "query": [
+                {
+                  "key": "feedbackId",
+                  "value": "azertyuiop"
+                }
               ]
             }
           },
@@ -707,7 +728,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/comment/user?userId=zefdknsjbhj",
+              "raw": "http://localhost:8080/supify/api/feedback/comment/user?userId=6a0104708a6d5373f75b3250",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -723,7 +744,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "zefdknsjbhj"
+                  "value": "6a0104708a6d5373f75b3250"
                 }
               ]
             }
@@ -768,7 +789,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "raw": "http://localhost:8080/supify/api/feedback/comment/?feedbackId=azertyuiop",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -779,7 +800,13 @@
                 "api",
                 "feedback",
                 "comment",
-                "feedbackId"
+                ""
+              ],
+              "query": [
+                {
+                  "key": "feedbackId",
+                  "value": "azertyuiop"
+                }
               ]
             }
           },
@@ -790,8 +817,12 @@
           "request": {
             "method": "DELETE",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"comment\": \"zejskfdbb aezhjsd c hnjhfdcx hjdfcbvhjfd jnj b hjdfc hjnfdc jhfd khj\"\r\n}"
+            },
             "url": {
-              "raw": "http://localhost:8080/supify/api/feedback/comment/feedbackId",
+              "raw": "http://localhost:8080/supify/api/feedback/comment/?feedbackId=azertyuiop",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -802,7 +833,13 @@
                 "api",
                 "feedback",
                 "comment",
-                "feedbackId"
+                ""
+              ],
+              "query": [
+                {
+                  "key": "feedbackId",
+                  "value": "azertyuiop"
+                }
               ]
             }
           },
@@ -826,7 +863,7 @@
                   "raw": "{\r\n    \"login\": \"testAdmin\",\r\n    \"password\": \"password\"\r\n}"
                 },
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/userId",
+                  "raw": "http://localhost:8080/supify/api/chat/?userId=6a01046e8a6d5373f75b324c",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -836,7 +873,13 @@
                     "supify",
                     "api",
                     "chat",
-                    "userId"
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "6a01046e8a6d5373f75b324c"
+                    }
                   ]
                 }
               },
@@ -870,7 +913,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/user?userId=efhsdv",
+                  "raw": "http://localhost:8080/supify/api/chat/user?userId=6a01046e8a6d5373f75b324c",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -885,7 +928,7 @@
                   "query": [
                     {
                       "key": "userId",
-                      "value": "efhsdv"
+                      "value": "6a01046e8a6d5373f75b324c"
                     }
                   ]
                 }
@@ -920,7 +963,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/chatId",
+                  "raw": "http://localhost:8080/supify/api/chat/?chatId=6a010fa9653ccd8e20cef6ff",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -930,7 +973,13 @@
                     "supify",
                     "api",
                     "chat",
-                    "chatId"
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "6a010fa9653ccd8e20cef6ff"
+                    }
                   ]
                 }
               },
@@ -956,7 +1005,7 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/chatId/",
+                  "raw": "http://localhost:8080/supify/api/chat/message/?chatId=6a0110c1f7fac923c2312c96",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -966,20 +1015,26 @@
                     "supify",
                     "api",
                     "chat",
-                    "chatId",
+                    "message",
                     ""
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "6a0110c1f7fac923c2312c96"
+                    }
                   ]
                 }
               },
               "response": []
             },
             {
-              "name": "get message in chat",
+              "name": "get message from chat",
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/chatId/messages",
+                  "raw": "http://localhost:8080/supify/api/chat/messages?chatId=6a0110c1f7fac923c2312c96",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -989,15 +1044,12 @@
                     "supify",
                     "api",
                     "chat",
-                    "chatId",
                     "messages"
                   ],
                   "query": [
                     {
-                      "key": "",
-                      "value": null,
-                      "type": "text",
-                      "disabled": true
+                      "key": "chatId",
+                      "value": "6a0110c1f7fac923c2312c96"
                     }
                   ]
                 }
@@ -1010,7 +1062,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/message?userId=rzeasd",
+                  "raw": "http://localhost:8080/supify/api/chat/messages/user?userId=6a010c245839e7d22a3fee59",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1020,12 +1072,13 @@
                     "supify",
                     "api",
                     "chat",
-                    "message"
+                    "messages",
+                    "user"
                   ],
                   "query": [
                     {
                       "key": "userId",
-                      "value": "rzeasd"
+                      "value": "6a010c245839e7d22a3fee59"
                     }
                   ]
                 }
@@ -1060,8 +1113,17 @@
               "request": {
                 "method": "PUT",
                 "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"content\": \"New message content\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/message?messageId=ezafds",
+                  "raw": "http://localhost:8080/supify/api/chat/message?messageId=6a01127da5dd8146900162a8",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1076,7 +1138,7 @@
                   "query": [
                     {
                       "key": "messageId",
-                      "value": "ezafds"
+                      "value": "6a01127da5dd8146900162a8"
                     }
                   ]
                 }
@@ -1089,7 +1151,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/chat/message?messageId=rzeasd",
+                  "raw": "http://localhost:8080/supify/api/chat/message?messageId=6a011393c1f35731077644a4",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1104,7 +1166,7 @@
                   "query": [
                     {
                       "key": "messageId",
-                      "value": "rzeasd"
+                      "value": "6a011393c1f35731077644a4"
                     }
                   ]
                 }
@@ -1136,7 +1198,7 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/signal?suspectUdserId=ezsdfqf&feedbackId=zerfds",
+                  "raw": "http://localhost:8080/supify/api/moderation/signal?suspectUserId=6a010c215839e7d22a3fee55&feedbackId=6a0255817b185c27b53a40ac",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1150,12 +1212,12 @@
                   ],
                   "query": [
                     {
-                      "key": "suspectUdserId",
-                      "value": "ezsdfqf"
+                      "key": "suspectUserId",
+                      "value": "6a010c215839e7d22a3fee55"
                     },
                     {
                       "key": "feedbackId",
-                      "value": "zerfds"
+                      "value": "6a0255817b185c27b53a40ac"
                     },
                     {
                       "key": "messageId",
@@ -1173,7 +1235,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/signaled?suspectUserID=zeazefds",
+                  "raw": "http://localhost:8080/supify/api/moderation/signaled?suspectUserId=6a010c215839e7d22a3fee55",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1187,8 +1249,8 @@
                   ],
                   "query": [
                     {
-                      "key": "suspectUserID",
-                      "value": "zeazefds"
+                      "key": "suspectUserId",
+                      "value": "6a010c215839e7d22a3fee55"
                     }
                   ]
                 }
@@ -1223,7 +1285,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/signal?signalId=ezlsfdhbv",
+                  "raw": "http://localhost:8080/supify/api/moderation/signal?signalId=6a02566d635535a4243f03f2",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1238,7 +1300,7 @@
                   "query": [
                     {
                       "key": "signalId",
-                      "value": "ezlsfdhbv"
+                      "value": "6a02566d635535a4243f03f2"
                     }
                   ]
                 }
@@ -1265,7 +1327,7 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/ban?suspectUserID=azesd",
+                  "raw": "http://localhost:8080/supify/api/moderation/ban?suspectUserId=6a010c215839e7d22a3fee55",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1279,8 +1341,8 @@
                   ],
                   "query": [
                     {
-                      "key": "suspectUserID",
-                      "value": "azesd"
+                      "key": "suspectUserId",
+                      "value": "6a010c215839e7d22a3fee55"
                     }
                   ]
                 }
@@ -1293,7 +1355,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/banned?userId=zeazefds",
+                  "raw": "http://localhost:8080/supify/api/moderation/banned?userId=6a010c215839e7d22a3fee55",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1308,7 +1370,7 @@
                   "query": [
                     {
                       "key": "userId",
-                      "value": "zeazefds"
+                      "value": "6a010c215839e7d22a3fee55"
                     }
                   ]
                 }
@@ -1321,7 +1383,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/banner?userId=zkeljgkhdsvb",
+                  "raw": "http://localhost:8080/supify/api/moderation/banner?userId=6a010c245839e7d22a3fee59",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1336,7 +1398,7 @@
                   "query": [
                     {
                       "key": "userId",
-                      "value": "zkeljgkhdsvb"
+                      "value": "6a010c245839e7d22a3fee59"
                     }
                   ]
                 }
@@ -1371,7 +1433,7 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/ban?banId=ezlsfdhbv",
+                  "raw": "http://localhost:8080/supify/api/moderation/ban?banId=6a02576ae795481b47031412",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1386,7 +1448,7 @@
                   "query": [
                     {
                       "key": "banId",
-                      "value": "ezlsfdhbv"
+                      "value": "6a02576ae795481b47031412"
                     }
                   ]
                 }
@@ -1399,7 +1461,7 @@
                 "method": "PUT",
                 "header": [],
                 "url": {
-                  "raw": "http://localhost:8080/supify/api/moderation/ban/revoke?banId=ezlsfdhbv",
+                  "raw": "http://localhost:8080/supify/api/moderation/ban/revoke?banId=6a02576ae795481b47031412",
                   "protocol": "http",
                   "host": [
                     "localhost"
@@ -1415,7 +1477,7 @@
                   "query": [
                     {
                       "key": "banId",
-                      "value": "ezlsfdhbv"
+                      "value": "6a02576ae795481b47031412"
                     }
                   ]
                 }
@@ -1444,7 +1506,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/notifications/?userId=ezhjdbs",
+              "raw": "http://localhost:8080/supify/api/notifications/?userId=6a010c245839e7d22a3fee59",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1459,7 +1521,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "ezhjdbs"
+                  "value": "6a010c245839e7d22a3fee59"
                 }
               ]
             }
@@ -1494,7 +1556,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/notifications/user?userId=ezhjdbs",
+              "raw": "http://localhost:8080/supify/api/notifications/user?userId=6a010c245839e7d22a3fee59",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1509,7 +1571,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "ezhjdbs"
+                  "value": "6a010c245839e7d22a3fee59"
                 }
               ]
             }
@@ -1544,7 +1606,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/notifications/?notificationId=zeiougifhdsvh",
+              "raw": "http://localhost:8080/supify/api/notifications/?notificationId=6a0258451628ff371a006c57",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1559,7 +1621,7 @@
               "query": [
                 {
                   "key": "notificationId",
-                  "value": "zeiougifhdsvh"
+                  "value": "6a0258451628ff371a006c57"
                 }
               ]
             }
@@ -1577,7 +1639,7 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscribers/?userId=iezufghjsdv",
+              "raw": "http://localhost:8080/supify/api/subscribers/?userId=6a010c215839e7d22a3fee55",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1592,7 +1654,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "iezufghjsdv"
+                  "value": "6a010c215839e7d22a3fee55"
                 }
               ]
             }
@@ -1628,7 +1690,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscriber/me/subscriptions",
+              "raw": "http://localhost:8080/supify/api/subscribers/me/subscriptions",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1637,7 +1699,7 @@
               "path": [
                 "supify",
                 "api",
-                "subscriber",
+                "subscribers",
                 "me",
                 "subscriptions"
               ]
@@ -1651,7 +1713,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscribers/subscribers?userId=iezufghjsdv",
+              "raw": "http://localhost:8080/supify/api/subscribers/subscribers?userId=6a010c215839e7d22a3fee55",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1666,7 +1728,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "iezufghjsdv"
+                  "value": "6a010c215839e7d22a3fee55"
                 }
               ]
             }
@@ -1679,7 +1741,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscribers/subscriptions?userId=iezufghjsdv",
+              "raw": "http://localhost:8080/supify/api/subscribers/subscriptions?userId=6a010c245839e7d22a3fee59",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1694,7 +1756,7 @@
               "query": [
                 {
                   "key": "userId",
-                  "value": "iezufghjsdv"
+                  "value": "6a010c245839e7d22a3fee59"
                 }
               ]
             }
@@ -1729,7 +1791,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscribers/?subscriberId=egrf",
+              "raw": "http://localhost:8080/supify/api/subscribers/?subscriberId=6a0258c9a5ef57e1415c0dc7",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1744,7 +1806,269 @@
               "query": [
                 {
                   "key": "subscriberId",
-                  "value": "egrf"
+                  "value": "6a0258c9a5ef57e1415c0dc7"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tracks",
+      "item": [
+        {
+          "name": "Create track",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"Rap god\",\r\n    \"releaseDate\":\"10/11/2012\",\r\n    \"apiId\":\"1\",\r\n    \"imageUrl\":\"\",\r\n    \"artist\":\"Eminem\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get track by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/id?trackId=6a024e2c517805fea95e118e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                "id"
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "6a024e2c517805fea95e118e"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get tracks by artist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/artist?artist=Eminem",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                "artist"
+              ],
+              "query": [
+                {
+                  "key": "artist",
+                  "value": "Eminem"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get tracks by name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/name?name=Rap god",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                "name"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Rap god"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all tracks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete track",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/?trackId=6a024e2c517805fea95e118e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "6a024e2c517805fea95e118e"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get tracks from list",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/list?listId=6a010c245839e7d22a3fee5a",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "listId",
+                  "value": "6a010c245839e7d22a3fee5a"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add track to list",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/list?trackId=6a024ee9517805fea95e118f&listId=6a010c245839e7d22a3fee5c",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "6a024ee9517805fea95e118f"
+                },
+                {
+                  "key": "listId",
+                  "value": "6a010c245839e7d22a3fee5c"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remove track from list",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/track/list?trackId=6a024ee9517805fea95e118f&listId=6a010c245839e7d22a3fee5a",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "track",
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "trackId",
+                  "value": "6a024ee9517805fea95e118f"
+                },
+                {
+                  "key": "listId",
+                  "value": "6a010c245839e7d22a3fee5a"
                 }
               ]
             }

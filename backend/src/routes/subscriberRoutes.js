@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
-const { createSubscriber, getMySubscribers, getMySubscriptions, getSubscriberByUser, getAllSubscribers, deleteSubscriber } = require('../Controllers/subscriberController')
+const { createSubscriber, getMySubscribers, getMySubscriptions, getSubscriberByUser, getSubscriptionsByUser, getAllSubscribers, deleteSubscriber } = require('../Controllers/subscriberController')
 
 //#region subscriber CRUD
 // Create
@@ -11,7 +11,7 @@ router.get('/me/subscribers', authenticateToken, getMySubscribers)
 router.get('/me/subscriptions', authenticateToken, getMySubscriptions)
 
 router.get('/subscribers', authenticateToken, getSubscriberByUser)
-router.get('/subscriptions', authenticateToken, getSubscriberByUser)
+router.get('/subscriptions', authenticateToken, getSubscriptionsByUser)
 
 router.get('/', authenticateToken, getAllSubscribers)
 

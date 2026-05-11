@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
-const {createList, getMyLists, getUserPublicLists, getAllLists, updateList, deleteList, addTrackToList, removeTrackFromList} = require('../Controllers/listController')
+const {createList, getMyLists, getUserPublicLists, getAllLists, updateList, deleteList } = require('../Controllers/listController')
 
 //#region CRUD
 // Create
@@ -22,9 +22,5 @@ router.delete('/', authenticateToken, deleteList)
 //#endregion
 
 
-//List Info (List content)
-router.post('/:listId/track', authenticateToken, addTrackToList)
-
-router.delete('/:listId/track', authenticateToken, removeTrackFromList)
 
 module.exports = router

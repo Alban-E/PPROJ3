@@ -13,7 +13,7 @@ const chatRoutes = require('./src/Routes/chatRoutes')
 const moderationRoutes = require('./src/Routes/moderationRoutes')
 const notificationRoutes = require('./src/Routes/notificationRoutes')
 const subscriberRoutes = require('./src/Routes/subscriberRoutes')
-// Tracks
+const trackRoutes = require('./src/Routes/trackRoutes')
 
 const app = express()
 
@@ -38,6 +38,7 @@ app.use('/supify/api/chat', chatRoutes)
 app.use('/supify/api/moderation', moderationRoutes)
 app.use('/supify/api/notifications', notificationRoutes)
 app.use('/supify/api/subscribers', subscriberRoutes)
+app.use('/supify/api/track', trackRoutes)
 
 mongo.connect(process.env.MONGODB_URI)
 .then(() => console.log('MongoDB connected'))

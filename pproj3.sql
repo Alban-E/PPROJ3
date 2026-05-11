@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS tracks (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  release_date DATE,
-  api_id VARCHAR(100) NOT NULL,
-  image_url VARCHAR(255),
+  releaseDate DATE,
+  apiId VARCHAR(100) NOT NULL,
+  imageUrl VARCHAR(255),
   listeners INT NOT NULL,
   artist VARCHAR(50) NOT NULL
 );

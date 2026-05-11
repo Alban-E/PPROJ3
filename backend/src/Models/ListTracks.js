@@ -5,4 +5,4 @@ const listTracksSchema = new Schema({
     trackId: { type: String, required: true }
 })
 
-module.exports = model('ListInfo', listTracksSchema)
+module.exports = model('ListTrack', listTracksSchema)

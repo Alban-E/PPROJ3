@@ -3,6 +3,7 @@ const cors = require("cors")
 const express = require("express")
 const mongo = require("mongoose")
 const cookieParser = require('cookie-parser')
+const { searchTracks } = require('./src/Services/lastfmServices')
 
 // Routes
 const userRoutes = require('./src/Routes/userRoutes')
@@ -14,6 +15,8 @@ const moderationRoutes = require('./src/Routes/moderationRoutes')
 const notificationRoutes = require('./src/Routes/notificationRoutes')
 const subscriberRoutes = require('./src/Routes/subscriberRoutes')
 const trackRoutes = require('./src/Routes/trackRoutes')
+
+const lastFmRoutes = require('./src/Routes/lastFmroutes') 
 
 const app = express()
 
@@ -39,6 +42,8 @@ app.use('/supify/api/moderation', moderationRoutes)
 app.use('/supify/api/notifications', notificationRoutes)
 app.use('/supify/api/subscribers', subscriberRoutes)
 app.use('/supify/api/track', trackRoutes)
+
+app.use('/supify/api/search', lastFmRoutes)
 
 mongo.connect(process.env.MONGODB_URI)
 .then(() => console.log('MongoDB connected'))

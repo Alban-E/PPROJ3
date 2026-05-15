@@ -3,7 +3,7 @@ import './navBar.css'
 
 export default function Navbar() {
   return (
-    <nav style={{flex:1}}>
+    <nav className='navbar' style={{flex:1}}>
       <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}>Accueil </NavLink>
       <NavLink to="/Details" className={({ isActive }) => isActive ? 'active' : ''}>Details </NavLink>
       <NavLink to="/Lists" className={({ isActive }) => isActive ? 'active' : ''}>Lists </NavLink>

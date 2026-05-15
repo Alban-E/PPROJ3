@@ -9,12 +9,14 @@ import Feed from './pages/feed.jsx'
 import Profile from './pages/profile.jsx'
 import Temp from './pages/Temp.jsx'
 import NotFound from './pages/notFound.jsx'
+import Register from './components/auth/register.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -22,7 +24,7 @@ function App() {
         <Route path='/Lists' element={<Lists />} />
         <Route path='/Feed' element={<Feed />} />
         <Route path='/Profile' element={<Profile />} />
-        <Route path='/Temp' element={<Temp />} />
+        <Route path='/Register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

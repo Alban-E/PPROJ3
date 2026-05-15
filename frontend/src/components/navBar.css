@@ -1,5 +1,36 @@
-.active{
-    color: red;
-    font-size: large;
-    font-weight: bold;
+/* navBar.css */
+.navbar {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: #111;
+  border-bottom: 1px solid #222;
+  font-family: system-ui, sans-serif;
+}
+
+.navbar a {
+  color: #bbb;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.navbar a.active {
+  color: #ff4d4d;
+  font-weight: 700;
+}
+
+/* Responsive (mobile) */
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }

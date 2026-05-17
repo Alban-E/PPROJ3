@@ -22,21 +22,21 @@ export default function Register() {
         <form className={styles.form} onSubmit={handleRegister}>
             <div>
                 <p>email: </p>
-                <input placeholder="email@example.com" value={email} onChange={newEmail => setEmail(newEmail.target.value)} />
+                <input placeholder="email@example.com" type="email" value={email} onChange={newEmail => setEmail(newEmail.target.value)} required />
             </div>
             <div>
                 <p>username</p>
-                <input placeholder='username' value={username} onChange={newUsername => setUsername(newUsername.target.value)} />
+                <input placeholder='username' value={username} onChange={newUsername => setUsername(newUsername.target.value)} required />
             </div>
             <div>
                 <p>login</p>
-                <input placeholder="login" value={login} onChange={newLogin => setLogin(newLogin.target.value)} />
+                <input placeholder="login" value={login} onChange={newLogin => setLogin(newLogin.target.value)} required />
             </div>
             <div>
                 <p>password</p>
-                <input placeholder="password" value={password} onChange={newPassword => setPassword(newPassword.target.value)} />
+                <input placeholder="password" type="password" value={password} onChange={newPassword => setPassword(newPassword.target.value)} required />
             </div>
-            <button>Register</button>
+            <input type="submit" content="Register" />
         </form>
     )
 }

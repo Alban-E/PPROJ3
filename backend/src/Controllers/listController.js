@@ -133,4 +133,4 @@ const deleteList = async (req, res) => {
 //#endregion
 
 
-module.exports = { createList, getMyLists, getUserPublicLists, getAllLists, updateList, deleteList }
+module.exports = { createList, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList }

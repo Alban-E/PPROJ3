@@ -10,8 +10,8 @@ router.post('/', authenticateToken, createSubscriber)
 router.get('/me/subscribers', authenticateToken, getMySubscribers)
 router.get('/me/subscriptions', authenticateToken, getMySubscriptions)
 
-router.get('/subscribers', authenticateToken, getSubscriberByUser)
-router.get('/subscriptions', authenticateToken, getSubscriptionsByUser)
+router.get('/user/subscribers', authenticateToken, getSubscriberByUser)
+router.get('/user/subscriptions', authenticateToken, getSubscriptionsByUser)
 
 router.get('/', authenticateToken, getAllSubscribers)
 

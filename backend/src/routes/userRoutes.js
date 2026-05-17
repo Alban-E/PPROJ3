@@ -19,8 +19,5 @@ router.put('/:id', authenticateToken, updateUserById)
 router.delete('/:id', authenticateToken, deleteUserById)
 //#endregion
 
-router.post('/login', login)
-
-router.post('/logout', authenticateToken, logout)
 
 module.exports = router

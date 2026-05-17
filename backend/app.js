@@ -7,6 +7,7 @@ const { searchTracks } = require('./src/Services/lastfmServices')
 
 // Routes
 const userRoutes = require('./src/Routes/userRoutes')
+const authRoutes = require('./src/Routes/authRoutes')
 const listRoutes = require('./src/Routes/listRoutes')
 const feedbackRoutes = require('./src/Routes/feedbackRoutes')
 const feedbackCommentRoutes = require('./src/Routes/feedbackCommentRoutes')
@@ -38,6 +39,7 @@ app.use(cookieParser())
 app.get('/supify/api/test', (req, res) => res.status(200).json({message: "Test OK"}))
 
 app.use('/supify/api/user', userRoutes)
+app.use('/supify/api/auth', authRoutes)
 app.use('/supify/api/list', listRoutes)
 app.use('/supify/api/feedback', feedbackRoutes)
 app.use('/supify/api/feedback/comment', feedbackCommentRoutes)

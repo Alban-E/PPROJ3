@@ -10,6 +10,7 @@ import Profile from './pages/profile.jsx'
 import Temp from './pages/Temp.jsx'
 import NotFound from './pages/notFound.jsx'
 import Register from './components/auth/register.jsx'
+import Login from './components/auth/login.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -25,6 +26,7 @@ function App() {
         <Route path='/Feed' element={<Feed />} />
         <Route path='/Profile' element={<Profile />} />
         <Route path='/Register' element={<Register />} />
+        <Route path='/Login' element={<Login />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

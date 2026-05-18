@@ -33,8 +33,12 @@ export const logout = async (payload) => {
 //#region User
 export const register = async (payload) => {
     console.log(payload)
-    const res = await axiosInstance.post('/user/register', payload)
-    return res.data
+    if (payload.login?.trim() && payload.username?.trim() && payload.password?.trim()) {
+        const res = await axiosInstance.post('/user/register', payload)
+        return res.data
+    }
+    throw new Error("login, username and password must be filled");
+    
 }
 
 export const getAllUsers = async () => {

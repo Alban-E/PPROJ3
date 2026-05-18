@@ -1,31 +1,27 @@
 import { useState } from "react"
-import { register } from "../../service/axios";
-import styles from "./register.module.css"
+import { login } from "../../service/axios";
+import styles from "./login.module.css"
 import { NavLink } from "react-router-dom";
 
-export default function Register() {
-    const [username, setUsername] = useState('');
+export default function Login () {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const data = await register({ username, login, password })
+            const data = await login({ login, password })
             console.log(data)
         } catch (err) {
             console.error(err.response?.data || err.message)
         }
     }
 
+
     return (
         <>
-            <NavLink to="/Login">Se connecter</NavLink>
-            <form className={styles.form} onSubmit={handleRegister}>
-                <div>
-                    <p>username</p>
-                    <input placeholder='username' value={username} onChange={newUsername => setUsername(newUsername.target.value)} required />
-                </div>
+            <NavLink to="/Register">Créer un compte</NavLink>
+            <form className={styles.form} onSubmit={handleLogin}>
                 <div>
                     <p>login</p>
                     <input placeholder="login" value={login} onChange={newLogin => setLogin(newLogin.target.value)} required />
@@ -38,4 +34,4 @@ export default function Register() {
             </form>
         </>
     )
-}
+} 

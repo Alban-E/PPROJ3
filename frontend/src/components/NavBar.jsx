@@ -9,7 +9,7 @@ export default function Navbar() {
       <NavLink to="/Lists" className={({ isActive }) => isActive ? 'active' : ''}>Lists </NavLink>
       <NavLink to="/Feed" className={({ isActive }) => isActive ? 'active' : ''}>Feed </NavLink>
       <NavLink to="/Profile" className={({ isActive }) => isActive ? 'active' : ''}>Profil </NavLink>
-      <NavLink to="/Register" className={({ isActive }) => isActive ? 'active' : ''}>Register </NavLink>
+      <NavLink to="/Register" className={({ isActive }) => isActive ? 'active' : ''}>Account </NavLink>
     </nav>
   )
 }

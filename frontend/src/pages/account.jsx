@@ -1,30 +1,32 @@
 import { useState } from "react"
-import Login from "../components/auth/login"
-import Register from "../components/auth/register"
+import { checkConnexion } from "../service/axios"
+import { useAuth } from "../service/AuthContext"
+import Login from "../components/account/login"
+import Register from "../components/account/register"
+import Profile from "../components/account/profile"
+import { useEffect } from "react"
 
 export default function Account() {
-    const [connected, setConnected] = useState(false)
+    const {user, loading} = useAuth()
     const [state, setState] = useState('register')
 
-    const changeState = () => {
-        switch (state) {
-            case "register":
-                setState("login")
-                break
-            case "login":
-                setState("register")
-                break
-            default:
-                console.log("Another state than register or login should not exist")
-                break
-        }
+    if (loading) {
+        return(
+            <>
+                <h3>Chargement ...</h3>
+            </>
+        )
+    }
+
+    if (user) { 
+        return <Profile/>
     }
 
     const buttonText = state === "register" ? "Se connecter" : "Créer un compte"
 
     return(
         <>
-            <button onClick={changeState}>{buttonText}</button>
+            <button onClick={() => {setState(state === "register" ? "login" : "register")}}>{buttonText}</button>
             {state === "register" && <Register/>}
             {state === "login" && <Login/>}
         </>

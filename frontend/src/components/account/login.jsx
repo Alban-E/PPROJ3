@@ -1,16 +1,18 @@
 import { useState } from "react"
-import { login } from "../../service/axios";
 import styles from "./login.module.css"
+import { useAuth } from "../../service/AuthContext";
 
 export default function Login () {
     const [loginValue, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [result, setResult] = useState('')
 
+    const { login } = useAuth()
+
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const data = await login({ login: loginValue, password })
+            await login({ login: loginValue, password })
             setResult("Vous êtes connecté")
         } catch (err) {
             const status = err.response?.status 

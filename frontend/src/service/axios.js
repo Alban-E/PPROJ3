@@ -19,13 +19,16 @@ axiosInstance.interceptors.response.use((response) =>{
 
 
 // #region Auth part 
+export const checkConnexion = async () => {
+    return await axiosInstance.get('/user/me')
+}
+
 export const login = async (payload) => {
-    const res = await axiosInstance.post('/auth/login', payload) 
-    return res
+    return await axiosInstance.post('/auth/login', payload) 
 }
 
 export const logout = async (payload) => {
-    const res = await axiosInstance.post('/aut/logout', payload)
+    const res = await axiosInstance.post('/auth/logout', payload)
 }
 //#endregion
 

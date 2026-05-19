@@ -9,8 +9,9 @@ import Feed from './pages/feed.jsx'
 import Profile from './pages/profile.jsx'
 import Temp from './pages/Temp.jsx'
 import NotFound from './pages/notFound.jsx'
-import Register from './components/auth/register.jsx'
-import Login from './components/auth/login.jsx'
+import Account from './pages/account.jsx'
+
+import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,9 +25,7 @@ function App() {
         <Route path='/Details' element={<Details />} />
         <Route path='/Lists' element={<Lists />} />
         <Route path='/Feed' element={<Feed />} />
-        <Route path='/Profile' element={<Profile />} />
-        <Route path='/Register' element={<Register />} />
-        <Route path='/Login' element={<Login />} />
+        <Route path='/Account' element={<Account />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

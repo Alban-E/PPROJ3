@@ -1,27 +1,40 @@
 import { useState } from "react"
 import { register } from "../../service/axios";
 import styles from "./register.module.css"
-import { NavLink } from "react-router-dom";
 
 export default function Register() {
     const [username, setUsername] = useState('');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
+    const [result, setResult] = useState('')
+
     const handleRegister = async (e) => {
         e.preventDefault()
+        setResult("")
+
         try {
-            const data = await register({ username, login, password })
-            console.log(data)
+            const res = await register({ username, login, password })
+            console.log(res.data)
+            setResult("Compte créé avec succès ")
+
         } catch (err) {
-            console.error(err.response?.data || err.message)
+            const status = err.response?.status
+            if (!status) { setResult(err.message) }
+            else if (status === 400) { setResult("Données invalides") }
+            else if (status === 409) { setResult("Un utilisateur avec ce login existe déjà") }
+            else if (status === 500) { setResult("Une erreur est survenue") }
         }
+
+        setUsername('')
+        setLogin('')
+        setPassword('')
     }
 
     return (
         <>
-            <NavLink to="/Login">Se connecter</NavLink>
             <form className={styles.form} onSubmit={handleRegister}>
+                {result && <p>{result}</p>}
                 <div>
                     <p>username</p>
                     <input placeholder='username' value={username} onChange={newUsername => setUsername(newUsername.target.value)} required />

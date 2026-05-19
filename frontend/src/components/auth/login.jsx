@@ -1,30 +1,36 @@
 import { useState } from "react"
 import { login } from "../../service/axios";
 import styles from "./login.module.css"
-import { NavLink } from "react-router-dom";
 
 export default function Login () {
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
+    const [loginValue, setLogin] = useState('')
+    const [password, setPassword] = useState('')
+    const [result, setResult] = useState('')
 
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const data = await login({ login, password })
-            console.log(data)
+            const data = await login({ login: loginValue, password })
+            setResult("Vous êtes connecté")
         } catch (err) {
-            console.error(err.response?.data || err.message)
+            const status = err.response?.status 
+            if (!status) { setResult(err.message) }
+            else if (status === 404) { setResult("Aucun utilisateur ne correspond à ce login/password") }
+            else if (status === 500) { setResult("Une erreur est survenue") }
         }
+
+        setLogin('')
+        setPassword('')
     }
 
 
     return (
         <>
-            <NavLink to="/Register">Créer un compte</NavLink>
             <form className={styles.form} onSubmit={handleLogin}>
+            {result && <p>{result}</p>}
                 <div>
                     <p>login</p>
-                    <input placeholder="login" value={login} onChange={newLogin => setLogin(newLogin.target.value)} required />
+                    <input placeholder="login" value={loginValue} onChange={newLogin => setLogin(newLogin.target.value)} required />
                 </div>
                 <div>
                     <p>password</p>

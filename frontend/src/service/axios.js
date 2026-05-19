@@ -11,11 +11,16 @@ axiosInstance.interceptors.request.use((config) =>{
     return config;
 });
 
-axiosInstance.interceptors.response.use((response) =>{
-    return response}, (error) => {
-        console.error('Une erreur est survenue: ', error);
+axiosInstance.interceptors.response.use((response) => {return response}, (error) => {
+    const status = error.response?.status
+    const url = error.config?.url
+    if ((status === 401 || status === 403) && url === "/user/me") {
         return Promise.reject(error);
-    });
+    }
+
+    console.error("Une erreur est survenue:", error)
+    return Promise.reject(error);
+});
 
 
 // #region Auth part 

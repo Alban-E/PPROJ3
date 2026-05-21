@@ -23,6 +23,20 @@ const createList = async (req, res) => {
 }
 
 // Read
+const getListById = async (req, res) => {
+    try {
+        const list = await List.findById(req.body.id)
+
+        if (!list){
+            return res.status(404).json({message: "No list found"})
+        }
+   
+        return res.status(200).json(list)        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 const getMyLists = async (req, res) => {
     try {
         const lists = await List.find({userId: req.user.userId})
@@ -134,4 +148,4 @@ const deleteList = async (req, res) => {
 //#endregion
 
 
-module.exports = { createList, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList }
+module.exports = { createList, getListById, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList }

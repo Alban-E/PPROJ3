@@ -5,14 +5,15 @@ const List = require('../Models/List')
 // Create
 const createList = async (req, res) => {
     try {
-        const listWithSameName = await List.findOne({name: req.query.listName, userId: req.user.userId})
+        const listWithSameName = await List.findOne({name: req.body.listName, userId: req.user.userId})
         if (listWithSameName) {
             return res.status(409).json({message: `A list with the same name (${req.query.listName}) already exist`})
         }
 
         const list = await List.create({
             userId: req.user.userId,
-            name: req.query.listName,
+            name: req.body.listName,
+            private: req.body.private
         })
 
         res.status(201).json({message: 'List created', list: list })
@@ -87,7 +88,7 @@ const updateList = async (req, res) => {
             return res.status(404).json({message: "List not found"})
         }
         
-        if ((list.userId === req.user.userId) || (String(req.user.userRole) === 'admin')){
+        if ((String(list.userId) === String(req.user.userId)) || (String(req.user.userRole) === 'admin')){
             const {listName, private} = req.body;
             
             if (listName) {
@@ -120,7 +121,7 @@ const deleteList = async (req, res) => {
             return res.status(404).json({message: "List not found"})
         }
         
-        if ((list.userId === req.user.userId) || (String(req.user.userRole) === 'admin')){
+        if ((String(list.userId) === String(req.user.userId)) || (String(req.user.userRole) === 'admin')){
             await list.deleteOne()
             return res.status(200).json({message: "List deleted successfully"})
         }

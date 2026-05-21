@@ -10,3 +10,26 @@
     height: auto;
     width: fit-content;
 }
+
+.popup{
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popupContent{
+    background-color: rgb(255, 255, 255);
+    padding: 2rem; 
+    border-radius: 8px;
+}
+
+.popupField{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1%;
+    gap: 10px;
+}

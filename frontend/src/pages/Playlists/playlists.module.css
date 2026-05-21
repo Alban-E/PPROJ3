@@ -6,6 +6,11 @@
 }
 
 .listButton{
+    border: solid, thin;
+    border-color: black;
+    border-radius: 5%;
+    background-color: rgb(255, 0, 255);
+    padding: 10px;
     margin-top: 1%;
     height: auto;
     width: fit-content;

@@ -1,9 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
-import { useAuth } from "../service/AuthContext";
-import { createList, getMyLists } from "../service/axios";
-import styles from "./lists.module.css"
+import { useAuth } from "../../service/AuthContext";
+import { createList, getMyLists } from "../../service/axios";
+import styles from "./playlists.module.css"
+import { NavLink } from "react-router-dom";
 
-export default function Lists() {
+export default function Playlists() {
   const { user } = useAuth()
 
   const [userLists, setUserLists] = useState([])
@@ -58,7 +59,7 @@ export default function Lists() {
 
   return (
     <div>
-      <h1>Playlist</h1>
+      <h2>Playlist</h2>
       {user ? 
         <>
           <button onClick={() => setShowNewListPopUp(true)}>Créer une playlist</button>
@@ -85,8 +86,8 @@ export default function Lists() {
           )}
 
           <div className={styles.listDiv}>
-            {userLists.map((item, index) => (
-              <button key={index} className={styles.listButton}>{item.name}</button>
+            {userLists.map((list, index) => (
+              <NavLink to={`/Playlist/details?id=${list._id}`} key={index} className={styles.listButton}>{list.name}</NavLink>
             ))}
           </div>
         </>

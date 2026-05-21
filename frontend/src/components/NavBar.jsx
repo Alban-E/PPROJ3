@@ -4,11 +4,19 @@ import styles from './navBar.module.css'
 export default function Navbar() {
   return (
     <nav className={styles.navbar} >
-      <NavLink to="/"         className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Accueil </NavLink>
-      <NavLink to="/Details"  className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Details </NavLink>
-      <NavLink to="/Lists"    className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Lists </NavLink>
-      <NavLink to="/Feed"     className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Feed </NavLink>
-      <NavLink to="/Account"  className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Account </NavLink>
+      <NavLink to="/"
+      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Accueil </NavLink>
+      
+      <NavLink to="/Feed"
+      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Feed </NavLink>
+      
+      <NavLink to="/Playlist"
+      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Playlists </NavLink>      
+      <NavLink to="/Details"
+      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Details </NavLink>
+      
+      <NavLink to="/Account"
+      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Account </NavLink>
     </nav>
   )
 }

@@ -111,12 +111,12 @@ export const deleteList = async (payload) => {
 
 //#region track list relation
 export const addTrackToList = async (payload) => {
-    const res = await axiosInstance.post('/track/list', payload)
+    const res = await axiosInstance.post('/track/add', payload)
     return res
 }
 
 export const getTracksFromList = async (payload) => {
-    const res = await axiosInstance.get('/track/list', payload)
+    const res = await axiosInstance.post('/track/list', payload)
     return res
 }
 

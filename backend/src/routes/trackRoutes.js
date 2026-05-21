@@ -18,9 +18,9 @@ router.delete('/', authenticateToken, assertUserIsAdmin, deleteTracks)
 //#endregion
 
 // track List relation
-router.get('/list', authenticateToken, getTracksFromList)
+router.post('/list', authenticateToken, getTracksFromList)
 
-router.post('/list', authenticateToken, addTrackToList)
+router.post('/add', authenticateToken, addTrackToList)
 
 router.delete('/list', authenticateToken, removeTrackFromList)
 

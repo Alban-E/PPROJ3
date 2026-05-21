@@ -99,11 +99,17 @@ const deleteTracks = async (req, res) => {
 
 const getTracksFromList = async (req, res) => {
     try {
-        const tracksInList = await ListTrack.find({listId: req.query.listId})
-        const trackIds = tracksInList.map(t => t.trackId)
-        const tracks = await Track.find({ _id: { $in: trackIds } })
+        const list = await List.findById(req.body.id)
+        if (!list) {
+            return res.status(404).json({message: "No list found"})
+        } else if (list.private === false || String(req.user.userRole) === "admin" || (String(list.userId) === String(req.user.userId))) {
+            const tracksInList = await ListTrack.find({listId: req.body.id})
+            const trackIds = tracksInList.map(t => t.trackId)
+            const tracks = await Track.find({ _id: { $in: trackIds } })
 
-        return res.status(200).json(tracks)
+            return res.status(200).json(tracks)
+        }
+        return res.status(409).json({message: "Unauthorized operation"})
     } catch (error) {
         res.status(500).json({message: error.message})
     }

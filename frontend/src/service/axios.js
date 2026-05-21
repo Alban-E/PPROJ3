@@ -77,8 +77,8 @@ export const createList = async (payload) => {
     return res
 }
 
-export const getMyLists= async (payload) => {
-    const res = await axiosInstance.get('/list/me', payload)
+export const getMyLists= async () => {
+    const res = await axiosInstance.get('/list/me')
     return res
 }
 

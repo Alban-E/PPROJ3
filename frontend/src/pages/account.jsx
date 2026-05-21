@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { checkConnexion } from "../service/axios"
 import { useAuth } from "../service/AuthContext"
-import Login from "../components/account/login"
-import Register from "../components/account/register"
+import Login from "../components/account/AuthPart/login"
+import Register from "../components/account/AuthPart/register"
 import Profile from "../components/account/profile"
 import { useEffect } from "react"
 

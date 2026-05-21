@@ -1,6 +1,6 @@
 import { useState } from "react"
 import styles from "./login.module.css"
-import { useAuth } from "../../service/AuthContext";
+import { useAuth } from "../../../service/AuthContext";
 
 export default function Login () {
     const [loginValue, setLogin] = useState('')

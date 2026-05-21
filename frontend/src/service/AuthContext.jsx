@@ -11,11 +11,11 @@ export function AuthProvider({ children }) {
     try {
       const res = await checkConnexion()
       setUser(res.data)
-      console.log(res.data)
     } catch (error) {
       const status = error.response?.status
       if (status === 401 || status === 403) {
         setUser(null)
+        console.log('Check connexion: User not logged')
       } else {
         console.error("Erreur checkAuth:", error)
       }

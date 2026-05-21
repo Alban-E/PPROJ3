@@ -1,0 +1,12 @@
+.listDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.listButton{
+    margin-top: 1%;
+    height: auto;
+    width: fit-content;
+}

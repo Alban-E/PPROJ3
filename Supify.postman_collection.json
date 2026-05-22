@@ -93,7 +93,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/user/login",
+              "raw": "http://localhost:8080/supify/api/auth/login",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -102,7 +102,7 @@
               "path": [
                 "supify",
                 "api",
-                "user",
+                "auth",
                 "login"
               ]
             }
@@ -130,6 +130,35 @@
                 "api",
                 "user",
                 "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/user/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "user",
+                "me"
               ]
             }
           },
@@ -1713,7 +1742,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscribers/subscribers?userId=6a010c215839e7d22a3fee55",
+              "raw": "http://localhost:8080/supify/api/subscribers/user/subscribers?userId=6a010c215839e7d22a3fee55",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1723,6 +1752,7 @@
                 "supify",
                 "api",
                 "subscribers",
+                "user",
                 "subscribers"
               ],
               "query": [
@@ -1741,7 +1771,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/supify/api/subscribers/subscriptions?userId=6a010c245839e7d22a3fee59",
+              "raw": "http://localhost:8080/supify/api/subscribers/user/subscriptions?userId=6a010c245839e7d22a3fee59",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1751,6 +1781,7 @@
                 "supify",
                 "api",
                 "subscribers",
+                "user",
                 "subscriptions"
               ],
               "query": [
@@ -1816,10 +1847,10 @@
       ]
     },
     {
-      "name": "Tracks",
+      "name": "Games",
       "item": [
         {
-          "name": "Create track",
+          "name": "Create Game",
           "request": {
             "method": "POST",
             "header": [],
@@ -1833,7 +1864,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/supify/api/track/",
+              "raw": "http://localhost:8080/supify/api/games/",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1842,7 +1873,7 @@
               "path": [
                 "supify",
                 "api",
-                "track",
+                "games",
                 ""
               ]
             }
@@ -1850,174 +1881,21 @@
           "response": []
         },
         {
-          "name": "get track by id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/track/id?trackId=6a024e2c517805fea95e118e",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "track",
-                "id"
-              ],
-              "query": [
-                {
-                  "key": "trackId",
-                  "value": "6a024e2c517805fea95e118e"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get tracks by artist",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/track/artist?artist=Eminem",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "track",
-                "artist"
-              ],
-              "query": [
-                {
-                  "key": "artist",
-                  "value": "Eminem"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get tracks by name",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/track/name?name=Rap god",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "track",
-                "name"
-              ],
-              "query": [
-                {
-                  "key": "name",
-                  "value": "Rap god"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get all tracks",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/track/",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "track",
-                ""
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "delete track",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/track/?trackId=6a024e2c517805fea95e118e",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "track",
-                ""
-              ],
-              "query": [
-                {
-                  "key": "trackId",
-                  "value": "6a024e2c517805fea95e118e"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get tracks from list",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:8080/supify/api/track/list?listId=6a010c245839e7d22a3fee5a",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "supify",
-                "api",
-                "track",
-                "list"
-              ],
-              "query": [
-                {
-                  "key": "listId",
-                  "value": "6a010c245839e7d22a3fee5a"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "add track to list",
+          "name": "get game by id",
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:8080/supify/api/track/list?trackId=6a024ee9517805fea95e118f&listId=6a010c245839e7d22a3fee5c",
+              "raw": "http://localhost:8080/supify/api/games/id",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2026,30 +1904,29 @@
               "path": [
                 "supify",
                 "api",
-                "track",
-                "list"
-              ],
-              "query": [
-                {
-                  "key": "trackId",
-                  "value": "6a024ee9517805fea95e118f"
-                },
-                {
-                  "key": "listId",
-                  "value": "6a010c245839e7d22a3fee5c"
-                }
+                "games",
+                "id"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "remove track from list",
+          "name": "get game by name",
           "request": {
-            "method": "DELETE",
+            "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Forza Horizon 6\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:8080/supify/api/track/list?trackId=6a024ee9517805fea95e118f&listId=6a010c245839e7d22a3fee5a",
+              "raw": "http://localhost:8080/supify/api/games/name",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -2058,18 +1935,154 @@
               "path": [
                 "supify",
                 "api",
-                "track",
-                "list"
+                "games",
+                "name"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all games",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/supify/api/games/",
+              "protocol": "http",
+              "host": [
+                "localhost"
               ],
-              "query": [
-                {
-                  "key": "trackId",
-                  "value": "6a024ee9517805fea95e118f"
-                },
-                {
-                  "key": "listId",
-                  "value": "6a010c245839e7d22a3fee5a"
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "games",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete games",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
                 }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/games/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "games",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get games from list",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": \"\",\r\n    \"listId\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/games/inlist",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "games",
+                "inlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add games to list",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": \"\",\r\n    \"listId\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/games/add",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "games",
+                "add"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remove games from list",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gameId\": \"\",\r\n    \"listId\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/supify/api/games/list",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "supify",
+                "api",
+                "games",
+                "list"
               ]
             }
           },

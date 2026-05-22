@@ -3,7 +3,6 @@ const cors = require("cors")
 const express = require("express")
 const mongo = require("mongoose")
 const cookieParser = require('cookie-parser')
-const { searchTracks } = require('./src/Services/lastfmServices')
 
 // Routes
 const userRoutes = require('./src/Routes/userRoutes')

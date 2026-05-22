@@ -34,7 +34,7 @@ const createUser = async (req, res) => {
 
         const user = await User.create(content)
 
-        const listsToCreate = [ "A écouter", "Ecoutées", "Aimée" ]
+        const listsToCreate = [ "A Jouer", "Terminé(s)", "Favoris" ]
         for (const name of listsToCreate) {
             await List.create({
                 userId: user.id,

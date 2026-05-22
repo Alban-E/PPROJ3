@@ -2,8 +2,8 @@ const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
 const { getGames, getGamesById } = require('../Controllers/RawgController')
 
-router.get('/games', getGames)
+router.post('/games', getGames)
 
-router.get('/game/id', getGamesById)
+router.post('/game/id', getGamesById)
 
 module.exports = router

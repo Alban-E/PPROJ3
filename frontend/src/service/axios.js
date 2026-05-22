@@ -419,28 +419,13 @@ export const revokeBan = async (payload) => {
 
 
 //#region API
-export const searchgame = async (payload) => {
-    const res = await axiosInstance.get('/search/games', payload)
-    return res
+export const searchGames = async (payload) => {
+    return await axiosInstance.post('/search/games', payload)
 }
-export const searchArtist = async (payload) => {
-    const res = await axiosInstance.get('/search/artist', payload)
-    return res
+
+export const searchGameById = async (payload) => {
+    return await axiosInstance.post('/search/game/id', payload)
 }
-export const searchArtistgames = async (payload) => {
-    const res = await axiosInstance.get('/search/artist/games', payload)
-    return res
-}
-export const searchArtistAlbums = async (payload) => {
-    const res = await axiosInstance.get('/search/artist/album', payload)
-    return res
-}
-export const searchAlbum = async (payload) => {
-    const res = await axiosInstance.get('/search/album', payload)
-    return res
-}
-export const searchAlbumTags = async (payload) => {
-    const res = await axiosInstance.get('/search/album/tags', payload)
-    return res
-}
+
+
 //#endregion

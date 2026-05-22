@@ -1,20 +1,31 @@
 const { rawgApi } = require('../Services/rawgService')
 
 const getGames = async (req, res) =>{
-    return rawgApi.get('/games', { 
-        params: {
-            platforms: req.body.platformValue, 
-            stores: req.body.storeValue, 
-            ordering: req.body.orderingVaue, 
-            page: req.body.pageValue, 
-            publishers: req.body.publisherValue,
-            page_size: req.body.pageSize,
-        }
-    });
+    try{
+        const games =  await rawgApi.get('/games', { 
+            params: {
+                platforms: req.body.platforms, 
+                stores: req.body.stores, 
+                ordering: req.body.ordering, 
+                page: req.body.page, 
+                publishers: req.body.publishers,
+                page_size: req.body.page_size,
+            }
+        })
+
+        return res.status(200).json(games.data)
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
 }
 
 const getGamesById = async (req, res) => {
-    return rawgApi.get(`/games/${req.body.gameId}`);
+    try {
+        const game = await rawgApi.get(`/games/${req.body.gameId}`)
+        return res.status(200).json(game.data)
+    } catch (error) {
+        return rest.status(500).json({message: error.message})        
+    }
 }
 
 module.exports = { getGames, getGamesById }

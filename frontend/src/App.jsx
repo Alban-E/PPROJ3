@@ -13,7 +13,7 @@ import Account from './pages/account.jsx'
 
 import './App.css'
 
-function App() {
+export default function App() {
   const [count, setCount] = useState(0)
 
   return (
@@ -31,5 +31,3 @@ function App() {
     </>
   )
 }
-
-export default App

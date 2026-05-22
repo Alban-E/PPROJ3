@@ -1,0 +1,99 @@
+/* ── Filters ── */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.filters select {
+    appearance: none;
+    padding: 7px 32px 7px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239e9890'/%3E%3C/svg%3E") no-repeat right 10px center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.filters select:hover,
+.filters select:focus {
+    border-color: var(--text);
+    outline: none;
+}
+
+.platformFilterSelect { min-width: 190px; }
+.storeFilterSelect    { min-width: 160px; }
+.orderingFilterSelect { min-width: 150px; }
+
+.reverseOrderingButton {
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: 0.8rem;
+    transition: border-color 0.15s;
+}
+
+.reverseOrderingButton:hover:not(:disabled) { border-color: var(--text); }
+.reverseOrderingButton:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.gamesContainer {
+    width: 100%;
+}
+
+.cardGameContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 1rem;
+    justify-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.loading {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding: 64px 0;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+/* ── Pagination ── */
+.gamesPageButtons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+    padding-top: 24px;
+    margin-bottom: 48px;
+    border-top: 1px solid var(--border);
+}
+
+.gamesPreviousPage,
+.gamesNextPage {
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.gamesPreviousPage:hover:not(:disabled),
+.gamesNextPage:hover:not(:disabled) {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+}
+
+.gamesPreviousPage:disabled,
+.gamesNextPage:disabled { opacity: 0.3; cursor: not-allowed; }

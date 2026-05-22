@@ -17,7 +17,7 @@ const notificationRoutes = require('./src/Routes/notificationRoutes')
 const subscriberRoutes = require('./src/Routes/subscriberRoutes')
 const gameRoutes = require('./src/Routes/gameRoutes')
 
-const lastFmRoutes = require('./src/Routes/lastFmroutes') 
+const rawgRoutes = require('./src/Routes/rawgRoutes') 
 
 const app = express()
 
@@ -49,7 +49,7 @@ app.use('/supify/api/notifications', notificationRoutes)
 app.use('/supify/api/subscribers', subscriberRoutes)
 app.use('/supify/api/games', gameRoutes)
 
-app.use('/supify/api/search', lastFmRoutes)
+app.use('/supify/api/search', rawgRoutes)
 
 mongo.connect(process.env.MONGODB_URI)
 .then(() => console.log('MongoDB connected'))

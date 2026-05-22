@@ -1,6 +1,6 @@
 const { rawgApi } = require('../Services/rawgService')
 
-const  getGames = async (req, res) =>{
+const getGames = async (req, res) =>{
     return rawgApi.get('/games', { 
         params: {
             platforms: req.body.platformValue, 
@@ -13,8 +13,8 @@ const  getGames = async (req, res) =>{
     });
 }
 
-const getGameById = async (req, res) => {
+const getGamesById = async (req, res) => {
     return rawgApi.get(`/games/${req.body.gameId}`);
 }
 
-module.exports = { searchTrack, searchArtist, searchArtistTracks, searchArtistAlbums, searchAlbum, searchAlbumTags }
+module.exports = { getGames, getGamesById }

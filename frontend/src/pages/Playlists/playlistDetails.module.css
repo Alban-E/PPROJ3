@@ -1,0 +1,18 @@
+.content{
+    margin: 1rem;
+}
+
+.title{
+    justify-self: center;
+    border: solid, 1px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.trackList{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

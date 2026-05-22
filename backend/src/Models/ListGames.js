@@ -5,4 +5,4 @@ const listGamesSchema = new Schema({
     gameId: { type: Types.ObjectId, ref: 'Game', required: true }
 })
 
-module.exports = model('ListGames', listGameSchema)
+module.exports = model('ListGames', listGamesSchema)

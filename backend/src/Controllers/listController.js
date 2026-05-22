@@ -25,7 +25,7 @@ const createList = async (req, res) => {
 // Read
 const getListById = async (req, res) => {
     try {
-        const list = await List.findById(req.body.id)
+        const list = await List.findById(req.body.listId)
 
         if (!list){
             return res.status(404).json({message: "No list found"})

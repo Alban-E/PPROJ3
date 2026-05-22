@@ -114,52 +114,52 @@ export const deleteList = async (payload) => {
 //#endregion
 
 
-//#region track list relation
-export const addTrackToList = async (payload) => {
-    const res = await axiosInstance.post('/track/add', payload)
+//#region game list relation
+export const addGameToList = async (payload) => {
+    const res = await axiosInstance.post('/games/add', payload)
     return res
 }
 
-export const getTracksFromList = async (payload) => {
-    const res = await axiosInstance.post('/track/list', payload)
+export const getGamesFromList = async (payload) => {
+    const res = await axiosInstance.post('/games/list', payload)
     return res
 }
 
-export const removeTrackFromList = async (payload) => {
-    const res = await axiosInstance.delete('/track/list', payload)
+export const removeGameFromList = async (payload) => {
+    const res = await axiosInstance.delete('/games/list', payload)
     return res
 }
 //#endregion
 
 
-//#region Tracks
-export const createTrack = async (payload) => {
-    const res = await axiosInstance.post('/track/', payload)
+//#region games
+export const creategame = async (payload) => {
+    const res = await axiosInstance.post('/games/', payload)
     return res
 }
 
-export const getTracksById = async (payload) => {
-    const res = await axiosInstance.get('/track/id', payload)
+export const getgamesById = async (payload) => {
+    const res = await axiosInstance.get('/games/id', payload)
     return res
 }
 
-export const getTracksByArtist = async (payload) => {
-    const res = await axiosInstance.get('/track/artist', payload)
+export const getgamesByArtist = async (payload) => {
+    const res = await axiosInstance.get('/games/artist', payload)
     return res
 }
 
-export const getTracksByName = async (payload) => {
-    const res = await axiosInstance.get('/track/name', payload)
+export const getgamesByName = async (payload) => {
+    const res = await axiosInstance.get('/games/name', payload)
     return res
 }
 
-export const getAllTracks = async (payload) => {
-    const res = await axiosInstance.get('/track/', payload)
+export const getAllgames = async (payload) => {
+    const res = await axiosInstance.get('/games/', payload)
     return res
 }
 
-export const deleteTrack = async (payload) => {
-    const res = await axiosInstance.delete('/track/', payload)
+export const deletegame = async (payload) => {
+    const res = await axiosInstance.delete('/games/', payload)
     return res
 }
 //#endregion
@@ -419,16 +419,16 @@ export const revokeBan = async (payload) => {
 
 
 //#region API
-export const searchTrack = async (payload) => {
-    const res = await axiosInstance.get('/search/tracks', payload)
+export const searchgame = async (payload) => {
+    const res = await axiosInstance.get('/search/games', payload)
     return res
 }
 export const searchArtist = async (payload) => {
     const res = await axiosInstance.get('/search/artist', payload)
     return res
 }
-export const searchArtistTracks = async (payload) => {
-    const res = await axiosInstance.get('/search/artist/tracks', payload)
+export const searchArtistgames = async (payload) => {
+    const res = await axiosInstance.get('/search/artist/games', payload)
     return res
 }
 export const searchArtistAlbums = async (payload) => {

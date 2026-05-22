@@ -10,7 +10,7 @@ export default function Navbar() {
       <NavLink to="/Feed"
       className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Feed </NavLink>
       
-      <NavLink to="/Playlist"
+      <NavLink to="/List"
       className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Playlists </NavLink>      
       <NavLink to="/Details"
       className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Details </NavLink>

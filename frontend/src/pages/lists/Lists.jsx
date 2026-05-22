@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { useAuth } from "../../service/AuthContext";
 import { createList, getMyLists } from "../../service/axios";
-import styles from "./playlists.module.css"
+import styles from "./lists.module.css"
 import { NavLink } from "react-router-dom";
 
-export default function Playlists() {
+export default function Lists() {
   const { user } = useAuth()
 
   const [userLists, setUserLists] = useState([])
@@ -87,7 +87,7 @@ export default function Playlists() {
 
           <div className={styles.listDiv}>
             {userLists.map((list, index) => (
-              <NavLink to={`/Playlist/details?id=${list._id}`} key={index} className={styles.listButton}>{list.name}</NavLink>
+              <NavLink to={`/List/details?id=${list._id}`} key={index} className={styles.listButton}>{list.name}</NavLink>
             ))}
           </div>
         </>

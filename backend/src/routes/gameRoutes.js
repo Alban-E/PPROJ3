@@ -17,7 +17,7 @@ router.delete('/', authenticateToken, assertUserIsAdmin, deleteGame)
 //#endregion
 
 // track List relation
-router.post('/inlist', authenticateToken, getGamesFromList)
+router.post('/list', authenticateToken, getGamesFromList)
 
 router.post('/add', authenticateToken, addGameToList)
 

@@ -25,7 +25,6 @@ export default function Home(){
                   publishers: null,
                   page_size: 40
                 }
-                console.log("Payload envoyé: ", payload)
                 const result = await searchGames(payload);
                 console.log(result.data)
 

@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import NavBar from './components/NavBar.jsx'
 import Home from './pages/home.jsx'
 import Details from './pages/details.jsx'
+import Publisher from './pages/publisher.jsx'
 import Lists from './pages/lists/Lists.jsx'
 import ListDetails from './pages/lists/ListDetails.jsx'
 import Feed from './pages/feed.jsx'
@@ -25,6 +26,7 @@ export default function App() {
         <Route path='/List' element={<Lists />} />
         <Route path='/List/details' element={<ListDetails />} />
         <Route path='/Details' element={<Details />} />
+        <Route path='/Publisher' element={<Publisher />} />
         <Route path='/Account' element={<Account />} />
         <Route path='/auth-success' element={<Account />} />
         <Route path='*' element={<NotFound />} />

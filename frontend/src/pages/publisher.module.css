@@ -1,0 +1,86 @@
+.publishersPart {}
+
+.publishersLoading {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 80px 0;
+}
+
+.publisherName {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.publisherImage {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    filter: saturate(0.85);
+}
+
+.publisherGamesAmount {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+}
+
+.gameContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.gamesLoading {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+.publisherGamesPageButtons {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.publisherGamesPreviousPage,
+.publisherGamesNextPage {
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.publisherGamesPreviousPage:hover:not(:disabled),
+.publisherGamesNextPage:hover:not(:disabled) {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+}
+
+.publisherGamesPreviousPage:disabled,
+.publisherGamesNextPage:disabled { opacity: 0.3; cursor: not-allowed; }

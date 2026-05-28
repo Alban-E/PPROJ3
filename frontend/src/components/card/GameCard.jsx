@@ -1,4 +1,3 @@
-// import { reformatDate } from "../services/games";
 import reformatDate from '../../service/ReformatDate'
 import { Link } from 'react-router-dom'
 import styles from "./GameCard.module.css"

@@ -17,7 +17,6 @@ const createUser = async (req, res) => {
         const password = req.body.password
         const hashedPassword = await bcrypt.hash(password,10)
 
-
         const content = {
             login: req.body.login,
             password: hashedPassword,
@@ -34,19 +33,13 @@ const createUser = async (req, res) => {
 
         const user = await User.create(content)
 
-        const listsToCreate = [ "A Jouer", "Terminé(s)", "Favoris" ]
-        for (const name of listsToCreate) {
-            await List.create({
-                userId: user.id,
-                name: name,
-            })
-        }
-
-        res.status(201).json({
+        await setupBaseUserList(user)
+        
+        return res.status(201).json({
             message: 'User created',
             user: { id: user._id, login: user.login, username: user.username, role: user.role }
     })} catch (error) {
-        res.status(500).json({message: error.message})
+        return res.status(500).json({message: error.message})
     }
 }
 
@@ -67,10 +60,26 @@ const createUserWithGoogle = async (accessToken, refreshToken, Profile, done) =>
             await user.save()
         }
 
+        await setupBaseUserList(user)
+        
         return done(null, user)
     } catch (error) {
         console.log(error)
         return done(error)
+    }
+}
+
+const setupBaseUserList = async (user) => {
+    try {
+        const listsToCreate = [ "A Jouer", "Terminé(s)", "Favoris" ]
+        for (const name of listsToCreate) {
+            await List.create({
+                userId: user.id,
+                name: name,
+            })
+        }
+    }catch (error) {
+        return error
     }
 }
 

@@ -10,6 +10,11 @@ export default function Account() {
     const {user, loading} = useAuth()
     const [state, setState] = useState('register')
 
+    const logWithGoogle = async () => {
+        const baseUrl = import.meta.env.VITE_API_URL
+        window.location.href = `${baseUrl}/auth/google`
+    }
+
     if (loading) {
         return(
             <>
@@ -29,6 +34,7 @@ export default function Account() {
             <button onClick={() => {setState(state === "register" ? "login" : "register")}}>{buttonText}</button>
             {state === "register" && <Register/>}
             {state === "login" && <Login/>}
+            <button onClick={logWithGoogle}>Google</button>
         </>
     )
 }

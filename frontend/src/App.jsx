@@ -26,6 +26,7 @@ export default function App() {
         <Route path='/List/details' element={<ListDetails />} />
         <Route path='/Details' element={<Details />} />
         <Route path='/Account' element={<Account />} />
+        <Route path='/auth-success' element={<Account />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

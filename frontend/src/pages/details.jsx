@@ -111,7 +111,7 @@ export default function Details(){
                                         )}
                                     </div>
                                 </>
-                            ) : null}
+                            ) : (<p>Aucun trailer n'est disponible pour {game.name}</p>)}
                         </>
                     )}
                 </div>
@@ -144,7 +144,7 @@ export default function Details(){
                                         <button disabled={!isNextAchievementsNextPage} onClick={() => setAchievementsPage((prev) => prev + 1)} className={styles.AchievementsNextPage}>Succès suivants</button>
                                     </div>
                                 </>
-                            ) : null}
+                            ) : (<p>Aucun succès n'est disponible pour {game.name}</p>)}
 
                         </>
                     )}

@@ -428,11 +428,11 @@ export const searchGameById = async (payload) => {
 }
 
 export const searchGameAchievements = async (payload) => {
-    return axiosInstance.get(`/search/game/achievements`, payload);
+    return axiosInstance.post(`/search/game/achievements`, payload);
 }
 
 export const searchGameTrailer = async (payload) => {
-    return axiosInstance.get(`/search/game/trailers`, payload)
+    return axiosInstance.post(`/search/game/trailers`, payload)
 }
 
 

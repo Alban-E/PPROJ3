@@ -57,14 +57,14 @@ const getGamesById = async (req, res) => {
 }
 
 const getGameAchievements = async (req, res) => {
-    const cacheKey = `rawg_Achievement_${payload}`
+    const cacheKey = `rawg_Achievement_${JSON.stringify(req.body)}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
     }
 
     try {
-        const achievements = rawgApi.get(`/games/${req.body.gameId}/achievements`, {params: {page: req.body.page}});
+        const achievements = await rawgApi.get(`/games/${req.body.gameId}/achievements`, {params: {page: req.body.page}});
         cache.set(cacheKey, achievements.data)
         return res.status(200).json(achievements.data)
     } catch (error) {
@@ -72,14 +72,14 @@ const getGameAchievements = async (req, res) => {
 }
 
 const getGameTrailer = async (req, res) => {
-    const cacheKey = `rawg_Trailer_${payload}`
+    const cacheKey = `rawg_Trailer_${JSON.stringify(req.body)}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
     }
 
     try {
-        const trailers = rawgApi.get(`/games/${req.body.gameId}/movies`)
+        const trailers = await rawgApi.get(`/games/${req.body.gameId}/movies`)
         cache.set(cacheKey, trailers.data)
         return res.status(200).json(trailers)
     } catch (error) {

@@ -17,6 +17,10 @@ const subscriberRoutes = require('./src/Routes/subscriberRoutes')
 const gameRoutes = require('./src/Routes/gameRoutes')
 
 const rawgRoutes = require('./src/Routes/rawgRoutes') 
+const passport = require("passport")
+const { createUserWithGoogle } = require("./src/Controllers/userController")
+const GoogleStrategy = require('passport-google-oauth20').Strategy 
+const User = require("./src/Models/User")
 
 const app = express()
 
@@ -34,6 +38,17 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieParser())
+
+app.use(passport.initialize())
+passport.use( new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CLIENT_CALLBACK_URL
+    },
+    (accessToken, refreshToken, Profile, done) => {createUserWithGoogle(accessToken, refreshToken, Profile, done)}
+))
+passport.serializeUser((user, done) => { done(null, user.id) })
+passport.deserializeUser((id, done) => { User.findById(id, (error, user) => { done(error, user) }) })
 
 app.get('/supify/api/test', (req, res) => res.status(200).json({message: "Test OK"}))
 

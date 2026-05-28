@@ -50,6 +50,30 @@ const createUser = async (req, res) => {
     }
 }
 
+const createUserWithGoogle = async (accessToken, refreshToken, Profile, done) => {
+    try{
+        let user = await User.findOne({oauth_GoogleId: Profile.id})
+
+        if (!user) {
+            user = await User.create({
+                login: Profile.emails[0].value,
+                oauth_GoogleId: Profile.id,
+                username: Profile.displayName,
+                avatar_url: Profile.photos[0]?.value,
+                refresh_Token: refreshToken
+            })
+        } else {
+            user.refresh_Token = refreshToken
+            await user.save()
+        }
+
+        return done(null, user)
+    } catch (error) {
+        console.log(error)
+        return done(error)
+    }
+}
+
 // Read
 const getMyprofile = async (req, res) => {
     try {
@@ -162,4 +186,4 @@ const deleteUserById = async (req, res) => {
 //#endregion
 
 
-module.exports = { createUser, getMyprofile, getAllUser, getUserById, updateUserById, deleteUserById }
+module.exports = { createUser, createUserWithGoogle, getMyprofile, getAllUser, getUserById, updateUserById, deleteUserById }

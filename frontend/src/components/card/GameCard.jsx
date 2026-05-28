@@ -9,7 +9,7 @@ export default function GameCard({id, name, releaseDate, rating, tags, developer
 
     return (
         <div className={styles.cardWrapper}>
-            <Link className={styles.cardLink} to={`/details/${id}`}>
+            <Link className={styles.cardLink} to={`/Details?id=${id}`}>
                 <div className={styles.card}>
                     <h2 className={styles.gameTitle}>{name}</h2>
                     <img className={styles.gameCover} src={imageURL} alt={`${name}'s cover image`} height={1080/4} loading="lazy"/>

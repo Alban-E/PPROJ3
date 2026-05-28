@@ -1,0 +1,208 @@
+.mainLoading {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.mainContainer{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.Title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.gameCover {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 36px;
+    filter: saturate(0.92);
+}
+
+.gameDescription {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #4a4640;
+    max-width: 720px;
+    margin: 0 auto 24px;
+    white-space: pre-line;
+}
+
+.releaseDate {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.rating {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+/* ── Sections ── */
+.trailerPart,
+.achievementsPart,
+.platformsPart,
+.storesPart,
+.tagsPart,
+.developersPart,
+.publishersPart {
+    margin-bottom: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+}
+
+.trailerLoading,
+.achievementLoading {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+}
+
+.trailersTitle,
+.achievementsTitle,
+.platformTitle,
+.storeTitle,
+.tagTitle,
+.developerTitle,
+.publisherTitle {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+/* ── Trailers ── */
+.trailerCotnainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.trailerCard { display: flex; flex-direction: column; gap: 8px; }
+
+.trailerName {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+}
+
+.trailer { border-radius: var(--radius); background: var(--text); width: 100%; }
+
+/* ── Achievements ── */
+.AchievementCard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.AchievementCard:last-child { border-bottom: none; }
+
+.achievementName { font-size: 0.875rem; color: var(--text); min-width: 220px; }
+
+.achievementProgressBar {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    appearance: none;
+    background: var(--border);
+}
+
+.achievementProgressBar::-webkit-progress-bar  { background: var(--border); }
+.achievementProgressBar::-webkit-progress-value { background: var(--text); border-radius: 2px; }
+.achievementProgressBar::-moz-progress-bar      { background: var(--text); }
+
+.achievementPercentage {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    min-width: 42px;
+    text-align: right;
+}
+
+.achievementPageButtons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.achievementsPreviousPage,
+.AchievementsNextPage {
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: transparent;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.achievementsPreviousPage:hover:not(:disabled),
+.AchievementsNextPage:hover:not(:disabled) {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+}
+
+.achievementsPreviousPage:disabled,
+.AchievementsNextPage:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── Tags / Platforms / Stores / Devs ── */
+.platformName,
+.storeName,
+.tagName,
+.developerName {
+    display: inline-block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 3px 10px;
+    margin: 0 6px 6px 0;
+}
+
+.publisherName {
+    display: inline-block;
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px solid #f0c4c0;
+    border-radius: 2px;
+    padding: 3px 10px;
+    margin: 0 6px 6px 0;
+    transition: background 0.15s;
+}
+
+.publisherName:hover { background: #fbe8e6; }
+
+.gameWebSite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-top: 8px;
+    transition: color 0.15s;
+}
+
+.gameWebSite:hover { color: var(--text); }

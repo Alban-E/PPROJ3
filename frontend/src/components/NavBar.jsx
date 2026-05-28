@@ -12,9 +12,7 @@ export default function Navbar() {
       
       <NavLink to="/List"
       className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Playlists </NavLink>      
-      <NavLink to="/Details"
-      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Details </NavLink>
-      
+
       <NavLink to="/Account"
       className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Account </NavLink>
     </nav>

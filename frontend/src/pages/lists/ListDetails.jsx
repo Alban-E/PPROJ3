@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { getListById, getGamesFromList } from "../../service/axios";
 import { useEffect, useState, Fragment } from "react";
-import GameItem from "../../components/GameITem";
 import styles from './listDetails.module.css'
 
 export default function ListDetails() {
@@ -49,13 +48,13 @@ export default function ListDetails() {
                 <h2 className={styles.title}>{list.name}</h2>
                 <p>Jeux :</p>
                 <div className={styles.gameList}>
-                    {games.map((track, index) => (
+                    {/* {games.map((track, index) => (
                     <GameItem key={index} track={track} ></GameItem>
                     ))}
                     
                     {test.map((game, index) => (
                     <GameItem key={index} game={game} ></GameItem>
-                    ))}
+                    ))} */}
                 </div>
             </div>
         :

@@ -427,5 +427,13 @@ export const searchGameById = async (payload) => {
     return await axiosInstance.post('/search/game/id', payload)
 }
 
+export const searchGameAchievements = async (payload) => {
+    return axiosInstance.get(`/search/game/achievements`, payload);
+}
+
+export const searchGameTrailer = async (payload) => {
+    return axiosInstance.get(`/search/game/trailers`, payload)
+}
+
 
 //#endregion

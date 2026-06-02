@@ -81,7 +81,7 @@ const getGameTrailer = async (req, res) => {
     try {
         const trailers = await rawgApi.get(`/games/${req.body.gameId}/movies`)
         cache.set(cacheKey, trailers.data)
-        return res.status(200).json(trailers)
+        return res.status(200).json(trailers.data)
     } catch (error) {
         return res.status(500).json({message: error.message})        
     }
@@ -97,7 +97,7 @@ const getPublisherById = async (req, res) => {
     try {
         const publishers = await rawgApi.get(`/publishers/${req.body.publisherId}`)
         cache.set(cacheKey, publishers.data)
-        return res.status(200).json(publishers)
+        return res.status(200).json(publishers.data)
     } catch (error) {
         return res.status(500).json({message: error.message})        
     }
@@ -117,7 +117,7 @@ const getGamesByPublishers= async (req, res) => {
             page_size: 20
         }}) 
         cache.set(cacheKey, games.data)
-        return res.status(200).json(games)
+        return res.status(200).json(games.data)
     } catch (error) {
         return res.status(500).json({message: error.message})        
     }

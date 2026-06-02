@@ -436,5 +436,12 @@ export const searchGameTrailer = async (payload) => {
     return axiosInstance.post(`/search/game/trailers`, payload)
 }
 
+export const searchPublisher = async (payload) => {
+    return axiosInstance.post(`/search/publisher`, payload)
+}
+
+export const searchPublisherGames = async (payload) => {
+    return axiosInstance.post(`/search/publisher/games`, payload)
+}
 
 //#endregion

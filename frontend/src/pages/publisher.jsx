@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-// import { getPublisherById, getPublisherGames } from "../services/publishers";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { searchPublisher, searchPublisherGames } from "../service/axios";
 import GameCard from "../components/card/GameCard";
 import styles from "./publisher.module.css";
 
 
 export default function Publisher(){
-    const { id } = useParams();
+    const [searcParams] = useSearchParams();
+    const id = searcParams.get("id")
     const navigate = useNavigate();
 
-    let [publisher, setPublisher] = useState(null);
-    let [loadingPublisher, setLoadingPublisher] = useState(true);
+    const [publisherData, setPublisherData] = useState(null);
+    const [loadingPublisher, setLoadingPublisher] = useState(true);
 
     useEffect(() => {
         async function loadPublisher() {
             try {
                 setLoadingPublisher(true);
-                // const result = await getPublisherById(id);
-                setPublisher(result.data);
+                const payload = {
+                    publisherId: id
+                }
+                const result = await searchPublisher(payload);
+                setPublisherData(result.data);
             } catch (error) {
                 console.error(`An error occured during the publisher loading: ${error}`);
                 navigate('/notfound');
@@ -27,16 +31,21 @@ export default function Publisher(){
         loadPublisher();
     }, [id]);
 
-    let [publisherGames, setPublisherGames] = useState(null);
-    let [publisherGamesPage, setPublisherGamesPage] = useState(1);
-    let [isNextPublisherGamesPage, setisNextPublisherGamesPage] = useState(false);
-    let [loadingPublisherGames, setLoadingPublisherGames] = useState(true);
+    const [publisherGames, setPublisherGames] = useState(null);
+    const [publisherGamesPage, setPublisherGamesPage] = useState(1);
+    const [isNextPublisherGamesPage, setisNextPublisherGamesPage] = useState(false);
+    const [loadingPublisherGames, setLoadingPublisherGames] = useState(true);
 
     useEffect(() => {
         async function loadPublisherGames() {
             try {
                 setLoadingPublisherGames(true);
-                // const result = await getPublisherGames(id, publisherGamesPage);
+                const payload = {
+                    publisherId: id,
+                    page: publisherGamesPage
+                }
+                const result = await searchPublisherGames(payload);
+                console.log("payload: ", payload, "result: ", result.data)
                 setPublisherGames(result.data.results);
                 setisNextPublisherGamesPage(Boolean(result.data.next));
             } catch (error) {
@@ -53,31 +62,34 @@ export default function Publisher(){
             {loadingPublisher ? (
                 <p className={styles.publishersLoading}>Chargement de l'éditeur ...</p>
             ) : (
-                <>
-                    <h1 className={styles.publisherName}>{publisher.name}</h1>
-                    <img src={publisher.image_background} height={1080/2} className={styles.publisherImage} alt={`${publisher.name} cover image`}/>
-                    <p className={styles.publisherGamesAmount}>Nombre de jeu(x): {publisher.games_count}</p>
+                publisherData ?
+                    <>
+                        <h1 className={styles.publisherName}>{publisherData.name}</h1>
+                        <img src={publisherData.image_background} height={1080/2} className={styles.publisherImage} alt={`${publisherData.name} cover image`}/>
+                        <p className={styles.publisherGamesAmount}>Nombre de jeu(x): {publisherData.games_count}</p>
 
-                    <div className={styles.gameContainer}>
-                        {loadingPublisherGames ? (
-                            <h2 className={styles.gamesLoading}>Chargement des jeux ...</h2>
-                        ) : (
-                            <>
-                                {publisherGames?.length > 0 ? (
-                                    <>
-                                        {publisherGames.slice().map(game =>
-                                            <GameCard key={game.id} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
-                                        )}
-                                        <div className={styles.publisherGamesPageButtons}>
-                                            <button disabled={publisherGamesPage === 1} onClick={()=> {setPublisherGamesPage(publisherGamesPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.publisherGamesPreviousPage}>Page précédente</button>
-                                            <button disabled={!isNextPublisherGamesPage} onClick={()=> {setPublisherGamesPage(publisherGamesPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.publisherGamesNextPage}>Page suivante</button>
-                                        </div>
-                                    </>
-                                ) : null }
-                            </>
-                        )}
-                    </div>
-                </>
+                        <div className={styles.gameContainer}>
+                            {loadingPublisherGames ? (
+                                <h2 className={styles.gamesLoading}>Chargement des jeux ...</h2>
+                            ) : (
+                                <>
+                                    {publisherGames?.length > 0 ? (
+                                        <>
+                                            {publisherGames.slice().map(game =>
+                                                <GameCard key={game.id} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
+                                            )}
+                                            <div className={styles.publisherGamesPageButtons}>
+                                                <button disabled={publisherGamesPage === 1} onClick={()=> {setPublisherGamesPage(publisherGamesPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.publisherGamesPreviousPage}>Page précédente</button>
+                                                <button disabled={!isNextPublisherGamesPage} onClick={()=> {setPublisherGamesPage(publisherGamesPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.publisherGamesNextPage}>Page suivante</button>
+                                            </div>
+                                        </>
+                                    ) : null }
+                                </>
+                            )}
+                        </div>
+                    </>
+                :
+                    <p>Aucune Donnée récupérée</p>
             )}
         </div>
     )

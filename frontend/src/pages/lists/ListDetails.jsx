@@ -1,18 +1,20 @@
 import { useSearchParams } from "react-router-dom";
-import { getListById, getGamesFromList } from "../../service/axios";
+import { getListById, getGamesFromList, getgamesById, searchGameById } from "../../service/axios";
 import { useEffect, useState, Fragment } from "react";
 import styles from './listDetails.module.css'
+import GameCard from "../../components/card/GameCard";
 
 export default function ListDetails() {
     const [searchParams]  = useSearchParams()
     const id = searchParams.get('id')
     const [list, setList] = useState({name: "", imageUrl: ""})
     const [gamesids, setGamesIds] = useState([])
+    const [gamesDatas, setGamesDatas] = useState([])
 
     const [loading, setLoading] = useState(true)
     const [authorized, setAuthorized] = useState(true); 
 
-    const updateGames = async() => {
+    const updateGamesIds = async() => {
         try {
             const payload = {listId: id}
             const listRes = await getListById(payload)
@@ -32,13 +34,25 @@ export default function ListDetails() {
                 console.log("error:", error)
             }
         }
-        
     }
     
     useEffect(() => {
-
-        updateGames()
+        updateGamesIds()
     },[])
+
+
+    const getGamesInformations = async () => {
+        setGamesDatas([])
+        for (const gameId of gamesids){
+            const gameData = await searchGameById({gameId: gameId})
+
+            setGamesDatas((prev) => [...prev, gameData.data])
+        }
+    }
+
+    useEffect(() => {
+        getGamesInformations()
+    }, [gamesids])
     
     return (
         authorized ?
@@ -46,19 +60,11 @@ export default function ListDetails() {
                 <h2 className={styles.title}>{list.name}</h2>
                 <p>Jeux :</p>
                 <div className={styles.gameList}>
-
-                {gamesids.map((gameId, index) => {
-                    return (
-                        <p key={index}>{gameId}</p>
-                    )
-                })}
-                    {/* {games.map((track, index) => (
-                    <GameItem key={index} track={track} ></GameItem>
+                    <div className={styles.cardGameContainer}>
+                    {gamesDatas?.map(game => (
+                        <GameCard key={game.id} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
                     ))}
-                    
-                    {test.map((game, index) => (
-                    <GameItem key={index} game={game} ></GameItem>
-                    ))} */}
+                    </div>
                 </div>
             </div>
         :

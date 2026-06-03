@@ -1,10 +1,13 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { searchGameAchievements, searchGameById, searchGameTrailer } from "../service/axios";
+import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer } from "../service/axios";
 import reformatDate from "../service/ReformatDate";
 import { useEffect, useState } from "react";
 import styles from "./Details.module.css";
+import { useAuth } from "../service/AuthContext";
 
 export default function Details(){
+    const { user } = useAuth()
+
     const [queryParam] = useSearchParams();
     const id = queryParam.get("id")
     const navigate = useNavigate();
@@ -75,6 +78,50 @@ export default function Details(){
         loadTrailers();
     }, [id, trailersPage])
 
+    const [displayAddToPlaylistPopup, setDisplayAddToPlaylistPopup] = useState(false)
+    const [userLists, setUserLists] = useState([])
+    const [listTarget, setListTarget] = useState("")
+    const [addGameError, setAddGameError] = useState("")
+
+    const handleGetUserLists = async () => {
+        if (!user) {
+            return
+        }
+
+        try {
+            const lists = await getMyLists()
+            setUserLists(lists.data)
+            console.log(lists.data)
+        } catch (error) {
+            setAddGameError(error)
+            console.error(`An error occured during the list loading: ${error}`);
+
+        }
+    }
+
+    useEffect(() => {
+        handleGetUserLists()
+    }, [user])
+
+    const handleAddGametoList = async () => {
+        if (!listTarget) {
+            return
+        }
+
+        try {
+            const payload = {
+                listId: listTarget,
+                gameId: id
+            }
+            console.log(payload)
+            const result = await addGameToList(payload)
+            console.log(result)
+            setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup)
+        } catch (error) {
+            console.error(`An error occured during the list loading: ${error}`);
+        }
+    }
+
     return (
         loading ? (
             <div className={styles.mainLoading}>
@@ -84,6 +131,34 @@ export default function Details(){
             <div className={styles.mainContainer}>
                 <h1 className={styles.Title}>{game.name}</h1>
                 <img src={game.background_image} height={1080/2} className={styles.gameCover} alt={`${game.name} cover image`}/>
+
+                <div className={styles.addToPlaylistContainer}>
+                    {user?
+                            <>
+                                <button onClick={() => {setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup)}} className={styles.addToPlaylistButton}>Ajouter à une playlist</button>
+                                {displayAddToPlaylistPopup && 
+                                    <div className={styles.addToPlaylistPopup}>
+                                        <div className={styles.popup}>
+                                            <select onChange={(event) => {setListTarget(event.target.value)}} className={styles.listselecter}>
+                                                <option value="">Selectionner une playlist</option>    
+                                                {userLists?.map((list, index) => { return (
+                                                    <option key={index} value={list._id}>{list.name}</option>
+                                                )})}
+                                            </select>
+                                            
+                                            <div className={styles.validPart}>
+                                                <button onClick={handleAddGametoList} className={styles.addToPlaylistButton}>Ajouter</button>
+                                                <button className={styles.addToPlaylistButton} onClick={() => {setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup)}} className={styles.echapButton}>X</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </>
+                        :
+                            <Link to={'/Account'} className={styles.addToPlaylistText}>Pour ajouter le jeu a une playlist veuillez vous connecter</Link>
+                    }
+                </div>
+
                 <p className={styles.gameDescription}>{game.description_raw}</p>
                 <p className={styles.releaseDate}>{reformatDate(game.released)}</p>
                 <p className={styles.rating}>⭐{game.rating}⭐</p>

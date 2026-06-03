@@ -91,9 +91,8 @@ const getGamesFromList = async (req, res) => {
         } else if (list.private === false || String(req.user.userRole) === "admin" || (String(list.userId) === String(req.user.userId))) {
             const gamesInList = await ListGames.find({listId: req.body.listId})
             const gameIds = gamesInList.map(t => t.gameId)
-            const games = await Game.find({ _id: { $in: gameIds } })
 
-            return res.status(200).json(games)
+            return res.status(200).json(gameIds)
         }
         return res.status(409).json({message: "Unauthorized operation"})
     } catch (error) {
@@ -102,14 +101,18 @@ const getGamesFromList = async (req, res) => {
 }
 
 const addGameToList = async (req, res)=> {
-    try {     
+    try {    
+        if (!req.user) {
+             return res.status(401).json({ message: "Not authenticated" });
+        } 
+        
         const list = await List.findById(req.body.listId)
         if (!list) {
             return res.status(404).json({message: "There is no existing list with this id"})
         }          
 
-        if (String(list.userId) !== String(req.user.userId) || String(req.user.userRole) !== "admin") {
-            return res.status(401).json({message: "Unauthorized operation, the user is not the owner of the list"})
+        if (String(list.userId) !== String(req.user.userId) && String(req.user.userRole) !== "admin") {
+            return res.status(403).json({message: "Unauthorized operation, the user is not the owner of the list"})
         }
 
         const AlreadyInList = await ListGames.findOne({listId: req.body.listId, gameId: req.body.gameId})

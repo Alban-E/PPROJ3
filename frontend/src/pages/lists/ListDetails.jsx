@@ -42,12 +42,13 @@ export default function ListDetails() {
 
 
     const getGamesInformations = async () => {
-        setGamesDatas([])
+        let games = []
         for (const gameId of gamesids){
             const gameData = await searchGameById({gameId: gameId})
 
-            setGamesDatas((prev) => [...prev, gameData.data])
+            games.push(gameData.data)
         }
+        setGamesDatas(games)
     }
 
     useEffect(() => {
@@ -61,9 +62,9 @@ export default function ListDetails() {
                 <p>Jeux :</p>
                 <div className={styles.gameList}>
                     <div className={styles.cardGameContainer}>
-                    {gamesDatas?.map(game => (
-                        <GameCard key={game.id} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
-                    ))}
+                    {gamesDatas?.map((game, index) => { return (
+                        <GameCard key={index} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
+                    )})}
                     </div>
                 </div>
             </div>

@@ -13,6 +13,10 @@
     color: red;
 }
 
+.updatedPassword{
+    color: green;
+}
+
 .profileInformations{
     width: 90%;
     display: flex;
@@ -25,9 +29,20 @@
     gap: 1rem;
 }
 
-.privateButton, .passwordButton{
+.privateButton, .passwordInput, .passwordButton, .disconnectButton, .bioInput, .bioButton, .updateBioButton{
     font: inherit;
     padding: 2px 5px;
     border-radius: 5px;
     border: solid 1px black;
+}
+
+.bioInput, .passwordInput{
+    width: 60%;
+    margin-right: 0.5rem;
+}
+
+.disconnectButton{
+    margin-top: 2rem;
+    align-self: center;
+    width: 40%;
 }

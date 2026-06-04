@@ -7,22 +7,40 @@ import styles from "./profile.module.css"
 export default function Profile() {
   const { user, logout, checkAuth } = useAuth()
 
-  const [displayPasswordPart, setDisplayPasswordPart] = useState(false)
-  const [newPassword, setNewPassword] = useState("")
-  const [passwordError, setPasswordError] = useState("")
-
   const updateUser = async (payload) => {
     try {
       setPasswordError("")
-      console.log("Payload: ", payload)
       const res = await updateUserById(user._id, payload)
-      console.log("Response:", res.status, res.data?.message);
-      await checkAuth()
       return res
     } catch (error) {
       console.error(`An error occured during the password update: ${error.message}`);
     }
   }
+
+  // Bio Part
+  const [displayUpdateBioPart, setDisplayUpdateBioPart] = useState(false)
+  const [newBio, setNewBio] = useState("")
+  const [bioError, setBioError] = useState("")
+  const [bioUpdated, setBioUpdated] = useState(false)
+
+  const updateBio = async () => {
+    if(!newBio){
+      setBioError("Nouvelle bio non définie")
+      return
+    }
+
+    const payload = {bio: newBio}
+    const res = await updateUser(payload)
+    await checkAuth()
+    setDisplayUpdateBioPart(!displayUpdateBioPart)
+    setBioUpdated(true)
+  }
+
+  // Password Part
+  const [displayUpdatePasswordPart, setDisplayUpdatePasswordPart] = useState(false)
+  const [newPassword, setNewPassword] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const [passwordUpdated, setPasswordUpdated] = useState(false)
 
   const updatePassword = async () => {
     if(!newPassword){
@@ -31,41 +49,67 @@ export default function Profile() {
     }
       const payload = {password: newPassword}
       const res = await updateUser(payload)
-      setDisplayPasswordPart(!displayPasswordPart)
+      setDisplayUpdatePasswordPart(!displayUpdatePasswordPart)
+      setPasswordUpdated(true)
   }
 
+  // Private state Part
   const updatePrivateState = async () => {
     const payload = {is_private: !user.is_private}
     const res = await updateUser(payload)
+    await checkAuth()
   }
 
+  // console.log("User: ", user)
+  
   return (
     <div className={styles.mainContainer}>
       <h1>Profil</h1>
       <div className={styles.profileInformations}>
         <h2>Bienvenue {user.username}</h2>
-        <p>Nom d'utilisateur: {user.username}</p>
 
+        <div className={styles.bioPart}>
+          <p>Bio:</p>
+          {bioUpdated && <p className={styles.bioUpdated}>Bio mise à jour</p>}
+          {bioError && <p className={styles.bioError}>{bioError}</p>}
+
+          <p className={styles.bio}>{user.bio}</p>
+          {displayUpdateBioPart?
+            <>
+              <input type="text" placeholder="Bio" onChange={(e) => {setNewBio(e.target.value)}} className={styles.bioInput}/>
+              <button onClick={() => {updateBio()}} className={styles.bioButton}>Valider</button>
+              <button onClick={() => {setDisplayUpdateBioPart(false)}} className={styles.bioButton}>Annuler</button>
+
+            </>
+          :
+            <button onClick={() => {setDisplayUpdateBioPart(true); setBioUpdated(false); setNewBio("")}} className={styles.updateBioButton}>Modifier la bio</button>
+          }
+        </div>
 
         <div className={styles.passwordPart}>
-          {displayPasswordPart ? (
+          <p>Mot de passe:</p>
+          {passwordUpdated && <p className={styles.updatedPassword}>Mot de passe mis à jour</p>}
+          {passwordError && <p className={styles.passwordError}>{passwordError}</p>}
+
+          {displayUpdatePasswordPart ? (
             <>
-              {passwordError && <p className={styles.passwordError}>{passwordError}</p>}
-              <input type="password" value={newPassword} onChange={(e) => {setNewPassword(event.target.value)}} placeholder="Nouveau mot de passe" className={styles.passwordButton}/>
+              <input type="password" value={newPassword} onChange={(e) => {setNewPassword(e.target.value)}} placeholder="Nouveau mot de passe" className={styles.passwordInput}/>
               <button onClick={() => {updatePassword()}} className={styles.passwordButton}>Valider</button>
-              <button onClick={() => {setDisplayPasswordPart(!displayPasswordPart)}} className={styles.passwordButton}>Annuler</button>
+              <button onClick={() => {setDisplayUpdatePasswordPart(false)}} className={styles.passwordButton}>Annuler</button>
             </>
           ):
-            <button onClick={() => {setDisplayPasswordPart(!displayPasswordPart)}} className={styles.passwordButton}>Changer le mot de passe</button>
+            <>
+              <button onClick={() => {setDisplayUpdatePasswordPart(true); setPasswordUpdated(false); setNewPassword("")}} className={styles.passwordButton}>Changer le mot de passe</button>
+            </>
           }
         </div>
 
         <div className={styles.privatePart}>
-          <p>Confidentialité: {user.is_private? "privé" : "public"}</p>
-          <button className={styles.privateButton} onClick={() => {updatePrivateState()}} >Passer en {user.is_private ? "public" : "privé"}</button>
+          <p>Visibilité: {user.is_private? "privée" : "publique"}</p>
+          <button className={styles.privateButton} onClick={() => {updatePrivateState()}} >Passer en {user.is_private ? "publique" : "privée"}</button>
         </div>
-        <p>Modifier les données etc etc etc</p>
-        <button onClick={logout} className={styles.passwordButton}>Se déconnecter</button>
+
+        <button onClick={logout} className={styles.disconnectButton}>Se déconnecter</button>
       </div>
 
       <Lists className={styles.listPart}/>

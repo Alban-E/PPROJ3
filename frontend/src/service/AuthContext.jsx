@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
 
   const checkAuth = async () => {
     try {
+      setLoading(true)
       const res = await checkConnexion()
       setUser(res.data)
     } catch (error) {
@@ -39,7 +40,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login: loginUser, logout: logoutUser }}>
+    <AuthContext.Provider value={{ user, loading, login: loginUser, logout: logoutUser, checkAuth }}>
       {children}
     </AuthContext.Provider>
   )

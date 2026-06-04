@@ -155,10 +155,10 @@ const updateUserById = async (req, res) => {
                 user.avatar_url = avatar_url
             }
             if (bio) {
-                user.bio = Boolean(bio)
+                user.bio = String(bio)
             }
-            if (is_private) {
-                user.is_private = is_private
+            if (is_private !== undefined) {
+                user.is_private = Boolean(is_private)
             }
             if (role) {
                 user.role= String(role) === "NewAdminRole"? "admin" : "user"

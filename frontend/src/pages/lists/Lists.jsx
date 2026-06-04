@@ -14,7 +14,6 @@ export default function Lists() {
 
   const newList = async () => {
     if (listData.listName){
-      console.log("Treat the datas provided: ", listData); 
       try {
         const res = await createList(listData)
         await updateUserLists()
@@ -28,7 +27,6 @@ export default function Lists() {
           console.log(error)
         }
       }
-
     } else {
       alert("Veuillez Entrer un nom de playlist")
     }
@@ -47,7 +45,6 @@ export default function Lists() {
     try {
       const lists = await getMyLists()
       setUserLists(lists.data)
-      console.log(lists.data)
     } catch (error) {
       console.log(error)
     }

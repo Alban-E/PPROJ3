@@ -5,8 +5,29 @@
     align-items: center;
 }
 
+.passwordPart{
+    margin-top: 1rem;
+}
+
+.passwordError{
+    color: red;
+}
+
 .profileInformations{
     width: 90%;
     display: flex;
     flex-direction: column;
+}
+
+.privatePart{
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.privateButton, .passwordButton{
+    font: inherit;
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: solid 1px black;
 }

@@ -58,11 +58,11 @@ export default function Lists() {
   }, [user])
 
   return (
-    <div>
-      <h2>Playlist</h2>
+    <div className={styles.mainContainer}>
+      <h2 className={styles.title}>Listes</h2>
       {user ? 
         <>
-          <button onClick={() => setShowNewListPopUp(true)}>Créer une playlist</button>
+          <button onClick={() => setShowNewListPopUp(true)} className={styles.createListButton}>Créer une playlist</button>
 
           {showNewListPopup && (
             <div className={styles.popup}>

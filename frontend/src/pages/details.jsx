@@ -91,11 +91,8 @@ export default function Details(){
         try {
             const lists = await getMyLists()
             setUserLists(lists.data)
-            console.log(lists.data)
         } catch (error) {
-            setAddGameError(error)
-            console.error(`An error occured during the list loading: ${error}`);
-
+            console.error(`An error occured when loading the user's list: ${error}`);
         }
     }
 
@@ -105,20 +102,26 @@ export default function Details(){
 
     const handleAddGametoList = async () => {
         if (!listTarget) {
+            setAddGameError("Veuillez sélectionner une liste")
             return
         }
-
+        
+        setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup)
         try {
             const payload = {
                 listId: listTarget,
                 gameId: id
             }
-            console.log(payload)
             const result = await addGameToList(payload)
-            console.log(result)
-            setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup)
+            setAddGameError("")
         } catch (error) {
-            console.error(`An error occured during the list loading: ${error}`);
+            if (error?.response?.status === 409){
+                setAddGameError("Ce jeu est déjà dans cette liste")
+                console.error(`An error occured when the game was added to the list: ${error.message}`);
+                return
+            }
+            setAddGameError(error?.response?.data?.message ||"une erreur est survenue")
+            console.error(`An error occured when the game was added to the list: ${error.message}`);
         }
     }
 
@@ -135,7 +138,10 @@ export default function Details(){
                 <div className={styles.addToPlaylistContainer}>
                     {user?
                             <>
-                                <button onClick={() => {setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup)}} className={styles.addToPlaylistButton}>Ajouter à une playlist</button>
+                                <div className={styles.displayPopupContainer}>
+                                    <button onClick={() => {setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup); setListTarget("")}} className={styles.addToPlaylistButton}>Ajouter à une playlist</button>
+                                    {addGameError && <p className={styles.errorMessage}>{addGameError}</p>}
+                                </div>
                                 {displayAddToPlaylistPopup && 
                                     <div className={styles.addToPlaylistPopup}>
                                         <div className={styles.popup}>

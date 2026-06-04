@@ -31,6 +31,14 @@
     filter: saturate(0.92);
 }
 
+.displayPopupContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+}
+
 .addToPlaylistContainer{
     display: flex;
     justify-content: center;
@@ -49,6 +57,12 @@
 .addToPlaylistButton:hover{
     background-color: #4a4640;
     color: #f5f2ee;
+}
+
+.errorMessage{
+    color: red;
+    font-size: large;
+    margin-top: 0.5rem;
 }
 
 .addToPlaylistPopup{
@@ -89,10 +103,11 @@
 .listselecter{
     padding: 5px 10px;
     border: solid 2px #4a4640;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     font: inherit;
     background-color: #f5f2ee;
 }
+
 .listselecter:hover{
     background-color: lightgray;
 }

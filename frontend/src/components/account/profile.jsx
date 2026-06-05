@@ -81,7 +81,7 @@ export default function Profile() {
   
   return (
     <div className={styles.mainContainer}>
-      <h1>Profil</h1>
+      <h1 className={styles.title}>Profil</h1>
       <div className={styles.profileInformations}>
         <div className={styles.welcomeContainer}>
           <h2 className={styles.welcomeTitle}>Bienvenue {user.username}</h2>

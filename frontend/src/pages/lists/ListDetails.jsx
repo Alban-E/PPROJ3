@@ -8,7 +8,7 @@ export default function ListDetails() {
     const [searchParams]  = useSearchParams()
     const id = searchParams.get('id')
     const [list, setList] = useState({name: "", imageUrl: ""})
-    const [gamesids, setGamesIds] = useState([])
+    const [gamesIds, setGamesIds] = useState([])
     const [gamesDatas, setGamesDatas] = useState([])
 
     const [loading, setLoading] = useState(true)
@@ -43,7 +43,7 @@ export default function ListDetails() {
 
     const getGamesInformations = async () => {
         let games = []
-        for (const gameId of gamesids){
+        for (const gameId of gamesIds){
             const gameData = await searchGameById({gameId: gameId})
 
             games.push(gameData.data)
@@ -53,23 +53,22 @@ export default function ListDetails() {
 
     useEffect(() => {
         getGamesInformations()
-    }, [gamesids])
+    }, [gamesIds])
     
-    return (
-        authorized ?
-            <div className={styles.content}>
-                <h2 className={styles.title}>{list.name}</h2>
-                <p>Jeux :</p>
-                <div className={styles.gameList}>
-                    <div className={styles.cardGameContainer}>
+    return ( authorized ?
+        <div className={styles.content}>
+            <h2 className={styles.title}>{list.name}</h2>
+            <p className={styles.listVisibility}>Visibilité: {list.private? "privée" : "publique"}</p>
+            <div className={styles.gameList}>
+                <div className={styles.cardGameContainer}>
                     {gamesDatas?.map((game, index) => { return (
                         <GameCard key={index} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
                     )})}
-                    </div>
                 </div>
             </div>
-        :
-            <p>Vous n'êtes pas autorisé à acceder à cette playlist</p>
+        </div>
+    :
+        <p>Vous n'êtes pas autorisé à acceder à cette playlist</p>
         
     )
 }

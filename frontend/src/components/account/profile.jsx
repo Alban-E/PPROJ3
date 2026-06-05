@@ -17,6 +17,23 @@ export default function Profile() {
     }
   }
 
+  // Avatar part
+  const [displayUpdateAvatarPart, setDisplayUpdateAvatarPart] = useState(false)
+  const [newAvatarUrl, setNewAvatarUrl] = useState("")
+  const [avatarError, setAvatarError] = useState("")
+
+  const updateAvatar = async () => {
+    if(!newAvatarUrl){
+      setAvatarError("Avatar non définit")
+      return
+    }
+
+    const payload = {avatar_url: newAvatarUrl}
+    const res = await updateUser(payload)
+    await checkAuth()
+    setDisplayUpdateAvatarPart(!displayUpdateBioPart)
+  }
+
   // Bio Part
   const [displayUpdateBioPart, setDisplayUpdateBioPart] = useState(false)
   const [newBio, setNewBio] = useState("")
@@ -60,13 +77,31 @@ export default function Profile() {
     await checkAuth()
   }
 
-  // console.log("User: ", user)
+  console.log("User: ", user)
   
   return (
     <div className={styles.mainContainer}>
       <h1>Profil</h1>
       <div className={styles.profileInformations}>
-        <h2>Bienvenue {user.username}</h2>
+        <div className={styles.welcomeContainer}>
+          <h2 className={styles.welcomeTitle}>Bienvenue {user.username}</h2>
+          
+          {user?.avatar_url && <img src={user.avatar_url} alt={`${user.username}'s avatar`} className={styles.avatar}/>}
+        </div>
+
+        <div className={styles.updateAvatarContainer}>
+          {displayUpdateAvatarPart?
+            <>
+              <input type="text" placeholder="Avatar url" onChange={(e) => {setNewAvatarUrl(e.target.value)}} className={styles.avatarInput}/>
+              <button onClick={() => {updateAvatar()}} className={styles.avatarButton}>Valider</button>
+              <button onClick={() => {setDisplayUpdateAvatarPart(false)}} className={styles.avatarButton}>Annuler</button>
+
+            </>
+          :
+            <button onClick={() => {setDisplayUpdateAvatarPart(true); setNewAvatar("")}} className={styles.avatarButton}>Modifier avatar</button>
+          }
+        </div>
+
 
         <div className={styles.bioPart}>
           <p>Bio:</p>

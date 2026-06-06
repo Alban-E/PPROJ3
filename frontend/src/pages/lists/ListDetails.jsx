@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { getListById, getGamesFromList, getgamesById, searchGameById } from "../../service/axios";
+import { getListById, getGamesFromList, getgamesById, searchGameById, updateList } from "../../service/axios";
 import { useEffect, useState, Fragment } from "react";
 import styles from './listDetails.module.css'
 import GameCard from "../../components/card/GameCard";
@@ -14,16 +14,29 @@ export default function ListDetails() {
     const [loading, setLoading] = useState(true)
     const [authorized, setAuthorized] = useState(true); 
 
-    const updateGamesIds = async() => {
+    const getList = async () => {
         try {
             const payload = {listId: id}
             const listRes = await getListById(payload)
             setList(listRes.data)
+        } catch (error) {
+            const status = error.response?.status
+            if (status === 409) {
+                setAuthorized(false)
+                console.log('Unauthorized operation')
+            }
+            else {
+                console.log("error:", error)
+            }
+        }
+    }
 
+    const updateGamesIds = async() => {
+        try {
+            await getList()
+            const payload = {listId: id}
             const gameRes = await getGamesFromList(payload)
             setGamesIds(gameRes.data)
-            console.log(gameRes.data)
-
         } catch (error) {
             const status = error.response?.status
             if (status === 409) {
@@ -54,11 +67,28 @@ export default function ListDetails() {
     useEffect(() => {
         getGamesInformations()
     }, [gamesIds])
+
     
+    const updateListVisibility = async () => {
+        const payload = {
+            private: !list.private,
+            listId: list._id
+        }
+        await updateList(payload)
+        await getList()
+    }
+
+    // console.log(list)
+
     return ( authorized ?
         <div className={styles.content}>
             <h2 className={styles.title}>{list.name}</h2>
-            <p className={styles.listVisibility}>Visibilité: {list.private? "privée" : "publique"}</p>
+            
+            <div className={styles.visibilityContainer}>
+                <p className={styles.listVisibility}>Visibilité: {list.private? "privée" : "publique"}</p>
+                <button onClick={()=> {updateListVisibility()}} className={styles.changeVisibilityButton}>Passer la liste en {list.private? "publique" : "privée"}</button>
+            </div>
+
             <div className={styles.gameList}>
                 <div className={styles.cardGameContainer}>
                     {gamesDatas?.map((game, index) => { return (

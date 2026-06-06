@@ -59,6 +59,7 @@
 
 .privateButton, .passwordInput, .passwordButton, .disconnectButton, .bioInput, .bioButton, .updateBioButton, .avatarButton, .avatarInput{
     font: inherit;
+    font-size: small;
     padding: 2px 5px;
     border-radius: 5px;
     border: solid 1px black;

@@ -7,7 +7,7 @@ const createList = async (req, res) => {
     try {
         const listWithSameName = await List.findOne({name: req.body.listName, userId: req.user.userId})
         if (listWithSameName) {
-            return res.status(409).json({message: `A list with the same name (${req.query.listName}) already exist`})
+            return res.status(409).json({message: `A list with the same name (${req.body.listName}) already exist`})
         }
 
         const list = await List.create({
@@ -53,7 +53,7 @@ const getMyLists = async (req, res) => {
 
 const getUserPublicLists = async (req, res) => {
     try {
-        const lists = await List.find({userId: req.query.userid, private: false})
+        const lists = await List.find({userId: req.body.userid, private: false})
         
         if(!lists){
             return res.status(404).json({message: "No public list found"})
@@ -67,7 +67,7 @@ const getUserPublicLists = async (req, res) => {
 
 const getUserLists = async (req, res) => {
     try {
-        const lists = await List.find({userId: req.query.userId})
+        const lists = await List.find({userId: req.body.userId})
         
         if(!lists){
             return res.status(404).json({message: "No list found"})
@@ -96,7 +96,7 @@ const getAllLists = async (req, res) => {
 // Update
 const updateList = async (req, res) => {
     try {
-        const list = await List.findById(req.query.listId)
+        const list = await List.findById(req.body.listId)
         
         if (!list) {
             return res.status(404).json({message: "List not found"})
@@ -112,8 +112,9 @@ const updateList = async (req, res) => {
                     list.name = listName
                 }
             }
-            if (private) {
-                list.private = private
+
+            if (private !== undefined) {
+                list.private = Boolean(private)
             }
             
             await list.save();
@@ -129,7 +130,7 @@ const updateList = async (req, res) => {
 // Delete
 const deleteList = async (req, res) => {
     try {
-        const list = await List.findById(req.query.listId)
+        const list = await List.findById(req.body.listId)
         
         if (!list) {
             return res.status(404).json({message: "List not found"})

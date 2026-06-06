@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { getListById, getGamesFromList, getgamesById, searchGameById, updateList } from "../../service/axios";
+import { getListById, getGamesFromList, getgamesById, searchGameById, updateList, removeGameFromList } from "../../service/axios";
 import { useEffect, useState, Fragment } from "react";
 import styles from './listDetails.module.css'
 import GameCard from "../../components/card/GameCard";
@@ -78,7 +78,15 @@ export default function ListDetails() {
         await getList()
     }
 
-    // console.log(list)
+    const removeFromPlaylist = async (gameId) => {
+        const payload = {
+            gameId: gameId,
+            listId: list._id
+        }
+        console.log("payload: ", payload)
+        await removeGameFromList(payload)
+        await updateGamesIds()
+    }
 
     return ( authorized ?
         <div className={styles.content}>
@@ -91,9 +99,15 @@ export default function ListDetails() {
 
             <div className={styles.gameList}>
                 <div className={styles.cardGameContainer}>
-                    {gamesDatas?.map((game, index) => { return (
-                        <GameCard key={index} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
-                    )})}
+                    {gamesDatas?.length > 0 ?(
+                        gamesDatas?.map((game, index) => { return (
+                            <div className={styles.gameCard} key={index}>
+                                <GameCard id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
+                                <button className={styles.removeFromPlaylistButton} onClick={() => {removeFromPlaylist(game.id)}}>Supprimer de la playlist</button>
+                            </div>
+                        )})):
+                            <p>Cette playlist est vide</p>
+                    }
                 </div>
             </div>
         </div>

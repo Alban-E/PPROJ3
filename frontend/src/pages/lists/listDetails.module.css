@@ -56,7 +56,19 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
     gap: 1rem;
-    justify-items: center;
 
     width: 90%;
+}
+
+.removeFromPlaylistButton{
+    width: 100%;
+    font: inherit;
+    font-size: small;
+    border-radius: 5px;
+    border: solid 1px lightgray;
+}
+
+.removeFromPlaylistButton:hover{
+    background-color: lightgray;
+    border: solid 1px black;
 }

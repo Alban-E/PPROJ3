@@ -139,7 +139,7 @@ const removeGameFromList = async (req, res) => {
             return res.status(404).json({message: "There is no existing list with this id"})
         }          
 
-        if (String(list.userId) !== String(req.user.userId) || String(req.user.userRole) !== "admin") {
+        if (String(list.userId) !== String(req.user.userId) && String(req.user.userRole) !== "admin") {
             return res.status(401).json({message: "Unauthorized operation, the user is not the owner of the list"})
         }
 

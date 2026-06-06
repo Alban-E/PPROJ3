@@ -127,7 +127,7 @@ export const getGamesFromList = async (payload) => {
 }
 
 export const removeGameFromList = async (payload) => {
-    const res = await axiosInstance.delete('/games/list', payload)
+    const res = await axiosInstance.delete('/games/list', {data: payload})
     return res
 }
 //#endregion

@@ -103,6 +103,7 @@
 .listselecter{
     padding: 5px 10px;
     border: solid 2px #4a4640;
+    width: 80%;
     border-radius: 10px;
     font: inherit;
     background-color: #f5f2ee;

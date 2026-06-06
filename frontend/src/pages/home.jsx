@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
 import GameCard from "../components/card/GameCard";
-import { searchGames } from "../service/axios";
+import { searchGames, updateFeedback } from "../service/axios";
 import styles from "./home.module.css";
 
 export default function Home(){
-    let [games, setGames] = useState([]);
-    let [loading, setLoading] = useState(true);
-    let [currentPage, setCurrentPage] = useState(1);
-    let [filters,setFilters] = useState({platform: null, store: null, ordering: null});
-    let [reverseOrdering, setReverseOrdering] = useState(true); 
-    let [isNextPage, setIsNextPage] = useState(false);
+    const [resultCount, setResultCount] = useState(0) 
+    const [games, setGames] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [titleToSearch, setTitleToSearch] = useState("")
+    const [titleToSearchDebounce, setTitleToSearchDebounce] = useState("")
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filters,setFilters] = useState({platform: null, store: null, ordering: null});
+    const [reverseOrdering, setReverseOrdering] = useState(true); 
+    const [isNextPage, setIsNextPage] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setTitleToSearchDebounce(titleToSearch)
+        }, 500);
+
+        return () => {clearTimeout(timer)}
+    }, [titleToSearch])
 
     useEffect( () => { 
         async function loadGames() {                
@@ -17,33 +28,38 @@ export default function Home(){
                 setLoading(true);
 
                 const orderingParam = filters.ordering? (reverseOrdering? `-${filters.ordering}`: filters.ordering) : null;
+                const title = titleToSearchDebounce.trim().split(" ").join("-")
                 const payload = {
+                  search: title,
+                  search_exact: (titleToSearchDebounce? true : null),
                   platforms: filters.platform,
                   stores: filters.store,
                   ordering: orderingParam,
                   page: currentPage,
-                  publishers: null,
                   page_size: 40
                 }
+                console.log(payload)
                 const result = await searchGames(payload);
-                console.log(result.data)
 
                 setIsNextPage(Boolean(result.data.next))
                 setGames(result.data.results);
+                setResultCount(result.data.count)
             } catch (error) {
                 console.error(`An error occured: ${error}`)
             }
             finally{ setLoading(false); }
         }   
         loadGames()
-        } , [filters, currentPage, reverseOrdering]);
+        } , [filters, currentPage, reverseOrdering, titleToSearchDebounce]);
     
 
     return (
         <>
-          <div className={styles.filters}>
+          <div className={styles.filtersContainer}>
+            <input type="text" placeholder="Rechercher..." value={titleToSearch} onChange={(e) => {setTitleToSearch(e.target.value)}} className={styles.searchInput}/>
+            <div className={styles.filters}>
                 <select onChange={(e) => {setCurrentPage(1); setReverseOrdering(false); setFilters({...filters, platform: e.target.value || null})}} className={styles.platformFilterSelect}>
-                    <option value="">Toutes les plateformes</option>
+                <option value="">Toutes les plateformes</option>
                     <option value="1">Xbox One</option>
                     <option value="3">iOS</option>
                     <option value="4">PC</option>
@@ -119,6 +135,7 @@ export default function Home(){
                 </select>
 
                 <button disabled={!filters.ordering} onClick={() => setReverseOrdering(prev => !prev)} className={styles.reverseOrderingButton}>⬇️⬆️</button>
+            </div>
           </div>
           
           <div className={styles.gamesContainer}>
@@ -126,9 +143,13 @@ export default function Home(){
               <p className={styles.loading}>Chargement ...</p>
             ) : (
               <>
+
                 <div className={styles.gamesPageButtons}>
-                  <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
-                  <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                  <p>Jeux trouvés: {resultCount}</p>
+                  <div>
+                    <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
+                    <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                  </div>
                 </div>
 
 

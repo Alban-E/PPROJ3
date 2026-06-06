@@ -15,6 +15,8 @@ const generateRawgSearchCacheKey = (filters = {}) => {
 
 const getGames = async (req, res) =>{
     const filters = {
+        search: req.body.search,
+        search_exact: req.body.search_exact,
         platforms: req.body.platforms, 
         stores: req.body.stores, 
         ordering: req.body.ordering, 

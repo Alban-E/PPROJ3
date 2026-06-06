@@ -1,4 +1,21 @@
 /* ── Filters ── */
+.filtersContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.searchInput{
+    width: 60%;
+    font: inherit;
+    border-radius: 20px;
+    border: solid 1px black;
+    padding: 5px 15px;
+}
+
+
 .filters {
     display: flex;
     flex-wrap: wrap;
@@ -67,13 +84,16 @@
 /* ── Pagination ── */
 .gamesPageButtons {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 8px;
     margin-top: 48px;
     padding-top: 24px;
     margin-bottom: 48px;
     border-top: 1px solid var(--border);
 }
+
 
 .gamesPreviousPage,
 .gamesNextPage {

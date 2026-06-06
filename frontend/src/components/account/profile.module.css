@@ -29,15 +29,15 @@
     border-radius: 50%;
 }
 
-.bio{
-    margin-left: 2rem;
+.updateBioButton{
+    margin-top: 0.5rem;
 }
 
 .passwordPart{
     margin-top: 1rem;
 }
 
-.passwordError{
+.passwordError, .bioError, .avatarError{
     color: red;
 }
 

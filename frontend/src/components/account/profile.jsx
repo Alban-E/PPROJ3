@@ -38,7 +38,6 @@ export default function Profile() {
   const [displayUpdateBioPart, setDisplayUpdateBioPart] = useState(false)
   const [newBio, setNewBio] = useState("")
   const [bioError, setBioError] = useState("")
-  const [bioUpdated, setBioUpdated] = useState(false)
 
   const updateBio = async () => {
     if(!newBio){
@@ -50,7 +49,6 @@ export default function Profile() {
     const res = await updateUser(payload)
     await checkAuth()
     setDisplayUpdateBioPart(!displayUpdateBioPart)
-    setBioUpdated(true)
   }
 
   // Password Part
@@ -88,13 +86,14 @@ export default function Profile() {
           
           {user?.avatar_url && <img src={user.avatar_url} alt={`${user.username}'s avatar`} className={styles.avatar}/>}
         </div>
+          {avatarError && <p className={styles.avatarError}>{avatarError}</p>}
 
         <div className={styles.updateAvatarContainer}>
           {displayUpdateAvatarPart?
             <>
               <input type="text" placeholder="Avatar url" onChange={(e) => {setNewAvatarUrl(e.target.value)}} className={styles.avatarInput}/>
               <button onClick={() => {updateAvatar()}} className={styles.avatarButton}>Valider</button>
-              <button onClick={() => {setDisplayUpdateAvatarPart(false)}} className={styles.avatarButton}>Annuler</button>
+              <button onClick={() => {setDisplayUpdateAvatarPart(false); setAvatarError("")}} className={styles.avatarButton}>Annuler</button>
 
             </>
           :
@@ -105,19 +104,18 @@ export default function Profile() {
 
         <div className={styles.bioPart}>
           <p>Bio:</p>
-          {bioUpdated && <p className={styles.bioUpdated}>Bio mise à jour</p>}
           {bioError && <p className={styles.bioError}>{bioError}</p>}
 
           <p className={styles.bio}>{user.bio}</p>
           {displayUpdateBioPart?
             <>
-              <input type="text" placeholder="Bio" onChange={(e) => {setNewBio(e.target.value)}} className={styles.bioInput}/>
+              <input type="text" placeholder="Nouvelle bio" onChange={(e) => {setNewBio(e.target.value)}} className={styles.bioInput}/>
               <button onClick={() => {updateBio()}} className={styles.bioButton}>Valider</button>
-              <button onClick={() => {setDisplayUpdateBioPart(false)}} className={styles.bioButton}>Annuler</button>
+              <button onClick={() => {setDisplayUpdateBioPart(false); setBioError("")}} className={styles.bioButton}>Annuler</button>
 
             </>
           :
-            <button onClick={() => {setDisplayUpdateBioPart(true); setBioUpdated(false); setNewBio("")}} className={styles.updateBioButton}>Modifier la bio</button>
+            <button onClick={() => {setDisplayUpdateBioPart(true); setNewBio("")}} className={styles.updateBioButton}>Modifier la bio</button>
           }
         </div>
 
@@ -130,7 +128,7 @@ export default function Profile() {
             <>
               <input type="password" value={newPassword} onChange={(e) => {setNewPassword(e.target.value)}} placeholder="Nouveau mot de passe" className={styles.passwordInput}/>
               <button onClick={() => {updatePassword()}} className={styles.passwordButton}>Valider</button>
-              <button onClick={() => {setDisplayUpdatePasswordPart(false)}} className={styles.passwordButton}>Annuler</button>
+              <button onClick={() => {setDisplayUpdatePasswordPart(false); setPasswordError("")}} className={styles.passwordButton}>Annuler</button>
             </>
           ):
             <>
@@ -140,8 +138,8 @@ export default function Profile() {
         </div>
 
         <div className={styles.privatePart}>
-          <p>Visibilité: {user.is_private? "privée" : "publique"}</p>
-          <button className={styles.privateButton} onClick={() => {updatePrivateState()}} >Passer en {user.is_private ? "publique" : "privée"}</button>
+          <p>Visibilité: {user.is_private? "privé" : "public"}</p>
+          <button className={styles.privateButton} onClick={() => {updatePrivateState()}} >Passer en {user.is_private ? "public" : "privé"}</button>
         </div>
 
         <button onClick={logout} className={styles.disconnectButton}>Se déconnecter</button>

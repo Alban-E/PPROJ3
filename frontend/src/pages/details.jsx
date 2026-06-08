@@ -144,8 +144,7 @@ export default function Details(){
                     setMyFeedback(null)
                     return
                 }
-                console.log(res.data)
-                setMyFeedback(res.data)
+                setMyFeedback(res.data[0])
             } catch (error) {
                 setMyFeedback(null)
                 const status = error.response?.status
@@ -223,7 +222,11 @@ export default function Details(){
                 <p className={styles.rating}>⭐{game.rating}⭐</p>
 
                 {myFeedback?
-                    <p>{user.username} a déjà un feedback sur ce jeu</p>
+                    <div className={styles.feedbackContainer}>
+                        <p>Vous avez déjà laissé un avis sur ce jeu</p>
+                        <p>Votre note: {myFeedback.rating}</p>
+                        <p>Votre commentaire: {myFeedback.comment}</p>
+                    </div>
                 :
                     <div className={styles.feedbackContainer}>
                         <p className={styles.feedbackError}>{feedbackError}</p>

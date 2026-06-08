@@ -141,13 +141,74 @@
     text-align: center;
     margin-bottom: 6px;
 }
-
-.rating {
+.rawgRating, .rating{
     font-family: 'DM Mono', monospace;
     font-size: 0.8rem;
     color: var(--text);
     text-align: center;
-    margin-bottom: 48px;
+}
+
+.feedbackContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    gap: 1.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.feedbackError{
+    color: red;
+}
+
+.commentPart{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.descriptionArea{
+    height: 5rem;
+    padding: 5px;
+    border-radius: 10px;
+    width: 95%;
+}
+
+.radioContainer{
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    width: 95%;
+    border-radius: 20px;
+}
+
+.radioInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px lightgray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.radioInput:hover{
+    background-color: lightgray;
+}
+
+.sendFeedbackButton, .deleteReviewButton{
+    font: inherit;
+    border: solid 1px black;
+    border-radius: 15px;
+    width: 30%;    
 }
 
 /* ── Sections ── */

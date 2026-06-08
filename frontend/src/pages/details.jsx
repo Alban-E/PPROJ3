@@ -128,7 +128,7 @@ export default function Details(){
     const [myFeedback, setMyFeedback] = useState(null)
     const [updateFeedback, setUpdateFeedback] = useState(0)
     const [comment, setComment] = useState("")
-    const [rating, setRating] = useState(0)
+    const [rating, setRating] = useState(null)
     const [feedbackError, setFeedbackError] = useState("")
 
     useEffect(() => {
@@ -171,6 +171,8 @@ export default function Details(){
             }
             const res =  await createFeedback(params)
             setUpdateFeedback(updateFeedback + 1)
+            setComment("")
+            setRating(null)
             setFeedbackError("")
         } catch (error) {
             console.log("Couldn't create feedback: ", error)
@@ -229,6 +231,7 @@ export default function Details(){
 
                 <p className={styles.gameDescription}>{game.description_raw}</p>
                 <p className={styles.releaseDate}>{reformatDate(game.released)}</p>
+                <p className={styles.rawgRating}>Note Rawg</p>
                 <p className={styles.rating}>⭐{game.rating}⭐</p>
 
                 <div className={styles.feedbackContainer}>
@@ -236,15 +239,18 @@ export default function Details(){
                     {myFeedback?
                         <>
                             <p>Vous avez déjà laissé un avis sur ce jeu</p>
-                            <p>Votre note: {myFeedback.rating}</p>
-                            <p>Votre commentaire: {myFeedback.comment}</p>
+                            <p>Votre note: {myFeedback.rating ? `${myFeedback.rating} ⭐` : "Aucune note"}</p>
+                            <div className={styles.commentPart}>
+                                <p>Votre commentaire:</p>
+                                <p>{myFeedback.comment? `${myFeedback.comment}` : "Aucun commentaire"}</p>
+                            </div>
                             <button className={styles.deleteReviewButton} onClick={() => {deleteMyReview()}}>Supprimer votre avis</button>
                         </>
                     :
                         <>
-                            <input type="text" placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value)}}/>
+                            <textarea placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value); setFeedbackError("")}} className={styles.descriptionArea}/>
 
-                            <fieldset>
+                            <fieldset className={styles.radioContainer} onChange={() => {setFeedbackError("")}}>
                                 <legend>Votre note :</legend>
                                 <div className={styles.radioInput}>
                                     <input type="radio" id="1" name="note" value="1" checked={rating === 1} onChange={(e) => setRating(Number(e.target.value))}/>

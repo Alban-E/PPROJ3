@@ -183,7 +183,7 @@ export const getUserFeedbacks = async (params) => {
 }
 
 export const getGameFeedbacks = async (params) => {
-    const res = await axiosInstance.get('/feedback/game', {params: params}, payload)
+    const res = await axiosInstance.get('/feedback/game', {params: params})
     return res
 }
 

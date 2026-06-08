@@ -113,20 +113,17 @@ const getAllUser = async (req, res) => {
 }
 
 const getUserById = async (req, res) => {
-    if ((req.user.userRole === 'admin') || (req.params.id === req.user.userId )){
-        try {
-            const users = await User.findById(req.params.id, {password: 0, oauth_provider: 0, oauth_id: 0, role: 0})
-            
-            if(!users){
-                return res.status(404).json({message: "No user found"})
-            }
-            
-            return res.status(200).json(users)
-        } catch (error) {
-            return res.status(500).json({message: error.message})
+    try {
+        const users = await User.findById(req.params.id, {password: 0, oauth_provider: 0, oauth_id: 0, role: 0})
+        
+        if(!users){
+            return res.status(404).json({message: "No user found"})
         }
+        
+        return res.status(200).json(users)
+    } catch (error) {
+        return res.status(500).json({message: error.message})
     }
-    return res.status(401).json({message: "Unauthorized operation"})
 }
 
 // Update

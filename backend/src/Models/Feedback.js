@@ -8,6 +8,6 @@ const feedbackSchema = new Schema({
     date: { type: Date, default: Date.now },
 })
 
-feedbackSchema.index({ trackId: 1, userId: 1 }, { unique: true })
+feedbackSchema.index({ gameId: 1, userId: 1 }, { unique: true })
 
 module.exports = model('Feedback', feedbackSchema)

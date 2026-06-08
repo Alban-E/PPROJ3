@@ -1,5 +1,5 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer, createFeedback, getMyGameFeedback, deleteFeedback } from "../service/axios";
+import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer, createFeedback, getMyGameFeedback, deleteFeedback, getGameFeedbacks, getUserByid } from "../service/axios";
 import reformatDate from "../service/ReformatDate";
 import { useEffect, useState } from "react";
 import styles from "./Details.module.css";
@@ -159,17 +159,21 @@ export default function Details(){
     }, [gameId, user, updateFeedback])
 
     const handleCritic = async () => {
+        if(!user){
+            return
+        }
+
         try {
             if(!comment && !rating){
                 setFeedbackError("Commentaire et note non définis")
                 return
             }
-            const params = {
+            const payload = {
                 comment: comment,
                 rating: rating,
                 gameId: gameId
             }
-            const res =  await createFeedback(params)
+            const res =  await createFeedback(payload)
             setUpdateFeedback(updateFeedback + 1)
             setComment("")
             setRating(null)
@@ -180,6 +184,10 @@ export default function Details(){
     }
 
     const deleteMyReview = async () => {
+        if(!user){
+            return
+        }
+
         try {
             const res = await deleteFeedback(myFeedback._id)
             setUpdateFeedback(updateFeedback + 1)
@@ -187,6 +195,42 @@ export default function Details(){
             console.log("Couldn't remove feedback: ", error)
             setFeedbackError("Une erreur est survenue durant la suppression de votre avis")
         }
+    }
+
+    const [gameFeedbacks, setGameFeedbacks] = useState([])
+    const [gameFeedbacksLoading, setGameFeedbacksLoading] = useState(true)
+
+
+    const fetchGameCritics = async () => {
+        setGameFeedbacksLoading(true)
+        
+        try {
+            const feedbacks = await getGameFeedbacks({gameId: gameId})
+            const enrichedFeedbacks = await Promise.all(
+                feedbacks.data.map(async (feedback) => ({
+                    ...feedback,
+                    username: await getUserUsername(feedback.userId)
+                }))
+            )
+
+            setGameFeedbacks(enrichedFeedbacks)
+            console.log("gameFeedback: ", enrichedFeedbacks)
+
+        } catch (error) {
+            console.error("Couldn't get game feedbacks: ", error)
+            setGameFeedbacks([])  // Reset si erreur
+        } finally {
+            setGameFeedbacksLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchGameCritics()
+    },[])
+
+    const getUserUsername = async (userId) => {
+        const res = await getUserByid(userId)
+        return res.data.username
     }
 
     return (
@@ -234,51 +278,74 @@ export default function Details(){
                 <p className={styles.rawgRating}>Note Rawg</p>
                 <p className={styles.rating}>⭐{game.rating}⭐</p>
 
-                <div className={styles.feedbackContainer}>
-                    <p className={styles.feedbackError}>{feedbackError}</p>
-                    {myFeedback?
-                        <>
-                            <p>Vous avez déjà laissé un avis sur ce jeu</p>
-                            <p>Votre note: {myFeedback.rating ? `${myFeedback.rating} ⭐` : "Aucune note"}</p>
-                            <div className={styles.commentPart}>
-                                <p>Votre commentaire:</p>
-                                <p>{myFeedback.comment? `${myFeedback.comment}` : "Aucun commentaire"}</p>
-                            </div>
-                            <button className={styles.deleteReviewButton} onClick={() => {deleteMyReview()}}>Supprimer votre avis</button>
-                        </>
-                    :
-                        <>
-                            <textarea placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value); setFeedbackError("")}} className={styles.descriptionArea}/>
+                    {user ?
+                        <div className={styles.feedbackContainer}>
+                            <p className={styles.feedbackError}>{feedbackError}</p>
+                            {myFeedback?
+                                <>
+                                    <p>Vous avez déjà laissé un avis sur ce jeu</p>
+                                    <p>Votre note: {myFeedback.rating ? `${myFeedback.rating} ⭐` : "Aucune note"}</p>
+                                    <div className={styles.commentPart}>
+                                        <p>Votre commentaire:</p>
+                                        <p>{myFeedback.comment? `${myFeedback.comment}` : "Aucun commentaire"}</p>
+                                    </div>
+                                    <button className={styles.deleteReviewButton} onClick={() => {deleteMyReview()}}>Supprimer votre avis</button>
+                                </>
+                            :
+                                <>
+                                    <textarea placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value); setFeedbackError("")}} className={styles.descriptionArea}/>
 
-                            <fieldset className={styles.radioContainer} onChange={() => {setFeedbackError("")}}>
-                                <legend>Votre note :</legend>
-                                <div className={styles.radioInput}>
-                                    <input type="radio" id="1" name="note" value="1" checked={rating === 1} onChange={(e) => setRating(Number(e.target.value))}/>
-                                    <label for="1">⭐</label>
+                                    <fieldset className={styles.radioContainer} onChange={() => {setFeedbackError("")}}>
+                                        <legend>Votre note :</legend>
+                                        <div className={styles.radioInput}>
+                                            <input type="radio" id="1" name="note" value="1" checked={rating === 1} onChange={(e) => setRating(Number(e.target.value))}/>
+                                            <label for="1">⭐</label>
+                                        </div>
+                                        <div className={styles.radioInput}>
+                                            <input type="radio" id="2" name="note" value="2" checked={rating === 2} onChange={(e) => setRating(Number(e.target.value))}/>
+                                            <label for="2">⭐⭐</label>
+                                        </div>
+                                        <div className={styles.radioInput}>
+                                            <input type="radio" id="3" name="note" value="3" checked={rating === 3} onChange={(e) => setRating(Number(e.target.value))}/>
+                                            <label for="3">⭐⭐⭐</label>
+                                        </div>
+                                        <div className={styles.radioInput}>
+                                            <input type="radio" id="4" name="note" value="4" checked={rating === 4} onChange={(e) => setRating(Number(e.target.value))}/>
+                                            <label for="4">⭐⭐⭐⭐</label>
+                                        </div>
+                                        <div className={styles.radioInput}>
+                                            <input type="radio" id="5" name="note" value="5" checked={rating === 5} onChange={(e) => setRating(Number(e.target.value))}/>
+                                            <label for="5">⭐⭐⭐⭐⭐</label>
+                                        </div>
+                                    </fieldset>
+                                    
+                                    <button className={styles.sendFeedbackButton} onClick={() => {handleCritic()}}>Envoyer</button>
+                                </>
+                            }
+                        </div>
+                    :
+                        <div className={styles.cannotFeedbackContainer}>
+                            <Link to={'/Account'} className={styles.notConnectedLink}>Pour ajouter un avis veuillez vous connecter</Link>
+                        </div>
+                    }
+
+
+                <div className={styles.communityFeedbackContainer}>
+                    {gameFeedbacksLoading ?
+                        <p>Chargement des avis de la communauté...</p>
+                    :
+                        gameFeedbacks.map((gameFeedback, index)=> {
+                            return(
+                                <div key={index} className={styles.gameFeedbackCard}>
+                                    <p>Date: {reformatDate(gameFeedback.date?.slice(0,10))}</p>
+                                    <p>User: {gameFeedback.username}</p>
+                                    <p>Note: {gameFeedback.rating} ⭐</p>
+                                    <p>Commentaire: {gameFeedback.comment}</p>
                                 </div>
-                                <div className={styles.radioInput}>
-                                    <input type="radio" id="2" name="note" value="2" checked={rating === 2} onChange={(e) => setRating(Number(e.target.value))}/>
-                                    <label for="2">⭐⭐</label>
-                                </div>
-                                <div className={styles.radioInput}>
-                                    <input type="radio" id="3" name="note" value="3" checked={rating === 3} onChange={(e) => setRating(Number(e.target.value))}/>
-                                    <label for="3">⭐⭐⭐</label>
-                                </div>
-                                <div className={styles.radioInput}>
-                                    <input type="radio" id="4" name="note" value="4" checked={rating === 4} onChange={(e) => setRating(Number(e.target.value))}/>
-                                    <label for="4">⭐⭐⭐⭐</label>
-                                </div>
-                                <div className={styles.radioInput}>
-                                    <input type="radio" id="5" name="note" value="5" checked={rating === 5} onChange={(e) => setRating(Number(e.target.value))}/>
-                                    <label for="5">⭐⭐⭐⭐⭐</label>
-                                </div>
-                            </fieldset>
-                            
-                            <button className={styles.sendFeedbackButton} onClick={() => {handleCritic()}}>Envoyer</button>
-                        </>
+                            )
+                        })
                     }
                 </div>
-
 
                 <div className={styles.trailerPart}>
                     {TrailersLoading ? (
@@ -405,5 +472,6 @@ export default function Details(){
 
                 <a href={game.website} target="_blank" rel="noreferrer" className={styles.gameWebSite}>{game.website}</a>
             </div>
-        ))
+        )
+    )
 }

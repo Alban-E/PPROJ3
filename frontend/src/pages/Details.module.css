@@ -46,7 +46,7 @@
     margin: 2rem 0;
 }
 
-.addToPlaylistButton{
+.addToPlaylistButton, .notConnectedLink{
     padding: 5px 10px;
     border: solid 2px #4a4640;
     border-radius: 10px;
@@ -54,7 +54,7 @@
     background-color: #f5f2ee;
 }
 
-.addToPlaylistButton:hover{
+.addToPlaylistButton:hover, .notConnectedLink:hover {
     background-color: #4a4640;
     color: #f5f2ee;
 }
@@ -157,11 +157,17 @@
     border-radius: 5px;
     gap: 1.5rem;
     padding-bottom: 0.5rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
 }
 
 .feedbackError{
     color: red;
+}
+
+.cannotFeedbackContainer{
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
 }
 
 .commentPart{

@@ -159,8 +159,10 @@ export default function Home(){
                 </div>
                     
                 <div className={styles.gamesPageButtons}>
-                  <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
-                  <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                  <div>
+                    <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
+                    <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                  </div>
                 </div>
               </>
             )}

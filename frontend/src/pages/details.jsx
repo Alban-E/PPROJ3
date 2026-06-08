@@ -199,6 +199,7 @@ export default function Details(){
 
     const [gameFeedbacks, setGameFeedbacks] = useState([])
     const [gameFeedbacksLoading, setGameFeedbacksLoading] = useState(true)
+    const [averageRating, setAverageRating] = useState(null)
 
 
     const fetchGameCritics = async () => {
@@ -206,19 +207,16 @@ export default function Details(){
         
         try {
             const feedbacks = await getGameFeedbacks({gameId: gameId})
-            const enrichedFeedbacks = await Promise.all(
-                feedbacks.data.map(async (feedback) => ({
-                    ...feedback,
-                    username: await getUserUsername(feedback.userId)
-                }))
-            )
-
-            setGameFeedbacks(enrichedFeedbacks)
-            console.log("gameFeedback: ", enrichedFeedbacks)
+            setGameFeedbacks(feedbacks.data)
 
         } catch (error) {
-            console.error("Couldn't get game feedbacks: ", error)
-            setGameFeedbacks([])  // Reset si erreur
+            const status = error.response?.status
+            if (status===404){
+                console.log("No public feedbacks found")
+                return
+            }
+            console.log("Couldn't get game feedbacks: ", error)
+            setGameFeedbacks([])
         } finally {
             setGameFeedbacksLoading(false)
         }
@@ -226,11 +224,29 @@ export default function Details(){
 
     useEffect(() => {
         fetchGameCritics()
-    },[])
+    },[updateFeedback])
 
-    const getUserUsername = async (userId) => {
+    const calculateAverageRating = () => {
+        if(gameFeedbacks.length === 0){
+            setAverageRating(null)
+            return
+        }
+        let result = 0
+        for (const feedback of gameFeedbacks){
+            result += feedback.rating
+        }
+        result /= gameFeedbacks.length
+
+        setAverageRating(result)
+    }
+
+    useEffect(() => {
+        calculateAverageRating()
+    }, [gameFeedbacks])
+
+    const getUser = async (userId) => {
         const res = await getUserByid(userId)
-        return res.data.username
+        return res.data
     }
 
     return (
@@ -334,16 +350,26 @@ export default function Details(){
                     {gameFeedbacksLoading ?
                         <p>Chargement des avis de la communauté...</p>
                     :
-                        gameFeedbacks.map((gameFeedback, index)=> {
-                            return(
-                                <div key={index} className={styles.gameFeedbackCard}>
-                                    <p>Date: {reformatDate(gameFeedback.date?.slice(0,10))}</p>
-                                    <p>User: {gameFeedback.username}</p>
-                                    <p>Note: {gameFeedback.rating} ⭐</p>
-                                    <p>Commentaire: {gameFeedback.comment}</p>
-                                </div>
-                            )
-                        })
+                        <>
+                            {averageRating  ?
+                            <div className={styles.averageRating}>
+                                <p>Note moyenne de la communauté</p>
+                                <p>{averageRating}⭐</p>
+                            </div>
+                            :null
+                            }
+                            
+                            {gameFeedbacks.map((gameFeedback, index)=> {
+                                return(
+                                    <div key={index} className={styles.gameFeedbackCard}>
+                                        <p className={styles.feedbackDate}>{reformatDate(gameFeedback.date?.slice(0,10))}</p>
+                                        <p className={styles.feedbackUsername}>{gameFeedback.username}</p>
+                                        <p>{gameFeedback.rating} ⭐</p>
+                                        <p className={styles.feedbackComment}>{gameFeedback.comment}</p>
+                                    </div>
+                                )
+                            })}
+                        </>
                     }
                 </div>
 

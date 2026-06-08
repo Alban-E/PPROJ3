@@ -144,7 +144,7 @@ export default function Home(){
               <>
 
                 <div className={styles.gamesPageButtons}>
-                  <p>Jeux trouvés: {resultCount}</p>
+                  <p>{resultCount} jeux trouvés</p>
                   <div>
                     <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
                     <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>

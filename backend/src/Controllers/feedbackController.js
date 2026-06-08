@@ -1,4 +1,5 @@
 const Feedback = require('../Models/Feedback')
+const User = require('../Models/User')
 
 // #region CRUD
 // CRUD OPERATIONS
@@ -53,22 +54,34 @@ const getUserFeedbacks = async (req, res) => {
 }
 
 const getGameFeedbacks = async (req, res) => {
-        try {
-        const feedbacks = await Feedback.find({gameId: req.query.gameId})
-        
-        if(!feedbacks){
-            return res.status(404).json({message: "No feedback found from the user"})
-        }
-        
-        return res.status(200).json(feedbacks)
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
+    try {
+        const feedbacks = await Feedback.find({ gameId: req.query.gameId })
+            .populate({
+                path: 'userId',
+                match: { is_private: false },
+                select: 'username'  // ← seul le username est chargé
+            })
 
-}
+        const publicFeedbacks = feedbacks
+            .filter(f => f.userId !== null)
+            .map(f => ({
+                ...f.toObject(),
+                username: f.userId.username,
+                userId: f.userId._id  // optionnel : garder l'id proprement
+            }))
+            
+        if (!publicFeedbacks.length) {
+            return res.status(404).json({ message: "No public feedback found for this game" });
+        }
+
+        return res.status(200).json(publicFeedbacks);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 const getMyGameFeedback  = async (req, res) => {
-        try {
+    try {
         const feedbacks = await Feedback.find({userId: req.query.userId, gameId: req.query.gameId})
         
         if(!feedbacks){
@@ -106,7 +119,7 @@ const updateFeedback = async (req, res) => {
         }
         
         if ((feedback.userId === req.user.userId) || (req.user.userRole === 'admin')){
-            const {rating, comment, liked} = req.body;
+            const {rating, comment, liked} = req.body
             
             if (rating) {
                 feedback.rating = Number(rating)
@@ -118,7 +131,7 @@ const updateFeedback = async (req, res) => {
                 feedback.liked = Boolean(liked)
             }
             
-            await feedback.save();
+            await feedback.save()
             return res.status(200).json({message: "Feedback updated"})
         }
         

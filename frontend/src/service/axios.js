@@ -172,18 +172,28 @@ export const createFeedback = async (payload) => {
     return res
 }
 
-export const getMyFeedbacks = async (payload) => {
-    const res = await axiosInstance.get('/feedback/me', payload)
+export const getMyFeedbacks = async () => {
+    const res = await axiosInstance.get('/feedback/me')
     return res
 }
 
-export const getUserFeedbacks = async (payload) => {
-    const res = await axiosInstance.get('/feedback/user', payload)
+export const getUserFeedbacks = async (params) => {
+    const res = await axiosInstance.get('/feedback/user', {params: params})
     return res
 }
 
-export const getAllFeedbacks = async (payload) => {
-    const res = await axiosInstance.get('/feedback/', payload)
+export const getGameFeedbacks = async (params) => {
+    const res = await axiosInstance.get('/feedback/game', {params: params}, payload)
+    return res
+}
+
+export const getMyGameFeedback = async (params) => {
+    const res = await axiosInstance.get('/feedback/me/game', {params: params})
+    return res
+}
+
+export const getAllFeedbacks = async (params) => {
+    const res = await axiosInstance.get('/feedback/', {params: params})
     return res
 }
 

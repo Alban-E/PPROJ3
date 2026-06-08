@@ -75,8 +75,6 @@ export default function Profile() {
     await checkAuth()
   }
 
-  console.log("User: ", user)
-  
   return (
     <div className={styles.mainContainer}>
       <h1 className={styles.title}>Profil</h1>

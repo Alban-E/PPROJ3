@@ -38,7 +38,6 @@ export default function Home(){
                   page: currentPage,
                   page_size: 40
                 }
-                console.log(payload)
                 const result = await searchGames(payload);
 
                 setIsNextPage(Boolean(result.data.next))

@@ -5,16 +5,15 @@ const Feedback = require('../Models/Feedback')
 // Create
 const createFeedback = async (req, res) => {
     try {
-        const existingFeedback = await Feedback.findOne({trackId: req.query.trackId, userId: req.user.userId})
+        const existingFeedback = await Feedback.findOne({gameId: req.body.gameId, userId: req.user.userId})
         if (existingFeedback) {
-            return res.status(409).json({message: "The user already leaved a feedback on this track"})
+            return res.status(409).json({message: "The user already leaved a feedback on this game"})
         }
 
         const feedback = await Feedback.create({
             rating: req.body.rating,
             comment: req.body.comment,
-            liked: req.body.liked,
-            trackId: req.query.trackId,
+            gameId: req.body.gameId,
             userId: req.user.userId
         })
 
@@ -53,6 +52,36 @@ const getUserFeedbacks = async (req, res) => {
     }
 }
 
+const getGameFeedbacks = async (req, res) => {
+        try {
+        const feedbacks = await Feedback.find({gameId: req.query.gameId})
+        
+        if(!feedbacks){
+            return res.status(404).json({message: "No feedback found from the user"})
+        }
+        
+        return res.status(200).json(feedbacks)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+
+}
+
+const getMyGameFeedback  = async (req, res) => {
+        try {
+        const feedbacks = await Feedback.find({userId: req.query.userId, gameId: req.query.gameId})
+        
+        if(!feedbacks){
+            return res.status(404).json({message: "No feedback found from the user"})
+        }
+        
+        return res.status(200).json(feedbacks)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+
+}
+
 const getAllFeedbacks = async (req, res) => {
     try {
         const feedbacks = await Feedback.find()
@@ -70,7 +99,7 @@ const getAllFeedbacks = async (req, res) => {
 // Update
 const updateFeedback = async (req, res) => {
     try {
-        const feedback = await Feedback.findById(req.query.feedbackId)
+        const feedback = await Feedback.findById(req.body.feedbackId)
         
         if (!feedback) {
             return res.status(404).json({message: "Feedback not found"})
@@ -102,7 +131,7 @@ const updateFeedback = async (req, res) => {
 // Delete
 const deleteFeedback = async (req, res) => {
     try {
-        const feedback = await Feedback.findById(req.query.id)
+        const feedback = await Feedback.findById(req.body.feedbackId)
         
         if (!feedback) {
             return res.status(404).json({message: "Feedback not found"})
@@ -120,4 +149,4 @@ const deleteFeedback = async (req, res) => {
 }
 //#endregion
 
-module.exports = { createFeedback, getMyFeedbacks, getUserFeedbacks, getAllFeedbacks, updateFeedback, deleteFeedback }
+module.exports = { createFeedback, getMyFeedbacks, getUserFeedbacks, getGameFeedbacks, getMyGameFeedback, getAllFeedbacks, updateFeedback, deleteFeedback }

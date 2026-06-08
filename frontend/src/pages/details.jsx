@@ -1,5 +1,5 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer } from "../service/axios";
+import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer, createFeedback, getMyGameFeedback } from "../service/axios";
 import reformatDate from "../service/ReformatDate";
 import { useEffect, useState } from "react";
 import styles from "./Details.module.css";
@@ -9,7 +9,7 @@ export default function Details(){
     const { user } = useAuth()
 
     const [queryParam] = useSearchParams();
-    const id = queryParam.get("id")
+    const gameId = queryParam.get("id")
     const navigate = useNavigate();
 
     const [game, setGame] = useState({});
@@ -19,7 +19,7 @@ export default function Details(){
         async function loadGame() {
             try{
                 setLoading(true);
-                const payload = {gameId: id}
+                const payload = {gameId: gameId}
                 const result = await searchGameById(payload);
                 setGame(result.data);
             }catch(error){
@@ -30,7 +30,7 @@ export default function Details(){
         }
 
         loadGame();
-        } , [id]);
+        } , [gameId]);
     
     const [achievements, setAchievements] = useState([]);
     const [achievementsPage, setAchievementsPage] = useState(1);
@@ -41,7 +41,7 @@ export default function Details(){
         async function loadAchievements() {
             try{
                 setAchievementsLoading(true);
-                const payload = {gameId: id, page: achievementsPage}
+                const payload = {gameId: gameId, page: achievementsPage}
                 const result = await searchGameAchievements(payload);
                 setAchievements(result.data.results);
                 setIsNextAchievementsNextPage(Boolean(result.data.next));
@@ -54,7 +54,7 @@ export default function Details(){
 
         loadAchievements();
 
-    }, [id, achievementsPage]);
+    }, [gameId, achievementsPage]);
 
     const [trailers, setTrailers] = useState([]);
     const [trailersPage, setTrailersPage] = useState(1);
@@ -65,7 +65,7 @@ export default function Details(){
         async function loadTrailers() {
             try {
                 setTrailersLoading(true);
-                const payload = {gameId: id}
+                const payload = {gameId: gameId}
                 const result = await searchGameTrailer(payload);
                 setTrailers(result.data.results);
                 setIsNextTrailersNextPage(Boolean(result.data.next))
@@ -76,7 +76,7 @@ export default function Details(){
             finally{setTrailersLoading(false);}
         }
         loadTrailers();
-    }, [id, trailersPage])
+    }, [gameId, trailersPage])
 
     const [displayAddToPlaylistPopup, setDisplayAddToPlaylistPopup] = useState(false)
     const [userLists, setUserLists] = useState([])
@@ -110,7 +110,7 @@ export default function Details(){
         try {
             const payload = {
                 listId: listTarget,
-                gameId: id
+                gameId: gameId
             }
             const result = await addGameToList(payload)
             setAddGameError("")
@@ -122,6 +122,59 @@ export default function Details(){
             }
             setAddGameError(error?.response?.data?.message ||"une erreur est survenue")
             console.error(`An error occured when the game was added to the list: ${error.message}`);
+        }
+    }
+
+    const [myFeedback, setMyFeedback] = useState(null)
+    const [updateFeedback, setupdateFeedback] = useState(false)
+    const [comment, setComment] = useState("")
+    const [rating, setRating] = useState(0)
+    const [feedbackError, setFeedbackError] = useState("")
+
+    useEffect(() => {
+        if(!user){
+            return
+        }
+
+        const fetchMyFeedback = async () => {
+            try {
+                const params = {userId: user._id, gameId: gameId}
+                const res = await getMyGameFeedback(params)
+                if (res.data.length === 0){
+                    setMyFeedback(null)
+                    return
+                }
+                console.log(res.data)
+                setMyFeedback(res.data)
+            } catch (error) {
+                setMyFeedback(null)
+                const status = error.response?.status
+                if (status === 404){
+                    return
+                }
+                console.log("Couldn't fetch user's feedback for this game: ", error)
+            }
+        }
+
+        fetchMyFeedback()
+    }, [gameId, user, updateFeedback])
+
+    const handleCritic = async () => {
+        try {
+            if(!comment && !rating){
+                setFeedbackError("Commentaire et note non définis")
+                return
+            }
+            const params = {
+                comment: comment,
+                rating: rating,
+                gameId: gameId
+            }
+            const res =  await createFeedback(params)
+            setupdateFeedback(!updateFeedback)
+            setFeedbackError("")
+        } catch (error) {
+            console.log("Couldn't create feedback: ", error)
         }
     }
 
@@ -168,6 +221,42 @@ export default function Details(){
                 <p className={styles.gameDescription}>{game.description_raw}</p>
                 <p className={styles.releaseDate}>{reformatDate(game.released)}</p>
                 <p className={styles.rating}>⭐{game.rating}⭐</p>
+
+                {myFeedback?
+                    <p>{user.username} a déjà un feedback sur ce jeu</p>
+                :
+                    <div className={styles.feedbackContainer}>
+                        <p className={styles.feedbackError}>{feedbackError}</p>
+                        <input type="text" placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value)}}/>
+
+                        <fieldset>
+                            <legend>Votre note :</legend>
+                            <div className={styles.radioInput}>
+                                <input type="radio" id="1" name="note" value="1" checked={rating === 1} onChange={(e) => setRating(Number(e.target.value))}/>
+                                <label for="1">⭐</label>
+                            </div>
+                            <div className={styles.radioInput}>
+                                <input type="radio" id="2" name="note" value="2" checked={rating === 2} onChange={(e) => setRating(Number(e.target.value))}/>
+                                <label for="2">⭐⭐</label>
+                            </div>
+                            <div className={styles.radioInput}>
+                                <input type="radio" id="3" name="note" value="3" checked={rating === 3} onChange={(e) => setRating(Number(e.target.value))}/>
+                                <label for="3">⭐⭐⭐</label>
+                            </div>
+                            <div className={styles.radioInput}>
+                                <input type="radio" id="4" name="note" value="4" checked={rating === 4} onChange={(e) => setRating(Number(e.target.value))}/>
+                                <label for="4">⭐⭐⭐⭐</label>
+                            </div>
+                            <div className={styles.radioInput}>
+                                <input type="radio" id="5" name="note" value="5" checked={rating === 5} onChange={(e) => setRating(Number(e.target.value))}/>
+                                <label for="5">⭐⭐⭐⭐⭐</label>
+                            </div>
+                        </fieldset>
+                        
+                        <button className={styles.sendFeedbackButton} onClick={() => {handleCritic()}}>Envoyer</button>
+                    </div>
+                }
+
 
                 <div className={styles.trailerPart}>
                     {TrailersLoading ? (

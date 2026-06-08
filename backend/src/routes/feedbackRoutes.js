@@ -18,7 +18,7 @@ router.get('/', authenticateToken, assertUserIsAdmin, getAllFeedbacks)
 router.put('/', authenticateToken, updateFeedback)
 
 // Delete
-router.delete('/', authenticateToken, deleteFeedback)
+router.delete('/:feedbackId', authenticateToken, deleteFeedback)
 //#endregion
 
 module.exports = router

@@ -202,8 +202,8 @@ export const updateFeedback = async (payload) => {
     return res
 }
 
-export const deleteFeedback = async (payload) => {
-    const res = await axiosInstance.delete('/feedback/', payload)
+export const deleteFeedback = async (feedbackId) => {
+    const res = await axiosInstance.delete(`/feedback/${feedbackId}`)
     return res
 }
 

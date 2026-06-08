@@ -1,5 +1,5 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer, createFeedback, getMyGameFeedback } from "../service/axios";
+import { getMyLists, addGameToList, searchGameAchievements, searchGameById, searchGameTrailer, createFeedback, getMyGameFeedback, deleteFeedback } from "../service/axios";
 import reformatDate from "../service/ReformatDate";
 import { useEffect, useState } from "react";
 import styles from "./Details.module.css";
@@ -126,7 +126,7 @@ export default function Details(){
     }
 
     const [myFeedback, setMyFeedback] = useState(null)
-    const [updateFeedback, setupdateFeedback] = useState(false)
+    const [updateFeedback, setUpdateFeedback] = useState(0)
     const [comment, setComment] = useState("")
     const [rating, setRating] = useState(0)
     const [feedbackError, setFeedbackError] = useState("")
@@ -170,10 +170,20 @@ export default function Details(){
                 gameId: gameId
             }
             const res =  await createFeedback(params)
-            setupdateFeedback(!updateFeedback)
+            setUpdateFeedback(updateFeedback + 1)
             setFeedbackError("")
         } catch (error) {
             console.log("Couldn't create feedback: ", error)
+        }
+    }
+
+    const deleteMyReview = async () => {
+        try {
+            const res = await deleteFeedback(myFeedback._id)
+            setUpdateFeedback(updateFeedback + 1)
+        } catch (error) {
+            console.log("Couldn't remove feedback: ", error)
+            setFeedbackError("Une erreur est survenue durant la suppression de votre avis")
         }
     }
 
@@ -221,44 +231,47 @@ export default function Details(){
                 <p className={styles.releaseDate}>{reformatDate(game.released)}</p>
                 <p className={styles.rating}>⭐{game.rating}⭐</p>
 
-                {myFeedback?
-                    <div className={styles.feedbackContainer}>
-                        <p>Vous avez déjà laissé un avis sur ce jeu</p>
-                        <p>Votre note: {myFeedback.rating}</p>
-                        <p>Votre commentaire: {myFeedback.comment}</p>
-                    </div>
-                :
-                    <div className={styles.feedbackContainer}>
-                        <p className={styles.feedbackError}>{feedbackError}</p>
-                        <input type="text" placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value)}}/>
+                <div className={styles.feedbackContainer}>
+                    <p className={styles.feedbackError}>{feedbackError}</p>
+                    {myFeedback?
+                        <>
+                            <p>Vous avez déjà laissé un avis sur ce jeu</p>
+                            <p>Votre note: {myFeedback.rating}</p>
+                            <p>Votre commentaire: {myFeedback.comment}</p>
+                            <button className={styles.deleteReviewButton} onClick={() => {deleteMyReview()}}>Supprimer votre avis</button>
+                        </>
+                    :
+                        <>
+                            <input type="text" placeholder="Votre commentaire..." value={comment} onChange={(e) => {setComment(e.target.value)}}/>
 
-                        <fieldset>
-                            <legend>Votre note :</legend>
-                            <div className={styles.radioInput}>
-                                <input type="radio" id="1" name="note" value="1" checked={rating === 1} onChange={(e) => setRating(Number(e.target.value))}/>
-                                <label for="1">⭐</label>
-                            </div>
-                            <div className={styles.radioInput}>
-                                <input type="radio" id="2" name="note" value="2" checked={rating === 2} onChange={(e) => setRating(Number(e.target.value))}/>
-                                <label for="2">⭐⭐</label>
-                            </div>
-                            <div className={styles.radioInput}>
-                                <input type="radio" id="3" name="note" value="3" checked={rating === 3} onChange={(e) => setRating(Number(e.target.value))}/>
-                                <label for="3">⭐⭐⭐</label>
-                            </div>
-                            <div className={styles.radioInput}>
-                                <input type="radio" id="4" name="note" value="4" checked={rating === 4} onChange={(e) => setRating(Number(e.target.value))}/>
-                                <label for="4">⭐⭐⭐⭐</label>
-                            </div>
-                            <div className={styles.radioInput}>
-                                <input type="radio" id="5" name="note" value="5" checked={rating === 5} onChange={(e) => setRating(Number(e.target.value))}/>
-                                <label for="5">⭐⭐⭐⭐⭐</label>
-                            </div>
-                        </fieldset>
-                        
-                        <button className={styles.sendFeedbackButton} onClick={() => {handleCritic()}}>Envoyer</button>
-                    </div>
-                }
+                            <fieldset>
+                                <legend>Votre note :</legend>
+                                <div className={styles.radioInput}>
+                                    <input type="radio" id="1" name="note" value="1" checked={rating === 1} onChange={(e) => setRating(Number(e.target.value))}/>
+                                    <label for="1">⭐</label>
+                                </div>
+                                <div className={styles.radioInput}>
+                                    <input type="radio" id="2" name="note" value="2" checked={rating === 2} onChange={(e) => setRating(Number(e.target.value))}/>
+                                    <label for="2">⭐⭐</label>
+                                </div>
+                                <div className={styles.radioInput}>
+                                    <input type="radio" id="3" name="note" value="3" checked={rating === 3} onChange={(e) => setRating(Number(e.target.value))}/>
+                                    <label for="3">⭐⭐⭐</label>
+                                </div>
+                                <div className={styles.radioInput}>
+                                    <input type="radio" id="4" name="note" value="4" checked={rating === 4} onChange={(e) => setRating(Number(e.target.value))}/>
+                                    <label for="4">⭐⭐⭐⭐</label>
+                                </div>
+                                <div className={styles.radioInput}>
+                                    <input type="radio" id="5" name="note" value="5" checked={rating === 5} onChange={(e) => setRating(Number(e.target.value))}/>
+                                    <label for="5">⭐⭐⭐⭐⭐</label>
+                                </div>
+                            </fieldset>
+                            
+                            <button className={styles.sendFeedbackButton} onClick={() => {handleCritic()}}>Envoyer</button>
+                        </>
+                    }
+                </div>
 
 
                 <div className={styles.trailerPart}>

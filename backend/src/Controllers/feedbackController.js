@@ -131,18 +131,19 @@ const updateFeedback = async (req, res) => {
 // Delete
 const deleteFeedback = async (req, res) => {
     try {
-        const feedback = await Feedback.findById(req.body.feedbackId)
+        const { feedbackId } = req.params
+        const feedback = await Feedback.findById(feedbackId)
         
         if (!feedback) {
             return res.status(404).json({message: "Feedback not found"})
         }
         
-        if ((feedback.userId === req.user.userId) || (req.user.userRole === 'admin')){
+        if ((String(feedback.userId) === req.user.userId) || (req.user.userRole === 'admin')){
             await feedback.deleteOne()
             return res.status(200).json({message: "Feedback deleted successfully"})
         }
         
-        return res.status(401).json({message: "Unauthorized operation"})
+        return res.status(403).json({message: "Unauthorized operation"})
     } catch (error) {
         return res.status(500).json({message: error.message})
     }

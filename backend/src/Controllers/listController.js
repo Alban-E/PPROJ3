@@ -25,13 +25,27 @@ const createList = async (req, res) => {
 // Read
 const getListById = async (req, res) => {
     try {
-        const list = await List.findById(req.body.listId)
+        const list = await List.findById(req.query.listId)
 
         if (!list){
             return res.status(404).json({message: "No list found"})
         }
    
         return res.status(200).json(list)        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+const getListByName = async (req, res) => {
+    try {
+        const lists = await List.find({name: new RegExp(req.query.listName, "i"), private: false})
+
+        if (!lists){
+            return res.status(404).json({message: "No list found"})
+        }
+   
+        return res.status(200).json(lists)        
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -53,7 +67,7 @@ const getMyLists = async (req, res) => {
 
 const getUserPublicLists = async (req, res) => {
     try {
-        const lists = await List.find({userId: req.body.userid, private: false})
+        const lists = await List.find({userId: req.query.userid, private: false})
         
         if(!lists){
             return res.status(404).json({message: "No public list found"})
@@ -67,7 +81,7 @@ const getUserPublicLists = async (req, res) => {
 
 const getUserLists = async (req, res) => {
     try {
-        const lists = await List.find({userId: req.body.userId})
+        const lists = await List.find({userId: req.query.userId})
         
         if(!lists){
             return res.status(404).json({message: "No list found"})
@@ -149,4 +163,4 @@ const deleteList = async (req, res) => {
 //#endregion
 
 
-module.exports = { createList, getListById, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList }
+module.exports = { createList, getListById, getListByName, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList }

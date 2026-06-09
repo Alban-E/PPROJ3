@@ -1,13 +1,14 @@
 const router = require('express').Router()
 const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVerif')
-const {createList, getListById, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList } = require('../Controllers/listController')
+const {createList, getListById, getListByName, getMyLists, getUserPublicLists, getUserLists, getAllLists, updateList, deleteList } = require('../Controllers/listController')
 
 //#region CRUD
 // Create
 router.post('/', authenticateToken, createList)
 
 // Read
-router.post('/id', authenticateToken, getListById)
+router.get('/id', authenticateToken, getListById)
+router.get('/name', getListByName)
 router.get('/me', authenticateToken, getMyLists)
 router.get('/user', authenticateToken, getUserPublicLists)
 

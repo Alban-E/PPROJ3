@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import GameCard from "../components/card/GameCard";
-import { getUserByUsername, searchGames, updateFeedback } from "../service/axios";
+import { getListByName, getUserByUsername, searchGames, updateFeedback } from "../service/axios";
 import styles from "./home.module.css";
 
 export default function Home(){
@@ -64,22 +64,33 @@ export default function Home(){
             setUserLoading(true)
             const params = { username: titleToSearchDebounce}
             const result = await getUserByUsername(params)
+            console.log("users: ", result.data)
             setUsers(result.data)
           } catch (error) {
             const status = error?.response?.status
             if(status===404){
               return
             }
+            console.log("An error occurred in the get user by username part: ", error)
           } finally{setUserLoading(false)}
         }
         
         async function loadLists() {
           try {
             setListLoading(true)
-            
+            const params = { listName: titleToSearchDebounce}
+            const result = await getListByName(params)
+            console.log("lists: ", result.data)
+            setLists(results.data)
           } catch (error) {
-            
-          }
+            const status = error?.response?.status
+            if(status===404){
+              setLists([])
+              return
+            }
+
+            console.log("An error occurred in the get list by name part: ", error)
+          } finally {setListLoading(false)}
         }
         
         loadGames()

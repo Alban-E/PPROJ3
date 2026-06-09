@@ -83,8 +83,13 @@ export const createList = async (payload) => {
     return res
 }
 
-export const getListById = async (payload) => {
-    const res = await axiosInstance.post('/list/id', payload)
+export const getListById = async (params) => {
+    const res = await axiosInstance.get('/list/id', {params: params})
+    return res
+}
+
+export const getListByName = async (params) => {
+    const res = await axiosInstance.get('/list/name', {params: params})
     return res
 }
 
@@ -93,8 +98,8 @@ export const getMyLists= async () => {
     return res
 }
 
-export const getUserPublicLists = async (payload) => {
-    const res = await axiosInstance.get('/list/user', payload)
+export const getUserPublicLists = async (params) => {
+    const res = await axiosInstance.get('/list/user', {params: params})
     return res
 }
 

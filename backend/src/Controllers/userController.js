@@ -126,6 +126,20 @@ const getUserById = async (req, res) => {
     }
 }
 
+const getUserByUsername = async (req, res) => {
+    try {
+        const users = await User.find({ username: new RegExp(req.query.username, "i")}, { password: 0, oauth_provider: 0, oauth_id: 0, role: 0 })
+        
+        if(!users){
+            return res.status(404).json({message: "No user found"})
+        }
+        
+        return res.status(200).json(users)
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+
 // Update
 const updateUserById = async (req, res) => {
     if ((req.user.userRole === 'admin') || (req.params.id === req.user.userId )){
@@ -192,4 +206,4 @@ const deleteUserById = async (req, res) => {
 //#endregion
 
 
-module.exports = { createUser, createUserWithGoogle, getMyprofile, getAllUser, getUserById, updateUserById, deleteUserById }
+module.exports = { createUser, createUserWithGoogle, getMyprofile, getAllUser, getUserById, getUserByUsername, updateUserById, deleteUserById }

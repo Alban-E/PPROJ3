@@ -59,6 +59,11 @@ export const getUserByid = async (id) => {
     return res
 }
 
+export const getUserByUsername = async (params) => {
+    const res = await axiosInstance.get(`/user/username`, {params: params})
+    return res
+}
+
 export const updateUserById = async (id, payload) => {
     const res = await axiosInstance.put(`/user/${id}`, payload)
     return res

@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import GameCard from "../components/card/GameCard";
-import { searchGames, updateFeedback } from "../service/axios";
+import { getUserByUsername, searchGames, updateFeedback } from "../service/axios";
 import styles from "./home.module.css";
 
 export default function Home(){
-    const [resultCount, setResultCount] = useState(0) 
-    const [games, setGames] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [titleToSearch, setTitleToSearch] = useState("")
     const [titleToSearchDebounce, setTitleToSearchDebounce] = useState("")
-    const [currentPage, setCurrentPage] = useState(1);
-    const [filters,setFilters] = useState({platform: null, store: null, ordering: null});
+
+    const [displayPart, setDisplayPart] = useState("games")
+
+    const [gameResultCount, setGameResultCount] = useState(0) 
+    const [games, setGames] = useState([]);
+    const [gameLoading, setGameLoading] = useState(true);
+    const [currentGamePage, setCurrentGamePage] = useState(1);
+    const [gameFilters,setGameFilters] = useState({platform: null, store: null, ordering: null});
     const [reverseOrdering, setReverseOrdering] = useState(true); 
     const [isNextPage, setIsNextPage] = useState(false);
+
+    const [userResultCount, setUserResultCount] = useState(0)
+    const [users, setUsers] = useState([])
+    const [userLoading, setUserLoading] = useState(true)
+
+    const [listResultCount, setListResultCount] = useState(0)
+    const [lists, setLists] = useState([])
+    const [listLoading, setListLoading] = useState(true)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -25,31 +36,59 @@ export default function Home(){
     useEffect( () => { 
         async function loadGames() {                
             try {
-                setLoading(true);
+                setGameLoading(true);
 
-                const orderingParam = filters.ordering? (reverseOrdering? `-${filters.ordering}`: filters.ordering) : null;
+                const orderingParam = gameFilters.ordering? (reverseOrdering? `-${gameFilters.ordering}`: gameFilters.ordering) : null;
                 const title = titleToSearchDebounce.trim().split(" ").join("-")
                 const payload = {
                   search: title,
                   search_exact: (titleToSearchDebounce? true : null),
-                  platforms: filters.platform,
-                  stores: filters.store,
+                  platforms: gameFilters.platform,
+                  stores: gameFilters.store,
                   ordering: orderingParam,
-                  page: currentPage,
+                  page: currentGamePage,
                   page_size: 40
                 }
                 const result = await searchGames(payload);
 
                 setIsNextPage(Boolean(result.data.next))
                 setGames(result.data.results);
-                setResultCount(result.data.count)
+                setGameResultCount(result.data.count)
             } catch (error) {
                 console.error(`An error occured: ${error}`)
+            } finally{ setGameLoading(false); }
+        }
+
+        async function loadUsers() {
+          try {
+            setUserLoading(true)
+            const params = { username: titleToSearchDebounce}
+            const result = await getUserByUsername(params)
+            console.log(result.data)
+            setUsers(result.data)
+          } catch (error) {
+            const status = error?.response?.status
+            if(status===404){
+              return
             }
-            finally{ setLoading(false); }
-        }   
+          } finally{setUserLoading(false)}
+        }
+        
+        async function loadLists() {
+          try {
+            setListLoading(true)
+            
+          } catch (error) {
+            
+          }
+        }
+        
         loadGames()
-        } , [filters, currentPage, reverseOrdering, titleToSearchDebounce]);
+        if(!titleToSearchDebounce) {return}
+        
+        loadUsers()
+        loadLists()
+        } , [gameFilters, currentGamePage, reverseOrdering, titleToSearchDebounce]);
     
 
     return (
@@ -57,7 +96,7 @@ export default function Home(){
           <div className={styles.filtersContainer}>
             <input type="text" placeholder="Rechercher..." value={titleToSearch} onChange={(e) => {setTitleToSearch(e.target.value)}} className={styles.searchInput}/>
             <div className={styles.filters}>
-                <select onChange={(e) => {setCurrentPage(1); setReverseOrdering(false); setFilters({...filters, platform: e.target.value || null})}} className={styles.platformFilterSelect}>
+                <select onChange={(e) => {setCurrentGamePage(1); setReverseOrdering(false); setGameFilters({...gameFilters, platform: e.target.value || null})}} className={styles.platformFilterSelect}>
                 <option value="">Toutes les plateformes</option>
                     <option value="1">Xbox One</option>
                     <option value="3">iOS</option>
@@ -111,7 +150,7 @@ export default function Home(){
                     <option value="187">PlayStation 5</option>
                 </select>
 
-                <select onChange={(e) => {setCurrentPage(1); setReverseOrdering(false); setFilters({...filters, store: e.target.value ||null})}} className={styles.storeFilterSelect}>
+                <select onChange={(e) => {setCurrentGamePage(1); setReverseOrdering(false); setGameFilters({...gameFilters, store: e.target.value ||null})}} className={styles.storeFilterSelect}>
                     <option value="">Tous les stores</option>
                     <option value="1">Steam</option>
                     <option value="2">Xbox Store</option>
@@ -125,7 +164,7 @@ export default function Home(){
                     <option value="11">Epic Games</option>
                 </select>
 
-                <select onChange={(e) => {setCurrentPage(1); setReverseOrdering(false); setFilters({...filters, ordering: e.target.value})}} className={styles.orderingFilterSelect}>
+                <select onChange={(e) => {setCurrentGamePage(1); setReverseOrdering(false); setGameFilters({...gameFilters, ordering: e.target.value})}} className={styles.orderingFilterSelect}>
                     <option value="">Aucun</option>
                     <option value="name">Nom</option>
                     <option value="released">Date de Sortie</option>
@@ -133,21 +172,20 @@ export default function Home(){
                     <option value="metacritic">Metacritique</option>
                 </select>
 
-                <button disabled={!filters.ordering} onClick={() => setReverseOrdering(prev => !prev)} className={styles.reverseOrderingButton}>⬇️⬆️</button>
+                <button disabled={!gameFilters.ordering} onClick={() => setReverseOrdering(prev => !prev)} className={styles.reverseOrderingButton}>⬇️⬆️</button>
             </div>
           </div>
           
           <div className={styles.gamesContainer}>
-            {loading ? (
+            {gameLoading ? (
               <p className={styles.loading}>Chargement ...</p>
             ) : (
               <>
-
                 <div className={styles.gamesPageButtons}>
-                  <p>{resultCount} jeux trouvés</p>
+                  <p>{gameResultCount} jeux trouvés</p>
                   <div>
-                    <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
-                    <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                    <button disabled={currentGamePage === 1} onClick={()=> {setCurrentGamePage(currentGamePage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
+                    <button disabled={!isNextPage} onClick={()=> {setCurrentGamePage(currentGamePage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
                   </div>
                 </div>
 
@@ -160,8 +198,8 @@ export default function Home(){
                     
                 <div className={styles.gamesPageButtons}>
                   <div>
-                    <button disabled={currentPage === 1} onClick={()=> {setCurrentPage(currentPage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
-                    <button disabled={!isNextPage} onClick={()=> {setCurrentPage(currentPage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                    <button disabled={currentGamePage === 1} onClick={()=> {setCurrentGamePage(currentGamePage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
+                    <button disabled={!isNextPage} onClick={()=> {setCurrentGamePage(currentGamePage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
                   </div>
                 </div>
               </>

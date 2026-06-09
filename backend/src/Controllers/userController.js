@@ -128,7 +128,7 @@ const getUserById = async (req, res) => {
 
 const getUserByUsername = async (req, res) => {
     try {
-        const users = await User.find({ username: new RegExp(req.query.username, "i")}, { password: 0, oauth_provider: 0, oauth_id: 0, role: 0 })
+        const users = await User.find({ username: new RegExp(req.query.username, "i"), is_private: false}, { password: 0, oauth_provider: 0, oauth_id: 0, role: 0 })
         
         if(!users){
             return res.status(404).json({message: "No user found"})

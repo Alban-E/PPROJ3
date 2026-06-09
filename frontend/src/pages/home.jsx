@@ -64,7 +64,6 @@ export default function Home(){
             setUserLoading(true)
             const params = { username: titleToSearchDebounce}
             const result = await getUserByUsername(params)
-            console.log(result.data)
             setUsers(result.data)
           } catch (error) {
             const status = error?.response?.status

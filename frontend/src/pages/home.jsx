@@ -19,11 +19,11 @@ export default function Home(){
 
     const [userResultCount, setUserResultCount] = useState(0)
     const [users, setUsers] = useState([])
-    const [userLoading, setUserLoading] = useState(true)
+    const [userLoading, setUserLoading] = useState(false)
 
     const [listResultCount, setListResultCount] = useState(0)
     const [lists, setLists] = useState([])
-    const [listLoading, setListLoading] = useState(true)
+    const [listLoading, setListLoading] = useState(false)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -52,11 +52,11 @@ export default function Home(){
                 const result = await searchGames(payload);
 
                 setIsNextPage(Boolean(result.data.next))
-                setGames(result.data.results);
+                setGames(result.data.results)
                 setGameResultCount(result.data.count)
             } catch (error) {
                 console.error(`An error occured: ${error}`)
-            } finally{ setGameLoading(false); }
+            } finally{ setGameLoading(false) }
         }
 
         async function loadUsers() {
@@ -72,7 +72,7 @@ export default function Home(){
               return
             }
             console.log("An error occurred in the get user by username part: ", error)
-          } finally{setUserLoading(false)}
+          } finally{ setUserLoading(false) }
         }
         
         async function loadLists() {
@@ -81,16 +81,15 @@ export default function Home(){
             const params = { listName: titleToSearchDebounce}
             const result = await getListByName(params)
             console.log("lists: ", result.data)
-            setLists(results.data)
+            setLists(result.data)
           } catch (error) {
             const status = error?.response?.status
             if(status===404){
               setLists([])
               return
             }
-
             console.log("An error occurred in the get list by name part: ", error)
-          } finally {setListLoading(false)}
+          } finally { setListLoading(false) }
         }
         
         loadGames()
@@ -186,35 +185,87 @@ export default function Home(){
             </div>
           </div>
           
-          <div className={styles.gamesContainer}>
-            {gameLoading ? (
-              <p className={styles.loading}>Chargement ...</p>
-            ) : (
-              <>
-                <div className={styles.gamesPageButtons}>
-                  <p>{gameResultCount} jeux trouvés</p>
-                  <div>
-                    <button disabled={currentGamePage === 1} onClick={()=> {setCurrentGamePage(currentGamePage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
-                    <button disabled={!isNextPage} onClick={()=> {setCurrentGamePage(currentGamePage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
-                  </div>
-                </div>
-
-
-                <div className={styles.cardGameContainer}>
-                  {games?.map(game => (
-                    <GameCard key={game.id} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
-                  ))}
-                </div>
-                    
-                <div className={styles.gamesPageButtons}>
-                  <div>
-                    <button disabled={currentGamePage === 1} onClick={()=> {setCurrentGamePage(currentGamePage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
-                    <button disabled={!isNextPage} onClick={()=> {setCurrentGamePage(currentGamePage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
-                  </div>
-                </div>
-              </>
-            )}
+          <div className={styles.selectResultContainer}>
+            <div className={styles.selectResult}>
+              <button className={styles.selectResultButton} onClick={() => {setDisplayPart("games")}}>Jeux</button>
+              <button className={styles.selectResultButton} onClick={() => {setDisplayPart("users")}}>Utilisateurs</button>
+              <button className={styles.selectResultButton} onClick={() => {setDisplayPart("lists")}}>Listes</button>
+            </div>
           </div>
+          
+          {displayPart === "games" &&
+            <div className={styles.gamesContainer}>
+              {gameLoading ? (
+                <p className={styles.loading}>Chargement ...</p>
+              ) : (
+                <>
+                  <div className={styles.gamesPageButtons}>
+                    <p className={styles.resultAmount}>{gameResultCount} jeux trouvés</p>
+                    <div>
+                      <button disabled={currentGamePage === 1} onClick={()=> {setCurrentGamePage(currentGamePage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
+                      <button disabled={!isNextPage} onClick={()=> {setCurrentGamePage(currentGamePage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                    </div>
+                  </div>
+
+
+                  <div className={styles.cardGameContainer}>
+                    {games?.map(game => (
+                      <GameCard key={game.id} id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
+                    ))}
+                  </div>
+                      
+                  <div className={styles.gamesPageButtons}>
+                    <div>
+                      <button disabled={currentGamePage === 1} onClick={()=> {setCurrentGamePage(currentGamePage - 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesPreviousPage}>Page précédente</button>
+                      <button disabled={!isNextPage} onClick={()=> {setCurrentGamePage(currentGamePage + 1), window.scrollTo({top: 0,behavior: "smooth" })}} className={styles.gamesNextPage}>Page suivante</button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          }
+
+          {displayPart === "users" &&
+            <div className={styles.userContainer}>
+              {userLoading ?
+                <p className={styles.loading}>Chargement...</p>
+              :
+                users.length === 0 ?
+                  <p className={styles.noneResult}>Aucun utilisateur trouvé</p>
+                : 
+                  <div className={styles.userCardContainer}>
+                      {users?.map((user, index) => {
+                      return (
+                        <div className={styles.userCard} key={index}>
+                          <p className={styles.username}>{user.username}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+              }
+            </div>
+          }
+
+          {displayPart === "lists" &&
+            <div className={styles.listContainer}>
+              {listLoading?
+                <p className={styles.loading}>Chargement...</p>
+              :
+                lists.length === 0 ?
+                  <p className={styles.noneResult}>Aucune listes trouvés</p>
+                :
+                  <div className={styles.listCardContainer}>
+                    {lists?.map((list, index) => {
+                      return (
+                        <div className={styles.listCard} key={index}>
+                          <p>{list.name}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+              }
+            </div>
+          }
         </>
     );
 }

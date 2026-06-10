@@ -91,12 +91,14 @@ export default function ListDetails() {
     return ( authorized ?
         <div className={styles.content}>
             <h2 className={styles.title}>{list.name}</h2>
-            
-            <div className={styles.visibilityContainer}>
-                <p className={styles.listVisibility}>Visibilité: {list.private? "privée" : "publique"}</p>
-                <button onClick={()=> {updateListVisibility()}} className={styles.changeVisibilityButton}>Passer la liste en {list.private? "publique" : "privée"}</button>
-            </div>
-
+            {list?.name.toLowerCase() !== "a jouer" && list?.name.toLowerCase() !== "terminé(s)" & list?.name.toLowerCase() !== "favoris" ?
+                <div className={styles.visibilityContainer}>
+                    <p className={styles.listVisibility}>Visibilité: {list.private? "privée" : "publique"}</p>
+                    <button onClick={()=> {updateListVisibility()}} className={styles.changeVisibilityButton}>Passer la liste en {list.private? "publique" : "privée"}</button>
+                </div>
+            :   
+                null
+            }
             <div className={styles.gameList}>
                 <div className={styles.cardGameContainer}>
                     {gamesDatas?.length > 0 ?(

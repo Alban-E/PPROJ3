@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { useAuth } from "../../service/AuthContext"
-import { updateUserById } from "../../service/axios"
+import { getGamesFromList, getMyFeedbacks, getMyLists, updateUserById } from "../../service/axios"
 import Lists from "../../pages/lists/Lists"
 import styles from "./profile.module.css"
+import { downloadAsJSON } from "../../service/DownloadAsJson"
 
 export default function Profile() {
   const { user, logout, checkAuth } = useAuth()
@@ -75,6 +76,42 @@ export default function Profile() {
     await checkAuth()
   }
 
+  const getPersonnalData = async () => {
+    const userFeedbacks = await getMyFeedbacks()
+    const userLists = await getMyLists()
+
+    let userlistsData = []
+    for (const list of userLists.data) {
+      const params = {listId: list._id}
+      const gamesInList = await getGamesFromList(params)
+      
+      let listData = {
+        name: list.name,
+      }
+      listData.games = gamesInList.data.map((game) => ({
+          rawgGameId: game
+      }))
+
+      userlistsData.push(listData)
+    }
+
+    const result = {
+      user: user,
+      feedbacks: userFeedbacks.data,
+      lists: userlistsData
+    }
+
+    return result
+  }
+
+  const exportPersonnalData = async () => {
+    const userPersonnalData = await getPersonnalData()
+    const now = new Date()
+    const currentDate = now.toLocaleDateString()
+    const fileName = `${user.username}-profile-data-${currentDate}.json`
+    downloadAsJSON(userPersonnalData, fileName)
+  }
+
   return (
     <div className={styles.mainContainer}>
       <h1 className={styles.title}>Profil</h1>
@@ -144,6 +181,8 @@ export default function Profile() {
       </div>
 
       <Lists className={styles.listPart}/>
+
+      <button onClick={exportPersonnalData} className={styles.exportPersonnalData}>Exporter mes données personnelles</button>
     </div>
   )
 }

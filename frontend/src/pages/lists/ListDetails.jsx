@@ -3,11 +3,15 @@ import { getListById, getGamesFromList, getgamesById, searchGameById, updateList
 import { useEffect, useState, Fragment } from "react";
 import styles from './listDetails.module.css'
 import GameCard from "../../components/card/GameCard";
+import { useAuth } from "../../service/AuthContext";
 
 export default function ListDetails() {
+    const { user } = useAuth()
+
     const [searchParams]  = useSearchParams()
-    const id = searchParams.get('id')
-    const [list, setList] = useState({name: "", imageUrl: ""})
+    const listId = searchParams.get('id')
+
+    const [list, setList] = useState({name: "", imageUrl: "", _id:""})
     const [gamesIds, setGamesIds] = useState([])
     const [gamesDatas, setGamesDatas] = useState([])
 
@@ -16,7 +20,7 @@ export default function ListDetails() {
 
     const getList = async () => {
         try {
-            const payload = {listId: id}
+            const payload = {listId: listId}
             const listRes = await getListById(payload)
             setList(listRes.data)
         } catch (error) {
@@ -34,7 +38,7 @@ export default function ListDetails() {
     const updateGamesIds = async() => {
         try {
             await getList()
-            const payload = {listId: id}
+            const payload = {listId: listId}
             const gameRes = await getGamesFromList(payload)
             setGamesIds(gameRes.data)
         } catch (error) {
@@ -52,6 +56,12 @@ export default function ListDetails() {
     useEffect(() => {
         updateGamesIds()
     },[])
+
+    useEffect(() => {
+        console.log("user: ", user)
+        console.log("list: ", list)
+        setAuthorized(String(list?.userId) === user?._id)
+    }, [list])
 
 
     const getGamesInformations = async () => {
@@ -88,10 +98,10 @@ export default function ListDetails() {
         await updateGamesIds()
     }
 
-    return ( authorized ?
+    return (
         <div className={styles.content}>
             <h2 className={styles.title}>{list.name}</h2>
-            {list?.name.toLowerCase() !== "a jouer" && list?.name.toLowerCase() !== "terminé(s)" & list?.name.toLowerCase() !== "favoris" ?
+            {authorized && (list?.name.toLowerCase() !== "a jouer" && list?.name.toLowerCase() !== "terminé(s)" & list?.name.toLowerCase() !== "favoris") ?
                 <div className={styles.visibilityContainer}>
                     <p className={styles.listVisibility}>Visibilité: {list.private? "privée" : "publique"}</p>
                     <button onClick={()=> {updateListVisibility()}} className={styles.changeVisibilityButton}>Passer la liste en {list.private? "publique" : "privée"}</button>
@@ -105,7 +115,9 @@ export default function ListDetails() {
                         gamesDatas?.map((game, index) => { return (
                             <div className={styles.gameCard} key={index}>
                                 <GameCard id={game.id} name={game.name} releaseDate={game.released} rating={game.rating} tags={game.tags} developers={game.developers} publishers={game.publishers} imageURL={game.background_image}/>
-                                <button className={styles.removeFromPlaylistButton} onClick={() => {removeFromPlaylist(game.id)}}>Supprimer de la playlist</button>
+                                {authorized &&
+                                    <button className={styles.removeFromPlaylistButton} onClick={() => {removeFromPlaylist(game.id)}}>Supprimer de la playlist</button>
+                                }
                             </div>
                         )})):
                             <p>Cette playlist est vide</p>
@@ -113,8 +125,5 @@ export default function ListDetails() {
                 </div>
             </div>
         </div>
-    :
-        <p>Vous n'êtes pas autorisé à acceder à cette playlist</p>
-        
     )
 }

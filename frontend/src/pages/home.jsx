@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import GameCard from "../components/card/GameCard";
 import { getListByName, getUserByUsername, searchGames, updateFeedback } from "../service/axios";
 import styles from "./home.module.css";
+import { Link } from "react-router-dom";
 
 export default function Home(){
     const [titleToSearch, setTitleToSearch] = useState("")
@@ -257,9 +258,7 @@ export default function Home(){
                   <div className={styles.listCardContainer}>
                     {lists?.map((list, index) => {
                       return (
-                        <div className={styles.listCard} key={index}>
-                          <p>{list.name}</p>
-                        </div>
+                        <Link to={`/List/details?id=${list._id}`} key={index} className={styles.listCard}>{list.name}</Link>
                       )
                     })}
                   </div>

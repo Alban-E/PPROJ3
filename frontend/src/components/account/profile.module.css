@@ -75,3 +75,19 @@
     align-self: center;
     width: 40%;
 }
+
+.exportPersonnalData{
+    font: inherit;
+    font-size: x-small;
+    align-self: center;
+    margin-top: 2rem;
+    padding: 0 5px;
+    border: solid 1px lightgray;
+    color: black;
+    border-radius: 5px;
+    width: 60%;
+}
+
+.exportPersonnalData:hover{
+    background-color: lightgray;
+}

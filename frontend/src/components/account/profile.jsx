@@ -176,13 +176,13 @@ export default function Profile() {
           <p>Visibilité: {user.is_private? "privé" : "public"}</p>
           <button className={styles.privateButton} onClick={() => {updatePrivateState()}} >Passer en {user.is_private ? "public" : "privé"}</button>
         </div>
+        
+        <button onClick={exportPersonnalData} className={styles.exportPersonnalData}>Exporter mes données personnelles</button>
 
         <button onClick={logout} className={styles.disconnectButton}>Se déconnecter</button>
       </div>
 
       <Lists className={styles.listPart}/>
-
-      <button onClick={exportPersonnalData} className={styles.exportPersonnalData}>Exporter mes données personnelles</button>
     </div>
   )
 }

@@ -71,3 +71,7 @@
     margin-top: 1%;
     gap: 10px;
 }
+
+.listError{
+    color: red
+}

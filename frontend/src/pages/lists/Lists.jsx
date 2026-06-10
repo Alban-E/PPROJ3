@@ -11,6 +11,7 @@ export default function Lists() {
 
   const [showNewListPopup, setShowNewListPopUp] = useState(false)
   const [listData, setListData] = useState({listName: '', private: true});
+  const [listError, setListError] = useState("")
 
   const newList = async () => {
     if (listData.listName){
@@ -28,11 +29,12 @@ export default function Lists() {
         }
       }
     } else {
-      alert("Veuillez Entrer un nom de playlist")
+      setListError("Veuillez Entrer un nom de playlist")
     }
   }
 
   const closeListCreation = async () => {
+    setListError("")
     setListData({listName: '', private: true})
     setShowNewListPopUp(false)
   }
@@ -64,9 +66,10 @@ export default function Lists() {
           {showNewListPopup && (
             <div className={styles.popup}>
               <div className={styles.popupContent}>
+                <p className={styles.listError}>{listError}</p>
                 <div className={styles.popupField}>
                   <p>Nom de la playlist:</p>
-                  <input type="text" value={listData.listName} onChange={(value) => setListData({...listData, listName: value.target.value})} required/>
+                  <input type="text" value={listData.listName} onChange={(value) => {setListData({...listData, listName: value.target.value}); setListError("")}} required/>
                 </div>
 
                 <div className={styles.popupField}>

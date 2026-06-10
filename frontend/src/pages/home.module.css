@@ -163,8 +163,13 @@
 }
 
 .userCard, .listCard{
-    border: solid 1px black;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: solid 1px lightgray;
     border-radius: 5px;
-    width: 90%;
-    text-align: center;
+    width: 60%;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }

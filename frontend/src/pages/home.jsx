@@ -60,6 +60,16 @@ export default function Home(){
             } finally{ setGameLoading(false) }
         }
 
+        loadGames()
+        } , [gameFilters, currentGamePage, reverseOrdering, titleToSearchDebounce]);
+    
+    useEffect(()=>{
+        if(!titleToSearchDebounce) {
+          setUsers([])
+          setLists([])
+          return
+        }
+
         async function loadUsers() {
           try {
             setUserLoading(true)
@@ -93,13 +103,9 @@ export default function Home(){
           } finally { setListLoading(false) }
         }
         
-        loadGames()
-        if(!titleToSearchDebounce) {return}
-        
         loadUsers()
         loadLists()
-        } , [gameFilters, currentGamePage, reverseOrdering, titleToSearchDebounce]);
-    
+        }, [titleToSearchDebounce])
 
     return (
         <>

@@ -14,7 +14,7 @@ const chatRoutes = require('./src/Routes/chatRoutes')
 const moderationRoutes = require('./src/Routes/moderationRoutes')
 const notificationRoutes = require('./src/Routes/notificationRoutes')
 const subscriberRoutes = require('./src/Routes/subscriberRoutes')
-const gameRoutes = require('./src/Routes/gameRoutes')
+const gameRoutes = require('./src/Routes/gameListRoutes')
 
 const rawgRoutes = require('./src/Routes/rawgRoutes') 
 const passport = require("passport")

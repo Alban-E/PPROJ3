@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { getListById, getGamesFromList, getgamesById, searchGameById, updateList, removeGameFromList } from "../../service/axios";
+import { getListById, getGamesFromList, searchGameById, updateList, removeGameFromList } from "../../service/axios";
 import { useEffect, useState, Fragment } from "react";
 import styles from './listDetails.module.css'
 import GameCard from "../../components/card/GameCard";

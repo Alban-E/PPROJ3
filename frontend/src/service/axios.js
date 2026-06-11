@@ -142,40 +142,6 @@ export const removeGameFromList = async (payload) => {
 }
 //#endregion
 
-
-//#region games
-export const creategame = async (payload) => {
-    const res = await axiosInstance.post('/games/', payload)
-    return res
-}
-
-export const getgamesById = async (payload) => {
-    const res = await axiosInstance.get('/games/id', payload)
-    return res
-}
-
-export const getgamesByArtist = async (payload) => {
-    const res = await axiosInstance.get('/games/artist', payload)
-    return res
-}
-
-export const getgamesByName = async (payload) => {
-    const res = await axiosInstance.get('/games/name', payload)
-    return res
-}
-
-export const getAllgames = async (payload) => {
-    const res = await axiosInstance.get('/games/', payload)
-    return res
-}
-
-export const deletegame = async (payload) => {
-    const res = await axiosInstance.delete('/games/', payload)
-    return res
-}
-//#endregion
-
-
 //#region Feedback
 export const createFeedback = async (payload) => {
     const res = await axiosInstance.post('/feedback/', payload)

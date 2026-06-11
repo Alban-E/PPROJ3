@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { register } from "../../../service/axios";
-import styles from "./register.module.css"
+import styles from "./authPart.module.css"
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -35,19 +35,19 @@ export default function Register() {
         <>
             <form className={styles.form} onSubmit={handleRegister}>
                 {result && <p>{result}</p>}
-                <div>
-                    <p>username</p>
-                    <input placeholder='username' value={username} onChange={newUsername => setUsername(newUsername.target.value)} required />
+                <div className={styles.inputContainer}>
+                    <p className={styles.inputField}>Nom d'utilisateur</p>
+                    <input placeholder='username' value={username} onChange={newUsername => setUsername(newUsername.target.value)} className={styles.input} required/>
                 </div>
-                <div>
-                    <p>login</p>
-                    <input placeholder="login" value={login} onChange={newLogin => setLogin(newLogin.target.value)} required />
+                <div className={styles.inputContainer}>
+                    <p className={styles.inputField}>Login</p>
+                    <input placeholder="login" value={login} onChange={newLogin => setLogin(newLogin.target.value)} className={styles.input} required />
                 </div>
-                <div>
-                    <p>password</p>
-                    <input placeholder="password" type="password" value={password} onChange={newPassword => setPassword(newPassword.target.value)} required />
+                <div className={styles.inputContainer}>
+                    <p className={styles.inputField}>Mot de passe</p>
+                    <input placeholder="Mot de passe" type="password" value={password} onChange={newPassword => setPassword(newPassword.target.value)} className={styles.input} required />
                 </div>
-                <input type="submit" content="Register" />
+                <input type="submit" content="Register" className={styles.submit}/>
             </form>
         </>
     )

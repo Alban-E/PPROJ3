@@ -5,6 +5,7 @@ import Login from "../components/account/AuthPart/login"
 import Register from "../components/account/AuthPart/register"
 import Profile from "../components/account/profile"
 import { useEffect } from "react"
+import styles from "./account.module.css"
 
 export default function Account() {
     const {user, loading} = useAuth()
@@ -30,11 +31,11 @@ export default function Account() {
     const buttonText = state === "register" ? "Se connecter" : "Créer un compte"
 
     return(
-        <>
-            <button onClick={() => {setState(state === "register" ? "login" : "register")}}>{buttonText}</button>
+        <div className={styles.mainContainer}>
+            <button onClick={() => {setState(state === "register" ? "login" : "register")}} className={styles.button}>{buttonText}</button>
             {state === "register" && <Register/>}
             {state === "login" && <Login/>}
-            <button onClick={logWithGoogle}>Google</button>
-        </>
+            <button onClick={logWithGoogle} className={styles.button}>Google</button>
+        </div>
     )
 }

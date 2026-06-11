@@ -1,6 +1,6 @@
 import { useState } from "react"
-import styles from "./login.module.css"
 import { useAuth } from "../../../service/AuthContext";
+import styles from "./authPart.module.css"
 
 export default function Login () {
     const [loginValue, setLogin] = useState('')
@@ -30,15 +30,15 @@ export default function Login () {
         <>
             <form className={styles.form} onSubmit={handleLogin}>
             {result && <p>{result}</p>}
-                <div>
-                    <p>login</p>
-                    <input placeholder="login" value={loginValue} onChange={newLogin => setLogin(newLogin.target.value)} required />
+                <div className={styles.inputContainer}>
+                    <p className={styles.inputField}>Login</p>
+                    <input placeholder="login" value={loginValue} onChange={newLogin => setLogin(newLogin.target.value)} className={styles.input} required />
                 </div>
-                <div>
-                    <p>password</p>
-                    <input placeholder="password" type="password" value={password} onChange={newPassword => setPassword(newPassword.target.value)} required />
+                <div className={styles.inputContainer}>
+                    <p className={styles.inputField}>Mot de passe</p>
+                    <input placeholder="Mot de passe" type="password" value={password} onChange={newPassword => setPassword(newPassword.target.value)} className={styles.input} required />
                 </div>
-                <input type="submit" content="Register" />
+                <input type="submit" content="Register" className={styles.submit}/>
             </form>
         </>
     )

@@ -39,6 +39,10 @@
     padding: 10px;
     height: auto;
     width: fit-content;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
 }
 
 .listButton:hover{

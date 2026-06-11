@@ -9,6 +9,7 @@
 
 .title{
     justify-self: center;
+    text-align: center;
     border: solid, 2px black;
     padding: 0.5rem;
     border-radius: 10px;

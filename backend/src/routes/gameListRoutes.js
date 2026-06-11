@@ -3,7 +3,7 @@ const { authenticateToken, assertUserIsAdmin } = require('../Middlewares/authVer
 const { getGamesFromList,  addGameToList, removeGameFromList } = require('../Controllers/gameListController')
 
 // game List relation
-router.post('/list', authenticateToken, getGamesFromList)
+router.get('/list', authenticateToken, getGamesFromList)
 
 router.post('/add', authenticateToken, addGameToList)
 

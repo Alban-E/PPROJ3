@@ -15,14 +15,14 @@ const generateRawgSearchCacheKey = (filters = {}) => {
 
 const getGames = async (req, res) =>{
     const filters = {
-        search: req.body.search,
-        search_exact: req.body.search_exact,
-        platforms: req.body.platforms, 
-        stores: req.body.stores, 
-        ordering: req.body.ordering, 
-        page: req.body.page, 
-        publishers: req.body.publisher,
-        page_size: req.body.page_size,
+        search: req.query.search,
+        search_exact: req.query.search_exact,
+        platforms: req.query.platforms, 
+        stores: req.query.stores, 
+        ordering: req.query.ordering, 
+        page: req.query.page, 
+        publishers: req.query.publisher,
+        page_size: req.query.page_size,
     }
     const cacheKey = generateRawgSearchCacheKey(filters)
     
@@ -43,14 +43,14 @@ const getGames = async (req, res) =>{
 }
 
 const getGamesById = async (req, res) => {
-    const cacheKey = `rawg_GameId_${req.body.gameId}`
+    const cacheKey = `rawg_GameId_${req.query.gameId}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
     }
         
     try {
-        const game = await rawgApi.get(`/games/${req.body.gameId}`)
+        const game = await rawgApi.get(`/games/${req.query.gameId}`)
         cache.set(cacheKey, game.data)
         return res.status(200).json(game.data)
     } catch (error) {
@@ -59,14 +59,14 @@ const getGamesById = async (req, res) => {
 }
 
 const getGameAchievements = async (req, res) => {
-    const cacheKey = `rawg_Achievement_${JSON.stringify(req.body)}`
+    const cacheKey = `rawg_Achievement_${JSON.stringify(req.query)}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
     }
 
     try {
-        const achievements = await rawgApi.get(`/games/${req.body.gameId}/achievements`, {params: {page: req.body.page}});
+        const achievements = await rawgApi.get(`/games/${req.query.gameId}/achievements`, {params: {page: req.query.page}});
         cache.set(cacheKey, achievements.data)
         return res.status(200).json(achievements.data)
     } catch (error) {
@@ -74,14 +74,14 @@ const getGameAchievements = async (req, res) => {
 }
 
 const getGameTrailer = async (req, res) => {
-    const cacheKey = `rawg_Trailer_${JSON.stringify(req.body)}`
+    const cacheKey = `rawg_Trailer_${JSON.stringify(req.query)}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
     }
 
     try {
-        const trailers = await rawgApi.get(`/games/${req.body.gameId}/movies`)
+        const trailers = await rawgApi.get(`/games/${req.query.gameId}/movies`)
         cache.set(cacheKey, trailers.data)
         return res.status(200).json(trailers.data)
     } catch (error) {
@@ -90,14 +90,14 @@ const getGameTrailer = async (req, res) => {
 }
 
 const getPublisherById = async (req, res) => {
-    const cacheKey = `rawg_Publisher${JSON.stringify(req.body)}`
+    const cacheKey = `rawg_Publisher${JSON.stringify(req.query)}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
     }
 
     try {
-        const publishers = await rawgApi.get(`/publishers/${req.body.publisherId}`)
+        const publishers = await rawgApi.get(`/publishers/${req.query.publisherId}`)
         cache.set(cacheKey, publishers.data)
         return res.status(200).json(publishers.data)
     } catch (error) {
@@ -106,7 +106,7 @@ const getPublisherById = async (req, res) => {
 }
 
 const getGamesByPublishers= async (req, res) => {
-    const cacheKey = `rawg_Publisher_Games${JSON.stringify(req.body)}`
+    const cacheKey = `rawg_Publisher_Games${JSON.stringify(req.query)}`
     const cachedData = cache.get(cacheKey)
     if (cachedData) {
         return res.status(200).json(cachedData)
@@ -114,8 +114,8 @@ const getGamesByPublishers= async (req, res) => {
 
     try {
         const games =  await rawgApi.get('/games', {params: {
-            publishers: req.body.publisherId,
-            page: req.body.page,
+            publishers: req.query.publisherId,
+            page: req.query.page,
             page_size: 20
         }}) 
         cache.set(cacheKey, games.data)

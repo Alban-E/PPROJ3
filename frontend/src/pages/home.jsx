@@ -259,7 +259,7 @@ export default function Home(){
                 <p className={styles.loading}>Chargement...</p>
               :
                 lists.length === 0 ?
-                  <p className={styles.noneResult}>Aucune listes trouvés</p>
+                  <p className={styles.noneResult}>Aucune liste trouvée</p>
                 :
                   <div className={styles.listCardContainer}>
                     {lists?.map((list, index) => {

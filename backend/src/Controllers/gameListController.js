@@ -3,11 +3,11 @@ const List = require('../Models/List')
 
 const getGamesFromList = async (req, res) => {
     try {
-        const list = await List.findById(req.body.listId)
+        const list = await List.findById(req.query.listId)
         if (!list) {
             return res.status(404).json({message: "No list found"})
         } else if (list.private === false || String(req.user.userRole) === "admin" || (String(list.userId) === String(req.user.userId))) {
-            const gamesInList = await ListGames.find({listId: req.body.listId})
+            const gamesInList = await ListGames.find({listId: req.query.listId})
             const gameIds = gamesInList.map(t => t.gameId)
 
             return res.status(200).json(gameIds)

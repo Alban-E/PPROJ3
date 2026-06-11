@@ -38,8 +38,8 @@ export default function ListDetails() {
     const updateGamesIds = async() => {
         try {
             await getList()
-            const payload = {listId: listId}
-            const gameRes = await getGamesFromList(payload)
+            const params = {listId: listId}
+            const gameRes = await getGamesFromList(params)
             setGamesIds(gameRes.data)
         } catch (error) {
             const status = error.response?.status

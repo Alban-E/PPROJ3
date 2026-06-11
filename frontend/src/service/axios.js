@@ -131,8 +131,8 @@ export const addGameToList = async (payload) => {
     return res
 }
 
-export const getGamesFromList = async (payload) => {
-    const res = await axiosInstance.post('/games/list', payload)
+export const getGamesFromList = async (params) => {
+    const res = await axiosInstance.get('/games/list', {params: params})
     return res
 }
 
@@ -406,28 +406,28 @@ export const revokeBan = async (payload) => {
 
 
 //#region API
-export const searchGames = async (payload) => {
-    return await axiosInstance.post('/search/games', payload)
+export const searchGames = async (params) => {
+    return await axiosInstance.get('/search/games', {params: params})
 }
 
-export const searchGameById = async (payload) => {
-    return await axiosInstance.post('/search/game/id', payload)
+export const searchGameById = async (params) => {
+    return await axiosInstance.get('/search/game/id', {params: params})
 }
 
-export const searchGameAchievements = async (payload) => {
-    return axiosInstance.post(`/search/game/achievements`, payload);
+export const searchGameAchievements = async (params) => {
+    return axiosInstance.get(`/search/game/achievements`, {params: params});
 }
 
-export const searchGameTrailer = async (payload) => {
-    return axiosInstance.post(`/search/game/trailers`, payload)
+export const searchGameTrailer = async (params) => {
+    return axiosInstance.get(`/search/game/trailers`, {params: params})
 }
 
-export const searchPublisher = async (payload) => {
-    return axiosInstance.post(`/search/publisher`, payload)
+export const searchPublisher = async (params) => {
+    return axiosInstance.get(`/search/publisher`, {params: params})
 }
 
-export const searchPublisherGames = async (payload) => {
-    return axiosInstance.post(`/search/publisher/games`, payload)
+export const searchPublisherGames = async (params) => {
+    return axiosInstance.get(`/search/publisher/games`, {params: params})
 }
 
 //#endregion

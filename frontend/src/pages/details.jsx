@@ -213,6 +213,7 @@ export default function Details(){
             const status = error.response?.status
             if (status===404){
                 console.log("No public feedbacks found")
+                setGameFeedbacks([])
                 return
             }
             console.log("Couldn't get game feedbacks: ", error)

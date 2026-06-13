@@ -11,7 +11,7 @@ export default function Navbar() {
       className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Feed </NavLink> */}
       
       <NavLink to="/Account"
-      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Account </NavLink>
+      className={({ isActive }) => isActive ? `${styles.navBarLink} ${styles.active}` : styles.navBarLink } >Compte </NavLink>
     </nav>
   )
 }

@@ -9,7 +9,7 @@ router.post('/', authenticateToken, createFeedback)
 // Read
 router.get('/me', authenticateToken, getMyFeedbacks)
 router.get('/user', authenticateToken, getUserFeedbacks)
-router.get('/game', authenticateToken, getGameFeedbacks)
+router.get('/game', getGameFeedbacks)
 router.get('/me/game', authenticateToken, getMyGameFeedback)
 
 router.get('/', authenticateToken, assertUserIsAdmin, getAllFeedbacks)

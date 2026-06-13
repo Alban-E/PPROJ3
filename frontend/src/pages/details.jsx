@@ -286,7 +286,7 @@ export default function Details(){
                                 }
                             </>
                         :
-                            <Link to={'/Account'} className={styles.addToPlaylistText}>Pour ajouter le jeu a une playlist veuillez vous connecter</Link>
+                            <Link to={'/Account'} className={styles.addToPlaylistText}>Pour ajouter le jeu à une playlist veuillez vous connecter</Link>
                     }
                 </div>
 

@@ -264,7 +264,7 @@ export default function Details(){
                     {user?
                             <>
                                 <div className={styles.displayPopupContainer}>
-                                    <button onClick={() => {setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup); setListTarget("")}} className={styles.addToPlaylistButton}>Ajouter à une playlist</button>
+                                    <button onClick={() => {setDisplayAddToPlaylistPopup(!displayAddToPlaylistPopup); setListTarget("")}} className={styles.addToPlaylistButton}>Ajouter à une liste</button>
                                     {addGameError && <p className={styles.errorMessage}>{addGameError}</p>}
                                 </div>
                                 {displayAddToPlaylistPopup && 

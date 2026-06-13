@@ -61,14 +61,14 @@ export default function Lists() {
       <h2 className={styles.title}>Listes</h2>
       {user ? 
         <>
-          <button onClick={() => setShowNewListPopUp(true)} className={styles.createListButton}>Créer une playlist</button>
+          <button onClick={() => setShowNewListPopUp(true)} className={styles.createListButton}>Créer une liste</button>
 
           {showNewListPopup && (
             <div className={styles.popup}>
               <div className={styles.popupContent}>
                 <p className={styles.listError}>{listError}</p>
                 <div className={styles.popupField}>
-                  <p>Nom de la playlist:</p>
+                  <p>Nom de la liste:</p>
                   <input type="text" value={listData.listName} onChange={(value) => {setListData({...listData, listName: value.target.value}); setListError("")}} required/>
                 </div>
 

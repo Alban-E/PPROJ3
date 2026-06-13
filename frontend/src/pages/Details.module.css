@@ -215,6 +215,10 @@
     border: solid 1px black;
     border-radius: 15px;
     width: 30%;    
+    padding: 5px;
+}
+.sendFeedbackButton:hover, .deleteReviewButton:hover{
+    background-color: lightgray;
 }
 
 .communityFeedbackContainer{
